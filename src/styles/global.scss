@@ -1,0 +1,21 @@
+@use './theme.scss';
+@use './tailwind-variable.scss';
+
+html,
+body {
+  overscroll-behavior-y: none;
+  scroll-behavior: smooth;
+  font-family: var(--font_text);
+  color: var(--color-black-color);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font_title);
+  font-weight: 500;
+}
+
+p {
+  font-size: 18px;
+}

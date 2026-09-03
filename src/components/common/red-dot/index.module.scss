@@ -1,0 +1,19 @@
+.dot {
+  width: 800px;
+  height: 800px;
+  background-color: var(--primary_color);
+  border-radius: 100%;
+  filter: blur(250px);
+
+  @media screen and (max-width: 768px) {
+    width: 300px;
+    height: 300px;
+    filter: blur(120px);
+  }
+
+  @media screen and (max-width: 1024px) {
+    width: 600px;
+    height: 600px;
+    filter: blur(280px);
+  }
+}

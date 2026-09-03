@@ -1,0 +1,26 @@
+.container {
+  background: linear-gradient(180deg, #09080d 25%, #e9262c 168.85%);
+  border: 2px solid var(--accent_color_3);
+  border-radius: 24px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    border: 2px solid var(--primary_color);
+    box-shadow: 0px 1px 24px 0px #e80c1bcc;
+    img {
+      transition: all 0.3s ease-in-out;
+      border: 2px solid var(--primary_color);
+    }
+  }
+
+  img {
+    transition: all 0.3s ease-in-out;
+    border: 0px solid var(--primary_color);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    border-radius: 16px;
+  }
+}

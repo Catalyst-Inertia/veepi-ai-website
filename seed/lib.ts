@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { RequiredDataFromCollectionSlug } from 'payload'
 import payload from 'payload'
-import type { Page, Post, BlockDetailBlock } from '../src/payload-types'
+import type { Page, Post, BlockHeroBlock } from '../src/payload-types'
 
 export const paragraphNode = (text: string) => ({
   type: 'paragraph',
@@ -28,7 +28,7 @@ export const paragraphNode = (text: string) => ({
 
 export const richTextParagraph = (
   text: string,
-): NonNullable<BlockDetailBlock['content']> => ({
+): NonNullable<BlockHeroBlock['title']> => ({
   root: {
     type: 'root',
     format: '',
@@ -41,7 +41,7 @@ export const richTextParagraph = (
 
 export const richTextRuns = (
   paragraphs: { text: string; italic?: boolean }[][],
-): NonNullable<BlockDetailBlock['content']> => ({
+): NonNullable<BlockHeroBlock['title']> => ({
   root: {
     type: 'root',
     format: '',
@@ -71,7 +71,7 @@ export const richTextRuns = (
 
 export const richTextParagraphs = (
   texts: string[],
-): NonNullable<BlockDetailBlock['content']> => ({
+): NonNullable<BlockHeroBlock['title']> => ({
   root: {
     type: 'root',
     format: '',

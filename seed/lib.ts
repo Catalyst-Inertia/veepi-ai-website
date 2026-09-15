@@ -40,7 +40,7 @@ export const richTextParagraph = (
 })
 
 export const richTextRuns = (
-  parts: { text: string; italic?: boolean }[],
+  paragraphs: { text: string; italic?: boolean }[][],
 ): NonNullable<BlockDetailBlock['content']> => ({
   root: {
     type: 'root',
@@ -48,26 +48,24 @@ export const richTextRuns = (
     indent: 0,
     version: 1,
     direction: 'ltr',
-    children: [
-      {
-        type: 'paragraph',
-        format: '',
-        indent: 0,
+    children: paragraphs.map((parts) => ({
+      type: 'paragraph',
+      format: '',
+      indent: 0,
+      version: 1,
+      direction: 'ltr',
+      textFormat: 0,
+      textStyle: '',
+      children: parts.map((p) => ({
+        type: 'text',
+        format: p.italic ? 2 : 0,
         version: 1,
-        direction: 'ltr',
-        textFormat: 0,
-        textStyle: '',
-        children: parts.map((p) => ({
-          type: 'text',
-          format: p.italic ? 2 : 0,
-          version: 1,
-          detail: 0,
-          mode: 'normal',
-          style: '',
-          text: p.text,
-        })),
-      },
-    ],
+        detail: 0,
+        mode: 'normal',
+        style: '',
+        text: p.text,
+      })),
+    })),
   },
 })
 

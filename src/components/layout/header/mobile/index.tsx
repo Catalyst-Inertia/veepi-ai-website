@@ -15,7 +15,7 @@ export default function ContainerPageHeaderMobile() {
 
   const [openMenu, setOpenMenu] = useState(false)
 
-  const { isVisible, withBackground } = useScrollDetection()
+  const { withBackground } = useScrollDetection()
 
   useEffect(() => {
     if (openMenu) {
@@ -31,7 +31,7 @@ export default function ContainerPageHeaderMobile() {
         <motion.header
           className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? 'bg-black-color drop-shadow-lg' : 'bg-transparent'} min-h-[80px] flex items-center`}
           initial={{ y: 0 }}
-          animate={{ y: isVisible ? 0 : -100 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.3, bounce: false }}
         >
           <BoxContainer sectionClassName="w-full">

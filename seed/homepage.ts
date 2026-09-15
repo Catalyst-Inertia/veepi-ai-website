@@ -276,8 +276,11 @@ export async function seedHomepage(): Promise<void> {
     contents.push(
       homeHero(
         richTextRuns([
-          { text: 'Turn your ' },
-          { text: 'results', italic: true },
+          [{ text: 'Turn your ' }, { text: 'results', italic: true }],
+          [
+            { text: 'into content\npeople want to ' },
+            { text: 'watch.', italic: true },
+          ],
         ]),
         'Built for plastic surgeons, dentists, dermatologists, med spas, aesthetic clinics, and medical professionals.',
         heroBgId || mastheadId || '',

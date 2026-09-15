@@ -39,6 +39,38 @@ export const richTextParagraph = (
   },
 })
 
+export const richTextRuns = (
+  parts: { text: string; italic?: boolean }[],
+): NonNullable<BlockDetailBlock['content']> => ({
+  root: {
+    type: 'root',
+    format: '',
+    indent: 0,
+    version: 1,
+    direction: 'ltr',
+    children: [
+      {
+        type: 'paragraph',
+        format: '',
+        indent: 0,
+        version: 1,
+        direction: 'ltr',
+        textFormat: 0,
+        textStyle: '',
+        children: parts.map((p) => ({
+          type: 'text',
+          format: p.italic ? 2 : 0,
+          version: 1,
+          detail: 0,
+          mode: 'normal',
+          style: '',
+          text: p.text,
+        })),
+      },
+    ],
+  },
+})
+
 export const richTextParagraphs = (
   texts: string[],
 ): NonNullable<BlockDetailBlock['content']> => ({
@@ -115,10 +147,12 @@ export type UpsertPageData = Omit<
 // payload.create/update's generic widens TSlug when data comes from a typed
 // variable; bind narrow signatures so the literal collection slug drives
 // inference. bind(payload) keeps `this` so the calls work at runtime.
+// SAFETY: generic widening workaround
 const createPage = payload.create.bind(payload) as unknown as (options: {
   collection: 'pages'
   data: RequiredDataFromCollectionSlug<'pages'>
 }) => Promise<Page>
+// SAFETY: generic widening workaround
 const updatePage = payload.update.bind(payload) as unknown as (options: {
   collection: 'pages'
   id: string
@@ -157,10 +191,12 @@ export type UpsertPostData = Omit<
   contents?: Post['contents']
 }
 
+// SAFETY: generic widening workaround
 const createPost = payload.create.bind(payload) as unknown as (options: {
   collection: 'posts'
   data: RequiredDataFromCollectionSlug<'posts'>
 }) => Promise<Post>
+// SAFETY: generic widening workaround
 const updatePost = payload.update.bind(payload) as unknown as (options: {
   collection: 'posts'
   id: string

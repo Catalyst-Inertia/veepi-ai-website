@@ -37,14 +37,14 @@ export default function ContainerPageHeaderMobile() {
           <BoxContainer sectionClassName="w-full">
             <div className="flex flex-wrap justify-between items-center min-h-[85px]">
               <div
-                className="w-[80px] aspect-video relative cursor-pointer"
+                className="w-[121px] h-[48px] relative cursor-pointer"
                 onClick={() => {
                   router.push('/')
                   setOpenMenu(false)
                 }}
               >
                 <Image
-                  src={'/images/logo.png'}
+                  src={'/veepi-logo.svg'}
                   fill
                   alt="logo"
                   style={{ objectFit: 'contain' }}
@@ -79,14 +79,14 @@ export default function ContainerPageHeaderMobile() {
                 <div className="w-full">
                   <div className="min-h-[80px] flex items-center justify-between mb-8 w-full">
                     <div
-                      className="w-[80px] aspect-video relative cursor-pointer"
+                      className="w-[121px] h-[48px] relative cursor-pointer"
                       onClick={() => {
                         router.push('/')
                         setOpenMenu(false)
                       }}
                     >
                       <Image
-                        src={'/images/logo.png'}
+                        src={'/veepi-logo.svg'}
                         fill
                         alt="logo"
                         style={{ objectFit: 'contain' }}

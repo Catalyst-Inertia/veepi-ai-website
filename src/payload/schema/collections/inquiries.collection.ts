@@ -4,7 +4,11 @@ import { jsonField, groupField, dateField, textField } from '../fields'
 export const Inquiries: CollectionConfig = {
   slug: 'inquiries',
   admin: {
-    defaultColumns: ['metadata.submittedAt', 'metadata.originPath'],
+    defaultColumns: [
+      'metadata.formType',
+      'metadata.submittedAt',
+      'metadata.originPath',
+    ],
     description:
       'Submissions are created via the public API. Creation is disabled in the admin UI (access control).',
   },
@@ -15,7 +19,17 @@ export const Inquiries: CollectionConfig = {
     delete: ({ req }) => req.user != null,
   },
   fields: [
-    jsonField({ name: 'submission', label: 'Submission', required: true }),
+    jsonField({
+      name: 'submission',
+      label: 'Submission',
+      required: true,
+      admin: {
+        readOnly: true,
+        components: {
+          Field: '/src/payload/components/submission-table#SubmissionTable',
+        },
+      },
+    }),
     groupField({
       name: 'metadata',
       label: 'Submission Metadata',
@@ -29,6 +43,7 @@ export const Inquiries: CollectionConfig = {
         textField({ name: 'ip', label: 'IP Address' }),
         textField({ name: 'userAgent', label: 'User Agent' }),
         textField({ name: 'originPath', label: 'Origin Page Path' }),
+        textField({ name: 'formType', label: 'Form Type' }),
       ],
     }),
   ],

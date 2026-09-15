@@ -1,7 +1,14 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import type { Block } from 'payload'
-import { identifierField, sectionIdField, textField } from '../../fields'
+import {
+  identifierField,
+  sectionIdField,
+  richTextField,
+  uploadField,
+  arrayField,
+  actionButtonField,
+} from '../../fields'
 
 // Exported so the renderer types blockType via typeof IDENTIFIER (single
 // source of truth for the slug).
@@ -26,7 +33,17 @@ export const BlockHeroBlock = {
   fields: [
     identifierField({ defaultValue: IDENTIFIER }),
     sectionIdField('hero'),
-    textField({ name: 'title', label: 'Title', required: true }),
-    // TODO: add fields
+    uploadField('backgroundMedia', {
+      label: 'Background Media',
+      required: true,
+    }),
+    richTextField({ name: 'title', label: 'Title' }),
+    richTextField({ name: 'description', label: 'Description' }),
+    arrayField({
+      name: 'logos',
+      label: 'Logos',
+      fields: [uploadField('logo', { label: 'Logo', required: true })],
+    }),
+    actionButtonField({ name: 'cta', label: 'Call to Action' }),
   ],
 } satisfies Block

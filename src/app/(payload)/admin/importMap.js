@@ -22,6 +22,7 @@ import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997e
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { SectionIdSelect as SectionIdSelect_8ff5323697156d64cf1dd2bed69d2fe4 } from '../../../../src/payload/components/section-id-select'
+import { SubmissionTable as SubmissionTable_3c815ab58a9957c606d44cb0e1734c1f } from '../../../../src/payload/components/submission-table'
 import { RevalidateControls as RevalidateControls_7ecd2edc73668a3a8ab49694f86a81d4 } from '../../../../src/payload/components/revalidate-controls'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
@@ -76,6 +77,8 @@ export const importMap = {
     ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   '/src/payload/components/section-id-select#SectionIdSelect':
     SectionIdSelect_8ff5323697156d64cf1dd2bed69d2fe4,
+  '/src/payload/components/submission-table#SubmissionTable':
+    SubmissionTable_3c815ab58a9957c606d44cb0e1734c1f,
   '/src/payload/components/revalidate-controls#RevalidateControls':
     RevalidateControls_7ecd2edc73668a3a8ab49694f86a81d4,
   '@payloadcms/storage-s3/client#S3ClientUploadHandler':

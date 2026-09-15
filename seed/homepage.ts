@@ -1,7 +1,10 @@
-/* eslint-disable no-console -- homepage seed */
+/* eslint-disable no-console, @typescript-eslint/no-unused-vars -- homepage seed */
 import payload from 'payload'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 import type { Page } from '../src/payload-types'
 import type {
+  BlockHeroBlock,
   BlockHomeMastheadBlock,
   BlockHomeServicesBlock,
   BlockHomeAboutBlock,
@@ -13,6 +16,7 @@ import {
   ensureMedia,
   richTextParagraph,
   richTextParagraphs,
+  richTextRuns,
   upsertPage,
 } from './lib'
 
@@ -175,6 +179,26 @@ const homeContact = (args: {
   blockType: 'block-home-contact',
 })
 
+const homeHero = (
+  title: BlockHeroBlock['title'],
+  description: string,
+  backgroundMedia: string,
+  actionButton: { label: string; href: string },
+  logos: string[],
+): BlockHeroBlock => ({
+  identifier: 'block-hero',
+  backgroundMedia,
+  title,
+  description: richTextParagraph(description),
+  logos: logos.map((logo) => ({ logo })),
+  cta: {
+    label: actionButton.label,
+    type: 'external',
+    externalUrl: actionButton.href,
+  },
+  blockType: 'block-hero',
+})
+
 export async function seedHomepage(): Promise<void> {
   // Upload section media (webm videos where available), then compose the
   // block-home-* blocks in page order (masthead, services, about, portfolio,
@@ -187,6 +211,42 @@ export async function seedHomepage(): Promise<void> {
       ensureMedia('unicorn.webm', 'Catatia contact us video'),
       ensureMedia('case-study-mascot.webp', 'Catatia case study mascot'),
     ])
+
+  let heroBgId: string | undefined
+  let partnerLogosId: string | undefined
+  try {
+    const bgBuf = await readFile(
+      join(process.cwd(), 'public/videos/veepi-bg.webm'),
+    )
+    const bgCreated = await payload.create({
+      collection: 'media',
+      data: { alt: 'Hero BG Video' },
+      file: {
+        data: bgBuf,
+        mimetype: 'video/webm',
+        name: 'veepi-bg.webm',
+        size: bgBuf.length,
+      },
+    })
+    heroBgId = String(bgCreated.id)
+
+    const logosBuf = await readFile(
+      join(process.cwd(), 'public/partner-logos.svg'),
+    )
+    const logosCreated = await payload.create({
+      collection: 'media',
+      data: { alt: 'Partner Logos' },
+      file: {
+        data: logosBuf,
+        mimetype: 'image/svg+xml',
+        name: 'partner-logos.svg',
+        size: logosBuf.length,
+      },
+    })
+    partnerLogosId = String(logosCreated.id)
+  } catch (e) {
+    console.error('Failed to upload hero assets', e)
+  }
 
   // seedProjects runs first (seed/index.ts) and creates the projects group at
   // /works; resolve it so the case-studies block can pin its feed.
@@ -212,16 +272,17 @@ export async function seedHomepage(): Promise<void> {
   }
 
   const contents: Page['contents'] = []
-  if (mastheadId) {
+  if (heroBgId || mastheadId) {
     contents.push(
-      homeMasthead(
-        homepageMasthead.title,
-        homepageMasthead.description,
-        {
-          label: homepageMasthead.buttonLabel,
-          href: homepageMasthead.buttonHref,
-        },
-        mastheadId,
+      homeHero(
+        richTextRuns([
+          { text: 'Turn your ' },
+          { text: 'results', italic: true },
+        ]),
+        'Built for plastic surgeons, dentists, dermatologists, med spas, aesthetic clinics, and medical professionals.',
+        heroBgId || mastheadId || '',
+        { label: 'Get Started & See How It Works', href: '#contact' },
+        [partnerLogosId || mastheadId || ''],
       ),
     )
   }

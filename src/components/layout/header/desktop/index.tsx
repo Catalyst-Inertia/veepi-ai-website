@@ -16,7 +16,7 @@ export default function ContainerPageHeaderDesktop() {
     <>
       <AnimatePresence key={'header-animation'} mode="sync">
         <motion.header
-          className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? 'bg-black-color drop-shadow-lg text-white-color' : 'bg-transparent'} min-h-[80px] flex items-center`}
+          className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? 'bg-black-color drop-shadow-lg' : 'bg-transparent'} min-h-[80px] flex items-center`}
           initial={{ y: 0 }}
           animate={{ y: isVisible ? 0 : -100 }}
           transition={{ duration: 0.3 }}
@@ -24,19 +24,19 @@ export default function ContainerPageHeaderDesktop() {
           <BoxContainer sectionClassName="w-full">
             <div className="flex flex-wrap justify-between items-center min-h-[113px]">
               <div
-                className="w-[80px] aspect-video relative cursor-pointer"
+                className="w-[121px] h-[48px] relative cursor-pointer"
                 onClick={() => {
                   router.push('/')
                 }}
               >
                 <Image
-                  src={'/images/logo.png'}
+                  src={'/veepi-logo.svg'}
                   fill
                   alt="logo"
                   style={{ objectFit: 'contain' }}
                 />
               </div>
-              <div className="flex flex-wrap gap-10">
+              <div className="flex flex-wrap gap-[41px] font-text text-[12px] leading-none uppercase text-[#FBF2E9]">
                 {PageNavigationData.map((item) => (
                   <div
                     key={item.key}
@@ -45,7 +45,7 @@ export default function ContainerPageHeaderDesktop() {
                     }}
                     className="cursor-pointer"
                   >
-                    {item.label.toUpperCase()}
+                    {item.label}
                   </div>
                 ))}
               </div>

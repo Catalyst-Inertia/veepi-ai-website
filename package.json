@@ -20,7 +20,9 @@
     "migrate:status": "payload migrate:status",
     "migrate:refresh": "payload migrate:refresh",
     "seed": "tsx --env-file=.env scripts/seed.ts",
-    "format": "yarn prettier --write ."
+    "format": "yarn prettier --write .",
+    "compress:images": "tsx src/script/compress.images.script.ts",
+    "compress:videos": "tsx src/script/compress-videos.script.ts"
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.1",

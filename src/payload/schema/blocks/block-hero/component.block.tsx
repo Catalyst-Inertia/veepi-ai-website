@@ -19,22 +19,21 @@ export type BlockHeroProps = { id?: string } & Extract<
 >
 
 export default function ContentsBlockHero(props: BlockHeroProps) {
-  const { id, backgroundMedia, title, description, logos, cta } = props
+  const { id, backgroundMedia, animatedTexts, description, logos, cta } = props
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useRef<HTMLDivElement>(null)
-  const text3Ref = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
     () => {
-      if (!sectionRef.current || !titleRef.current) return
-      const p1 = titleRef.current.querySelector('p:nth-child(1)')
-      const p2 = titleRef.current.querySelector('p:nth-child(2)')
-      const p3 = text3Ref.current
-      if (!p1 || !p2 || !p3) return
+      if (!sectionRef.current || !containerRef.current) return
+      const elements = gsap.utils.toArray<HTMLElement>(
+        containerRef.current.children,
+      )
+      if (elements.length === 0) return
 
-      // Position paragraphs absolutely in the center
-      gsap.set(titleRef.current, { position: 'relative' })
-      gsap.set([p1, p2], {
+      // Position all text elements absolutely in the center
+      gsap.set(containerRef.current, { position: 'relative' })
+      gsap.set(elements, {
         position: 'absolute',
         top: '50%',
         left: '50%',
@@ -43,23 +42,31 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
         width: '100%',
       })
 
-      // Start p2 and p3 hidden and lower
-      gsap.set([p2, p3], { autoAlpha: 0, y: 50 })
+      // Start all elements EXCEPT the first one hidden at bottom of screen
+      if (elements.length > 1) {
+        gsap.set(elements.slice(1), { autoAlpha: 0, y: window.innerHeight })
+      }
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=250%',
+          end: `+=${elements.length * 100}%`,
           pin: true,
           scrub: true,
         },
       })
 
-      tl.to(p1, { y: -50, autoAlpha: 0, duration: 1 })
-        .to(p2, { y: 0, autoAlpha: 1, duration: 1 }, '<0.5')
-        .to(p2, { y: -50, autoAlpha: 0, duration: 1 }, '+=0.5')
-        .to(p3, { y: 0, autoAlpha: 1, duration: 1 }, '<0.5')
+      for (let i = 0; i < elements.length - 1; i++) {
+        const current = elements[i]
+        const next = elements[i + 1]
+
+        tl.to(
+          current,
+          { y: -window.innerHeight, autoAlpha: 0, duration: 1 },
+          i > 0 ? '+=0.5' : undefined,
+        ).to(next, { y: 0, autoAlpha: 1, duration: 1 }, '<0.5')
+      }
     },
     { scope: sectionRef },
   )
@@ -79,35 +86,28 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
       </div>
 
       {/* Title — dead center */}
-      <style>{`
-        .hero-title p { font-size: 36px; }
-        @media (min-width: 768px) { .hero-title p { font-size: 80px; } }
-        @media (min-width: 1024px) { .hero-title p { font-size: 100px; } }
-        .hero-tagline p { font-size: 13px; }
-      `}</style>
-      <div className="relative z-10 flex-1 flex items-center justify-center text-center px-4 w-full">
-        {title && (
-          <div
-            ref={titleRef}
-            className="hero-title font-title leading-[1.05] text-[#FBF2E9] w-full max-w-[1000px] h-[200px]"
-          >
-            <RichText data={title} />
-          </div>
-        )}
-        <div
-          ref={text3Ref}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] text-center font-text text-[16px] md:text-[18px] leading-relaxed text-[#FBF2E9] px-4 flex flex-col gap-6 opacity-0"
-        >
-          <p>
-            VeePi transforms your existing medical and aesthetic content into
-            premium, social-ready videos — powered by AI and built for your
-            practice.
-          </p>
-          <p>
-            From before &amp; after results to treatment imagery, VeePi turns
-            what you already have into creative content designed for Reels,
-            TikTok, YouTube, Stories, and more.
-          </p>
+      <div className="absolute inset-0 z-10 flex items-center justify-center text-center px-4 pointer-events-none">
+        <div ref={containerRef} className="w-full max-w-[1000px] h-[200px]">
+          {animatedTexts?.map((item, index) => {
+            if (item.textStyle === 'heading') {
+              return (
+                <div
+                  key={item.id || index}
+                  className="font-title leading-[1.05] text-[#FBF2E9] w-full mx-auto max-w-[1000px] [&_p]:text-[36px] md:[&_p]:text-[80px] lg:[&_p]:text-[120px] text-center [&_p]:text-center [&_p]:m-0 pointer-events-auto"
+                >
+                  <RichText data={item.text!} />
+                </div>
+              )
+            }
+            return (
+              <div
+                key={item.id || index}
+                className="w-full mx-auto max-w-[800px] text-center font-text text-[16px] md:text-[18px] leading-relaxed text-[#FBF2E9] px-4 flex flex-col gap-6 pointer-events-auto [&_p]:m-0 [&_p]:text-center"
+              >
+                <RichText data={item.text!} />
+              </div>
+            )
+          })}
         </div>
       </div>
 
@@ -118,7 +118,7 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="flex flex-col gap-4 text-[#FBF2E9]">
               {description && (
-                <div className="hero-tagline leading-snug max-w-[600px]">
+                <div className="leading-snug max-w-[600px] [&_p]:text-[13px]">
                   <RichText data={description} />
                 </div>
               )}

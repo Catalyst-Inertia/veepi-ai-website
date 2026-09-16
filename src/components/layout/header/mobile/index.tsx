@@ -65,15 +65,19 @@ export default function ContainerPageHeaderMobile() {
 
       <AnimatePresence mode="wait">
         {openMenu && (
-          <div
-            className={`fixed w-full h-screen z-50 flex justify-end bg-black-color`}
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={`fixed w-full h-screen z-50 flex justify-end`}
           >
             <motion.div
-              initial={{ x: 400 }}
+              initial={{ x: '100%' }}
               animate={{ x: 0 }}
-              exit={{ x: 400 }}
+              exit={{ x: '100%' }}
               transition={{ duration: 0.3, bounce: true }}
-              className={`w-screen h-screen right-0 relative z-10 flex flex-wrap items-between px-[25px] ${s.slider}`}
+              className={`w-screen h-screen right-0 relative z-10 flex flex-wrap items-between px-[25px] bg-white`}
             >
               <div className="w-full z-10 flex flex-wrap">
                 <div className="w-full">
@@ -90,6 +94,7 @@ export default function ContainerPageHeaderMobile() {
                         fill
                         alt="logo"
                         style={{ objectFit: 'contain' }}
+                        className="brightness-0"
                       />
                     </div>
                     <div
@@ -138,7 +143,7 @@ export default function ContainerPageHeaderMobile() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

@@ -7,6 +7,7 @@ import {
   richTextField,
   uploadField,
   arrayField,
+  selectField,
   actionButtonField,
 } from '../../fields'
 
@@ -37,7 +38,23 @@ export const BlockHeroBlock = {
       label: 'Background Media',
       required: true,
     }),
-    richTextField({ name: 'title', label: 'Title' }),
+    arrayField({
+      name: 'animatedTexts',
+      label: 'Animated Texts',
+      fields: [
+        selectField({
+          name: 'textStyle',
+          label: 'Text Style',
+          options: [
+            { label: 'Heading (Large Serif)', value: 'heading' },
+            { label: 'Description (Small Sans)', value: 'description' },
+          ],
+          defaultValue: 'heading',
+          required: true,
+        }),
+        richTextField({ name: 'text', label: 'Content' }),
+      ],
+    }),
     richTextField({ name: 'description', label: 'Description' }),
     arrayField({
       name: 'logos',

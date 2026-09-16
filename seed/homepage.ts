@@ -5,19 +5,13 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { Page } from '../src/payload-types'
 import type { BlockHeroBlock } from '../src/payload-types'
-import {
-  ensureMedia,
-  richTextParagraph,
-  richTextParagraphs,
-  richTextRuns,
-  upsertPage,
-} from './lib'
+import { ensureMedia, richTextParagraph, richTextRuns, upsertPage } from './lib'
 
 // Homepage section copy. Deliberately decoupled from src/data/homepage
 // (frontend fallback copy): this module owns the copy the homepage seed
 // writes, so frontend copy edits cannot silently drift seeded CMS content.
 const homeHero = (
-  title: BlockHeroBlock['title'],
+  animatedTexts: BlockHeroBlock['animatedTexts'],
   description: string,
   backgroundMedia: string,
   actionButton: { label: string; href: string },
@@ -25,7 +19,7 @@ const homeHero = (
 ): BlockHeroBlock => ({
   identifier: 'block-hero',
   backgroundMedia,
-  title,
+  animatedTexts,
   description: richTextParagraph(description),
   logos: logos.map((logo) => ({ logo })),
   cta: {
@@ -84,13 +78,38 @@ export async function seedHomepage(): Promise<void> {
   if (heroBgId || mastheadId) {
     contents.push(
       homeHero(
-        richTextRuns([
-          [{ text: 'Turn your ' }, { text: 'results', italic: true }],
-          [
-            { text: 'into content\npeople want to ' },
-            { text: 'watch.', italic: true },
-          ],
-        ]),
+        [
+          {
+            textStyle: 'heading',
+            text: richTextRuns([
+              [{ text: 'Turn your ' }, { text: 'results', italic: true }],
+            ]),
+          },
+          {
+            textStyle: 'heading',
+            text: richTextRuns([
+              [
+                { text: 'into content\npeople want to ' },
+                { text: 'watch.', italic: true },
+              ],
+            ]),
+          },
+          {
+            textStyle: 'description',
+            text: richTextRuns([
+              [
+                {
+                  text: 'VeePi transforms your existing medical and aesthetic content into premium, social-ready videos — powered by AI and built for your practice.',
+                },
+              ],
+              [
+                {
+                  text: 'From before & after results to treatment imagery, VeePi turns what you already have into creative content designed for Reels, TikTok, YouTube, Stories, and more.',
+                },
+              ],
+            ]),
+          },
+        ],
         'Built for plastic surgeons, dentists, dermatologists, med spas, aesthetic clinics, and medical professionals.',
         heroBgId || mastheadId || '',
         { label: 'Get Started & See How It Works', href: '#contact' },

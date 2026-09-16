@@ -117,6 +117,38 @@ export async function seedHomepage(): Promise<void> {
       ),
     )
   }
+  contents.push({
+    blockType: 'block-faq',
+    identifier: 'block-faq',
+    sectionId: 'faq',
+    title: 'Questions, answered.',
+    questions: [
+      {
+        question: 'What is VeePi?',
+        answer: richTextParagraph(
+          'VeePi transforms your existing medical and aesthetic content into premium, social-ready videos — powered by AI and built for your practice.',
+        ),
+      },
+      {
+        question: 'What kind of content can I create with VeePi?',
+        answer: richTextParagraph(
+          'You can create high-quality, social-ready videos optimized for platforms like TikTok, Instagram Reels, and YouTube Shorts. Our AI turns your existing clinical photos, before-and-afters, and raw footage into engaging, branded video content.',
+        ),
+      },
+      {
+        question: 'Do I need to create new content for VeePi?',
+        answer: richTextParagraph(
+          "No, you don't need to shoot anything new. VeePi is designed to leverage the content you already have—such as treatment photos, clinic imagery, and standard before-and-after shots—and transform them into polished videos.",
+        ),
+      },
+      {
+        question: 'Which medical specialties is VeePi built for?',
+        answer: richTextParagraph(
+          'VeePi is specifically tailored for plastic surgeons, dermatologists, med spas, dentists, and aesthetic clinics. Our platform understands the nuances of medical content and ensures your videos are professional, compliant, and highly engaging.',
+        ),
+      },
+    ],
+  })
 
   const homepage = await upsertPage('homepage', {
     title: 'Homepage',

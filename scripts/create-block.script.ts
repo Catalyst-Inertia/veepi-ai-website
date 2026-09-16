@@ -82,7 +82,7 @@ async function main(): Promise<void> {
   // Thumbnail: copy the public logo asset into the block directory.
   await mkdir(join(blockDir, '_components'), { recursive: true })
   await copyFile(
-    join('public', 'assets', 'images', 'logo.webp'),
+    join('public', 'images', 'logo.png'),
     join(blockDir, 'thumbnail.webp'),
   )
   const schemaContent = `import { readFileSync } from 'node:fs'

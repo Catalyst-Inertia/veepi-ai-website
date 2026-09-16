@@ -59,154 +59,160 @@ export type SupportedTimezones =
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+  | 'Pacific/Fiji'
 
 export interface Config {
   auth: {
-    users: UserAuthOperations;
-  };
-  blocks: {};
+    users: UserAuthOperations
+  }
+  blocks: {}
   collections: {
-    users: User;
-    media: Media;
-    pages: Page;
-    posts: Post;
-    groups: Group;
-    inquiries: Inquiry;
-    'payload-kv': PayloadKv;
-    'payload-locked-documents': PayloadLockedDocument;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
-  };
+    users: User
+    media: Media
+    pages: Page
+    posts: Post
+    groups: Group
+    inquiries: Inquiry
+    'payload-kv': PayloadKv
+    'payload-locked-documents': PayloadLockedDocument
+    'payload-preferences': PayloadPreference
+    'payload-migrations': PayloadMigration
+  }
   collectionsJoins: {
     groups: {
-      posts: 'posts';
-    };
-  };
+      posts: 'posts'
+    }
+  }
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
-    pages: PagesSelect<false> | PagesSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
-    groups: GroupsSelect<false> | GroupsSelect<true>;
-    inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
-  };
+    users: UsersSelect<false> | UsersSelect<true>
+    media: MediaSelect<false> | MediaSelect<true>
+    pages: PagesSelect<false> | PagesSelect<true>
+    posts: PostsSelect<false> | PostsSelect<true>
+    groups: GroupsSelect<false> | GroupsSelect<true>
+    inquiries: InquiriesSelect<false> | InquiriesSelect<true>
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>
+    'payload-locked-documents':
+      | PayloadLockedDocumentsSelect<false>
+      | PayloadLockedDocumentsSelect<true>
+    'payload-preferences':
+      | PayloadPreferencesSelect<false>
+      | PayloadPreferencesSelect<true>
+    'payload-migrations':
+      | PayloadMigrationsSelect<false>
+      | PayloadMigrationsSelect<true>
+  }
   db: {
-    defaultIDType: string;
-  };
-  fallbackLocale: null;
+    defaultIDType: string
+  }
+  fallbackLocale: null
   globals: {
-    header: Header;
-    footer: Footer;
-    config: Config1;
-  };
+    header: Header
+    footer: Footer
+    config: Config1
+  }
   globalsSelect: {
-    header: HeaderSelect<false> | HeaderSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
-    config: ConfigSelect<false> | ConfigSelect<true>;
-  };
-  locale: null;
+    header: HeaderSelect<false> | HeaderSelect<true>
+    footer: FooterSelect<false> | FooterSelect<true>
+    config: ConfigSelect<false> | ConfigSelect<true>
+  }
+  locale: null
   widgets: {
-    collections: CollectionsWidget;
-  };
-  user: User;
+    collections: CollectionsWidget
+  }
+  user: User
   jobs: {
-    tasks: unknown;
-    workflows: unknown;
-  };
+    tasks: unknown
+    workflows: unknown
+  }
 }
 export interface UserAuthOperations {
   forgotPassword: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   login: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   registerFirstUser: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
   unlock: {
-    email: string;
-    password: string;
-  };
+    email: string
+    password: string
+  }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
+  id: string
+  name: string
+  updatedAt: string
+  createdAt: string
+  email: string
+  resetPasswordToken?: string | null
+  resetPasswordExpiration?: string | null
+  salt?: string | null
+  hash?: string | null
+  loginAttempts?: number | null
+  lockUntil?: string | null
   sessions?:
     | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
+        id: string
+        createdAt?: string | null
+        expiresAt: string
       }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
+    | null
+  password?: string | null
+  collection: 'users'
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
-  alt: string;
-  caption?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  id: string
+  alt: string
+  caption?: string | null
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
+  filename?: string | null
+  mimeType?: string | null
+  filesize?: number | null
+  width?: number | null
+  height?: number | null
+  focalX?: number | null
+  focalY?: number | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
-  title: string;
+  id: string
+  title: string
   /**
    * Marks this page as the site homepage (served at /). Only one page can be the homepage; checking it clears the flag on every other page.
    */
-  isHomepage?: boolean | null;
-  slug: string;
+  isHomepage?: boolean | null
+  slug: string
   seo?: {
-    title?: string | null;
-    description?: string | null;
+    title?: string | null
+    description?: string | null
     /**
      * Comma-separated
      */
-    keywords?: string | null;
-    og_image?: (string | null) | Media;
-  };
-  contents?: BlockHeroBlock[] | null;
-  updatedAt: string;
-  createdAt: string;
+    keywords?: string | null
+    og_image?: (string | null) | Media
+  }
+  contents?: BlockHeroBlock[] | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -216,135 +222,142 @@ export interface BlockHeroBlock {
   /**
    * Block-type identifier — distinguishes this block from other block types.
    */
-  identifier?: string | null;
+  identifier?: string | null
   /**
    * Unique anchor for this section. Auto-generated, but you can override it.
    */
-  sectionId?: string | null;
-  backgroundMedia: string | Media;
+  sectionId?: string | null
+  backgroundMedia: string | Media
   animatedTexts?:
     | {
-        textStyle: 'heading' | 'description';
+        textStyle: 'heading' | 'description'
         text?: {
           root: {
-            type: string;
+            type: string
             children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        id?: string | null;
+              type: any
+              version: number
+              [k: string]: unknown
+            }[]
+            direction: ('ltr' | 'rtl') | null
+            format:
+              | 'left'
+              | 'start'
+              | 'center'
+              | 'right'
+              | 'end'
+              | 'justify'
+              | ''
+            indent: number
+            version: number
+          }
+          [k: string]: unknown
+        } | null
+        id?: string | null
       }[]
-    | null;
+    | null
   description?: {
     root: {
-      type: string;
+      type: string
       children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  } | null
   logos?:
     | {
-        logo: string | Media;
-        id?: string | null;
+        logo: string | Media
+        id?: string | null
       }[]
-    | null;
+    | null
   cta: {
-    label: string;
+    label: string
     /**
      * Internal links point to Pages or Posts; external links use a full URL or scheme.
      */
-    type: 'internal' | 'external';
+    type: 'internal' | 'external'
     /**
      * Pick a Page or Post. Required when Link Type is "internal".
      */
     internalUrl?:
       | ({
-          relationTo: 'pages';
-          value: string | Page;
+          relationTo: 'pages'
+          value: string | Page
         } | null)
       | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
+          relationTo: 'posts'
+          value: string | Post
+        } | null)
     /**
      * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
      */
-    sectionId?: string | null;
+    sectionId?: string | null
     /**
      * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
      */
-    externalUrl?: string | null;
-    target?: ('_self' | '_blank') | null;
+    externalUrl?: string | null
+    target?: ('_self' | '_blank') | null
     /**
      * Computed: internal references resolve to their public path.
      */
-    url?: string | null;
+    url?: string | null
     /**
      * Computed from "Open Link In".
      */
-    newTab?: boolean | null;
-    variant?: ('primary' | 'secondary' | 'link') | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'block-hero';
+    newTab?: boolean | null
+    variant?: ('primary' | 'secondary' | 'link') | null
+  }
+  id?: string | null
+  blockName?: string | null
+  blockType: 'block-hero'
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  group: string | Group;
+  id: string
+  title: string
+  slug: string
+  group: string | Group
   seo?: {
-    title?: string | null;
-    description?: string | null;
+    title?: string | null
+    description?: string | null
     /**
      * Comma-separated
      */
-    keywords?: string | null;
-    og_image?: (string | null) | Media;
-  };
-  contents?: BlockHeroBlock[] | null;
-  updatedAt: string;
-  createdAt: string;
+    keywords?: string | null
+    og_image?: (string | null) | Media
+  }
+  contents?: BlockHeroBlock[] | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "groups".
  */
 export interface Group {
-  id: string;
-  name: string;
+  id: string
+  name: string
   /**
    * Single path segment only (e.g. /projects). Multi-segment prefixes make posts unreachable.
    */
-  prefix: string;
+  prefix: string
   posts?: {
-    docs?: (string | Post)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
+    docs?: (string | Post)[]
+    hasNextPage?: boolean
+    totalDocs?: number
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * Submissions are created via the public API. Creation is disabled in the admin UI (access control).
@@ -353,701 +366,631 @@ export interface Group {
  * via the `definition` "inquiries".
  */
 export interface Inquiry {
-  id: string;
+  id: string
   submission:
     | {
-        [k: string]: unknown;
+        [k: string]: unknown
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null;
+    | null
   metadata: {
-    submittedAt: string;
-    ip?: string | null;
-    userAgent?: string | null;
-    originPath?: string | null;
-    formType?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
+    submittedAt: string
+    ip?: string | null
+    userAgent?: string | null
+    originPath?: string | null
+    formType?: string | null
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
-  key: string;
+  id: string
+  key: string
   data:
     | {
-        [k: string]: unknown;
+        [k: string]: unknown
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null;
+    | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: string
   document?:
     | ({
-        relationTo: 'users';
-        value: string | User;
+        relationTo: 'users'
+        value: string | User
       } | null)
     | ({
-        relationTo: 'media';
-        value: string | Media;
+        relationTo: 'media'
+        value: string | Media
       } | null)
     | ({
-        relationTo: 'pages';
-        value: string | Page;
+        relationTo: 'pages'
+        value: string | Page
       } | null)
     | ({
-        relationTo: 'posts';
-        value: string | Post;
+        relationTo: 'posts'
+        value: string | Post
       } | null)
     | ({
-        relationTo: 'groups';
-        value: string | Group;
+        relationTo: 'groups'
+        value: string | Group
       } | null)
     | ({
-        relationTo: 'inquiries';
-        value: string | Inquiry;
-      } | null);
-  globalSlug?: string | null;
+        relationTo: 'inquiries'
+        value: string | Inquiry
+      } | null)
+  globalSlug?: string | null
   user: {
-    relationTo: 'users';
-    value: string | User;
-  };
-  updatedAt: string;
-  createdAt: string;
+    relationTo: 'users'
+    value: string | User
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: string
   user: {
-    relationTo: 'users';
-    value: string | User;
-  };
-  key?: string | null;
+    relationTo: 'users'
+    value: string | User
+  }
+  key?: string | null
   value?:
     | {
-        [k: string]: unknown;
+        [k: string]: unknown
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
+    | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
-  name?: string | null;
-  batch?: number | null;
-  updatedAt: string;
-  createdAt: string;
+  id: string
+  name?: string | null
+  batch?: number | null
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
+  name?: T
+  updatedAt?: T
+  createdAt?: T
+  email?: T
+  resetPasswordToken?: T
+  resetPasswordExpiration?: T
+  salt?: T
+  hash?: T
+  loginAttempts?: T
+  lockUntil?: T
   sessions?:
     | T
     | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
+        id?: T
+        createdAt?: T
+        expiresAt?: T
+      }
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  caption?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
+  alt?: T
+  caption?: T
+  updatedAt?: T
+  createdAt?: T
+  url?: T
+  thumbnailURL?: T
+  filename?: T
+  mimeType?: T
+  filesize?: T
+  width?: T
+  height?: T
+  focalX?: T
+  focalY?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
-  title?: T;
-  isHomepage?: T;
-  slug?: T;
+  title?: T
+  isHomepage?: T
+  slug?: T
   seo?:
     | T
     | {
-        title?: T;
-        description?: T;
-        keywords?: T;
-        og_image?: T;
-      };
+        title?: T
+        description?: T
+        keywords?: T
+        og_image?: T
+      }
   contents?:
     | T
     | {
-        'block-hero'?: T | BlockHeroBlockSelect<T>;
-      };
-  updatedAt?: T;
-  createdAt?: T;
+        'block-hero'?: T | BlockHeroBlockSelect<T>
+      }
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "BlockHeroBlock_select".
  */
 export interface BlockHeroBlockSelect<T extends boolean = true> {
-  identifier?: T;
-  sectionId?: T;
-  backgroundMedia?: T;
+  identifier?: T
+  sectionId?: T
+  backgroundMedia?: T
   animatedTexts?:
     | T
     | {
-        textStyle?: T;
-        text?: T;
-        id?: T;
-      };
-  description?: T;
+        textStyle?: T
+        text?: T
+        id?: T
+      }
+  description?: T
   logos?:
     | T
     | {
-        logo?: T;
-        id?: T;
-      };
+        logo?: T
+        id?: T
+      }
   cta?:
     | T
     | {
-        label?: T;
-        type?: T;
-        internalUrl?: T;
-        sectionId?: T;
-        externalUrl?: T;
-        target?: T;
-        url?: T;
-        newTab?: T;
-        variant?: T;
-      };
-  id?: T;
-  blockName?: T;
+        label?: T
+        type?: T
+        internalUrl?: T
+        sectionId?: T
+        externalUrl?: T
+        target?: T
+        url?: T
+        newTab?: T
+        variant?: T
+      }
+  id?: T
+  blockName?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  group?: T;
+  title?: T
+  slug?: T
+  group?: T
   seo?:
     | T
     | {
-        title?: T;
-        description?: T;
-        keywords?: T;
-        og_image?: T;
-      };
+        title?: T
+        description?: T
+        keywords?: T
+        og_image?: T
+      }
   contents?:
     | T
     | {
-        'block-hero'?: T | BlockHeroBlockSelect<T>;
-      };
-  updatedAt?: T;
-  createdAt?: T;
+        'block-hero'?: T | BlockHeroBlockSelect<T>
+      }
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "groups_select".
  */
 export interface GroupsSelect<T extends boolean = true> {
-  name?: T;
-  prefix?: T;
-  posts?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  name?: T
+  prefix?: T
+  posts?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "inquiries_select".
  */
 export interface InquiriesSelect<T extends boolean = true> {
-  submission?: T;
+  submission?: T
   metadata?:
     | T
     | {
-        submittedAt?: T;
-        ip?: T;
-        userAgent?: T;
-        originPath?: T;
-        formType?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
+        submittedAt?: T
+        ip?: T
+        userAgent?: T
+        originPath?: T
+        formType?: T
+      }
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
-  key?: T;
-  data?: T;
+  key?: T
+  data?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T;
-  globalSlug?: T;
-  user?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  document?: T
+  globalSlug?: T
+  user?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T;
-  key?: T;
-  value?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  user?: T
+  key?: T
+  value?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T;
-  batch?: T;
-  updatedAt?: T;
-  createdAt?: T;
+  name?: T
+  batch?: T
+  updatedAt?: T
+  createdAt?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
-  id: string;
-  logo?: (string | null) | Media;
+  id: string
+  logo?: (string | null) | Media
   /**
    * Navigation links: pick an internal Page or Post, or enter an external URL.
    */
   nav?:
     | {
-        label: string;
+        label: string
         /**
          * Internal links point to Pages or Posts; external links use a full URL or scheme.
          */
-        type: 'internal' | 'external';
+        type: 'internal' | 'external'
         /**
          * Pick a Page or Post. Required when Link Type is "internal".
          */
         internalUrl?:
           | ({
-              relationTo: 'pages';
-              value: string | Page;
+              relationTo: 'pages'
+              value: string | Page
             } | null)
           | ({
-              relationTo: 'posts';
-              value: string | Post;
-            } | null);
+              relationTo: 'posts'
+              value: string | Post
+            } | null)
         /**
          * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
          */
-        sectionId?: string | null;
+        sectionId?: string | null
         /**
          * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
          */
-        externalUrl?: string | null;
-        target?: ('_self' | '_blank') | null;
+        externalUrl?: string | null
+        target?: ('_self' | '_blank') | null
         /**
          * Computed: internal references resolve to their public path.
          */
-        url?: string | null;
+        url?: string | null
         /**
          * Computed from "Open Link In".
          */
-        newTab?: boolean | null;
-        id?: string | null;
+        newTab?: boolean | null
+        id?: string | null
       }[]
-    | null;
+    | null
   /**
    * Uncheck to hide the call-to-action button entirely.
    */
-  showCta?: boolean | null;
+  showCta?: boolean | null
   /**
    * Primary call-to-action link: internal Page/Post or external URL.
    */
   cta?: {
-    label: string;
+    label: string
     /**
      * Internal links point to Pages or Posts; external links use a full URL or scheme.
      */
-    type: 'internal' | 'external';
+    type: 'internal' | 'external'
     /**
      * Pick a Page or Post. Required when Link Type is "internal".
      */
     internalUrl?:
       | ({
-          relationTo: 'pages';
-          value: string | Page;
+          relationTo: 'pages'
+          value: string | Page
         } | null)
       | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
+          relationTo: 'posts'
+          value: string | Post
+        } | null)
     /**
      * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
      */
-    sectionId?: string | null;
+    sectionId?: string | null
     /**
      * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
      */
-    externalUrl?: string | null;
-    target?: ('_self' | '_blank') | null;
+    externalUrl?: string | null
+    target?: ('_self' | '_blank') | null
     /**
      * Computed: internal references resolve to their public path.
      */
-    url?: string | null;
+    url?: string | null
     /**
      * Computed from "Open Link In".
      */
-    newTab?: boolean | null;
-    id?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
+    newTab?: boolean | null
+    id?: string | null
+  }
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: string;
-  logo?: (string | null) | Media;
-  background?: (string | null) | Media;
+  id: string
+  logo?: (string | null) | Media
   /**
    * Footer links: internal Page/Post or external URL.
    */
   links?:
     | {
-        label: string;
+        label: string
         /**
          * Internal links point to Pages or Posts; external links use a full URL or scheme.
          */
-        type: 'internal' | 'external';
+        type: 'internal' | 'external'
         /**
          * Pick a Page or Post. Required when Link Type is "internal".
          */
         internalUrl?:
           | ({
-              relationTo: 'pages';
-              value: string | Page;
+              relationTo: 'pages'
+              value: string | Page
             } | null)
           | ({
-              relationTo: 'posts';
-              value: string | Post;
-            } | null);
+              relationTo: 'posts'
+              value: string | Post
+            } | null)
         /**
          * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
          */
-        sectionId?: string | null;
+        sectionId?: string | null
         /**
          * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
          */
-        externalUrl?: string | null;
-        target?: ('_self' | '_blank') | null;
+        externalUrl?: string | null
+        target?: ('_self' | '_blank') | null
         /**
          * Computed: internal references resolve to their public path.
          */
-        url?: string | null;
+        url?: string | null
         /**
          * Computed from "Open Link In".
          */
-        newTab?: boolean | null;
-        id?: string | null;
+        newTab?: boolean | null
+        id?: string | null
       }[]
-    | null;
+    | null
   socials?:
     | {
-        platform?: ('x' | 'instagram' | 'linkedin' | 'facebook' | 'youtube' | 'tiktok') | null;
+        platform?:
+          | ('x' | 'instagram' | 'linkedin' | 'facebook' | 'youtube' | 'tiktok')
+          | null
         /**
          * Social profile link (usually external, e.g. https://instagram.com/…). Label is used as accessibility text.
          */
         link: {
-          label: string;
+          label: string
           /**
            * Internal links point to Pages or Posts; external links use a full URL or scheme.
            */
-          type: 'internal' | 'external';
+          type: 'internal' | 'external'
           /**
            * Pick a Page or Post. Required when Link Type is "internal".
            */
           internalUrl?:
             | ({
-                relationTo: 'pages';
-                value: string | Page;
+                relationTo: 'pages'
+                value: string | Page
               } | null)
             | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
+                relationTo: 'posts'
+                value: string | Post
+              } | null)
           /**
            * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
            */
-          sectionId?: string | null;
+          sectionId?: string | null
           /**
            * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
            */
-          externalUrl?: string | null;
-          target?: ('_self' | '_blank') | null;
+          externalUrl?: string | null
+          target?: ('_self' | '_blank') | null
           /**
            * Computed: internal references resolve to their public path.
            */
-          url?: string | null;
+          url?: string | null
           /**
            * Computed from "Open Link In".
            */
-          newTab?: boolean | null;
-          id?: string | null;
-        };
-        id?: string | null;
+          newTab?: boolean | null
+          id?: string | null
+        }
+        id?: string | null
       }[]
-    | null;
-  copyright?: string | null;
-  heading?: string | null;
+    | null
+  copyright?: string | null
+  heading?: string | null
   intro?: {
     root: {
-      type: string;
+      type: string
       children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Uncheck to hide the call-to-action button entirely.
-   */
-  showCta?: boolean | null;
-  /**
-   * Footer call-to-action link: internal Page/Post or external URL.
-   */
-  cta?: {
-    label: string;
-    /**
-     * Internal links point to Pages or Posts; external links use a full URL or scheme.
-     */
-    type: 'internal' | 'external';
-    /**
-     * Pick a Page or Post. Required when Link Type is "internal".
-     */
-    internalUrl?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
-    /**
-     * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
-     */
-    sectionId?: string | null;
-    /**
-     * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
-     */
-    externalUrl?: string | null;
-    target?: ('_self' | '_blank') | null;
-    /**
-     * Computed: internal references resolve to their public path.
-     */
-    url?: string | null;
-    /**
-     * Computed from "Open Link In".
-     */
-    newTab?: boolean | null;
-    id?: string | null;
-  };
-  sectionLabels?: {
-    links?: string | null;
-    contact?: string | null;
-  };
-  contact?:
-    | {
-        icon: 'phone' | 'mail' | 'location';
-        label: string;
-        id?: string | null;
+        type: any
+        version: number
+        [k: string]: unknown
       }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  } | null
+  subscribe?: {
+    placeholder?: string | null
+    buttonLabel?: string | null
+    note?: string | null
+  }
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "config".
  */
 export interface Config1 {
-  id: string;
+  id: string
   cache?: {
-    lastRevalidatedAt?: string | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
+    lastRevalidatedAt?: string | null
+  }
+  updatedAt?: string | null
+  createdAt?: string | null
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  logo?: T;
+  logo?: T
   nav?:
     | T
     | {
-        label?: T;
-        type?: T;
-        internalUrl?: T;
-        sectionId?: T;
-        externalUrl?: T;
-        target?: T;
-        url?: T;
-        newTab?: T;
-        id?: T;
-      };
-  showCta?: T;
+        label?: T
+        type?: T
+        internalUrl?: T
+        sectionId?: T
+        externalUrl?: T
+        target?: T
+        url?: T
+        newTab?: T
+        id?: T
+      }
+  showCta?: T
   cta?:
     | T
     | {
-        label?: T;
-        type?: T;
-        internalUrl?: T;
-        sectionId?: T;
-        externalUrl?: T;
-        target?: T;
-        url?: T;
-        newTab?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        label?: T
+        type?: T
+        internalUrl?: T
+        sectionId?: T
+        externalUrl?: T
+        target?: T
+        url?: T
+        newTab?: T
+        id?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  logo?: T;
-  background?: T;
+  logo?: T
   links?:
     | T
     | {
-        label?: T;
-        type?: T;
-        internalUrl?: T;
-        sectionId?: T;
-        externalUrl?: T;
-        target?: T;
-        url?: T;
-        newTab?: T;
-        id?: T;
-      };
+        label?: T
+        type?: T
+        internalUrl?: T
+        sectionId?: T
+        externalUrl?: T
+        target?: T
+        url?: T
+        newTab?: T
+        id?: T
+      }
   socials?:
     | T
     | {
-        platform?: T;
+        platform?: T
         link?:
           | T
           | {
-              label?: T;
-              type?: T;
-              internalUrl?: T;
-              sectionId?: T;
-              externalUrl?: T;
-              target?: T;
-              url?: T;
-              newTab?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  copyright?: T;
-  heading?: T;
-  intro?: T;
-  showCta?: T;
-  cta?:
+              label?: T
+              type?: T
+              internalUrl?: T
+              sectionId?: T
+              externalUrl?: T
+              target?: T
+              url?: T
+              newTab?: T
+              id?: T
+            }
+        id?: T
+      }
+  copyright?: T
+  heading?: T
+  intro?: T
+  subscribe?:
     | T
     | {
-        label?: T;
-        type?: T;
-        internalUrl?: T;
-        sectionId?: T;
-        externalUrl?: T;
-        target?: T;
-        url?: T;
-        newTab?: T;
-        id?: T;
-      };
-  sectionLabels?:
-    | T
-    | {
-        links?: T;
-        contact?: T;
-      };
-  contact?:
-    | T
-    | {
-        icon?: T;
-        label?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        placeholder?: T
+        buttonLabel?: T
+        note?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1057,11 +1000,11 @@ export interface ConfigSelect<T extends boolean = true> {
   cache?:
     | T
     | {
-        lastRevalidatedAt?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+        lastRevalidatedAt?: T
+      }
+  updatedAt?: T
+  createdAt?: T
+  globalType?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1069,18 +1012,17 @@ export interface ConfigSelect<T extends boolean = true> {
  */
 export interface CollectionsWidget {
   data?: {
-    [k: string]: unknown;
-  };
-  width: 'full';
+    [k: string]: unknown
+  }
+  width: 'full'
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown;
+  [k: string]: unknown
 }
-
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}

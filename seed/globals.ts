@@ -21,10 +21,7 @@ export async function seedGlobals(): Promise<void> {
     extLink('Blogs', '/#blogs'),
   ]
   const logoId = await ensureMedia('logo-white.webp', 'Catatia logo')
-  const backgroundId = await ensureMedia(
-    'footer-bg.webp',
-    'Catatia footer background',
-  )
+  const footerLogoId = await ensureMedia('veepi-logo.svg', 'VeePi logo')
 
   await payload.updateGlobal({
     slug: 'header',
@@ -39,43 +36,35 @@ export async function seedGlobals(): Promise<void> {
   await payload.updateGlobal({
     slug: 'footer',
     data: {
-      ...(logoId ? { logo: logoId } : {}),
-      ...(backgroundId ? { background: backgroundId } : {}),
-      heading: 'Let’s collaborate!',
+      ...(footerLogoId ? { logo: footerLogoId } : {}),
+      heading: 'Stay in the loop.',
       intro: richTextParagraph(
-        'This is no mere website—it’s a gateway to digital sorcery, crafted with the mystical magic of CATATIA. Together, let’s forge a partnership and conjure extraordinary creations that defy the ordinary!',
+        'AI-powered creative content for medical & aesthetic professionals.',
       ),
-      cta: extLink('Reach Out', WHATSAPP_URL),
-      sectionLabels: { links: 'The Magic Atlas', contact: 'Portal Key' },
+      subscribe: {
+        placeholder: 'e.g. youremail@email.com',
+        buttonLabel: 'Subscribe',
+        note: 'No spam. Just useful creative inspiration.',
+      },
       links: [
-        extLink('Project', '/#project'),
-        extLink('About', '/#about'),
-        extLink('Services', '/#services'),
-        extLink('Contact', '/#contact'),
-        extLink('FAQ', '/#faq'),
-        extLink('Blog', '/#blog'),
+        extLink('Privacy Policy', '/privacy-policy'),
+        extLink('Terms of Service', '/terms-of-service'),
       ],
       socials: [
-        { platform: 'tiktok', link: extLink('TikTok', 'https://tiktok.com') },
         {
-          platform: 'facebook',
-          link: extLink('Facebook', 'https://facebook.com'),
+          platform: 'linkedin',
+          link: extLink('LinkedIn', 'https://www.linkedin.com'),
         },
         {
           platform: 'instagram',
-          link: extLink('Instagram', 'https://instagram.com'),
+          link: extLink('Instagram', 'https://www.instagram.com'),
         },
         {
-          platform: 'linkedin',
-          link: extLink('LinkedIn', 'https://linkedin.com'),
+          platform: 'tiktok',
+          link: extLink('TikTok', 'https://www.tiktok.com'),
         },
       ],
-      contact: [
-        { icon: 'phone', label: '+62 823 - 4092 - 1249' },
-        { icon: 'mail', label: 'hello@catatia.com' },
-        { icon: 'location', label: 'Jl Padma Gg. Jaya Raya No.7' },
-      ],
-      copyright: '© 2025 Catatia All right reserved',
+      copyright: '© 2026 VeePi. All rights reserved.',
     },
   })
   console.log('Global footer updated')

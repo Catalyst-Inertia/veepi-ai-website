@@ -6,7 +6,6 @@ import {
   linkField,
   textField,
   richTextField,
-  checkboxField,
   arrayField,
   groupField,
   selectField,
@@ -21,7 +20,6 @@ export const footer: GlobalConfig = {
   },
   fields: [
     uploadField('logo', { label: 'Logo' }),
-    uploadField('background', { label: 'Background Image' }),
     groupLinkField({
       name: 'links',
       label: 'Links',
@@ -54,46 +52,13 @@ export const footer: GlobalConfig = {
     textField({ name: 'copyright', label: 'Copyright' }),
     textField({ name: 'heading', label: 'Heading' }),
     richTextField({ name: 'intro', label: 'Intro Paragraph' }),
-    checkboxField({
-      name: 'showCta',
-      label: 'Show Call to Action',
-      defaultValue: true,
-      admin: {
-        description: 'Uncheck to hide the call-to-action button entirely.',
-      },
-    }),
-    linkField({
-      name: 'cta',
-      label: 'Call to Action',
-      admin: {
-        condition: (_, siblingData) => siblingData?.showCta !== false,
-        description:
-          'Footer call-to-action link: internal Page/Post or external URL.',
-      },
-    }),
     groupField({
-      name: 'sectionLabels',
-      label: 'Column Titles',
+      name: 'subscribe',
+      label: 'Subscription Form',
       fields: [
-        textField({ name: 'links', label: 'Links Column Title' }),
-        textField({ name: 'contact', label: 'Contact Column Title' }),
-      ],
-    }),
-    arrayField({
-      name: 'contact',
-      label: 'Contact Details',
-      fields: [
-        selectField({
-          name: 'icon',
-          label: 'Icon',
-          required: true,
-          options: [
-            { label: 'Phone', value: 'phone' },
-            { label: 'Mail', value: 'mail' },
-            { label: 'Location', value: 'location' },
-          ],
-        }),
-        textField({ name: 'label', label: 'Label', required: true }),
+        textField({ name: 'placeholder', label: 'Input Placeholder' }),
+        textField({ name: 'buttonLabel', label: 'Button Label' }),
+        textField({ name: 'note', label: 'Note Under Form' }),
       ],
     }),
   ],

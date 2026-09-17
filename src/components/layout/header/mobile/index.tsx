@@ -1,7 +1,6 @@
 import BoxContainer from '@/components/container/boxed'
 import { BurgerMenuIcon } from '@/components/icon/burger-menu'
 import { PageNavigationData } from '@/data/page-navigation'
-import { SocialMediaFooterData } from '@/data/social-media-footer'
 import { useScrollDetection } from '@/hooks/ui/scroll-detection'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -131,13 +130,7 @@ export default function ContainerPageHeaderMobile() {
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-8">
-                      {SocialMediaFooterData.map((item) => (
-                        <div key={item.key}>
-                          <a href={item.url} target="_blank">
-                            {item.icon}
-                          </a>
-                        </div>
-                      ))}
+                      {/* Social links removed; to be driven by CMS globally */}
                     </div>
                   </div>
                 </div>

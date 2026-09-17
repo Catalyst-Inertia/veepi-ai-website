@@ -41,12 +41,17 @@ export default function ContentsBlockFaq({
             <svg
               width="14"
               height="14"
-              viewBox="0 0 14 14"
+              viewBox="0 0 24 24"
               fill="none"
+              stroke="#FBF2E9"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <circle cx="7" cy="7" r="6.5" stroke="#FBF2E9" strokeWidth="1" />
-              <circle cx="7" cy="7" r="2.5" stroke="#FBF2E9" strokeWidth="1" />
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <path d="M12 17h.01" />
             </svg>
           </div>
           <span className="font-text text-[10px] font-extrabold uppercase tracking-[8px] text-[#372B34]">
@@ -70,12 +75,27 @@ export default function ContentsBlockFaq({
             <button
               key={key}
               type="button"
-              className="flex w-full items-center gap-6 border-b border-[#372B34] py-8 text-left md:gap-16"
+              className={`group relative flex w-full items-center gap-6 border-b py-8 text-left transition-colors duration-300 md:gap-16 ${
+                open
+                  ? 'border-transparent'
+                  : 'border-[#372B34] hover:border-transparent'
+              }`}
               aria-expanded={open}
               onClick={() => toggle(key)}
             >
+              <div
+                className={`absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-[#C05EC4] to-[#F0876B] transition-opacity duration-300 ${
+                  open ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                }`}
+              />
               <div className="flex grow flex-col">
-                <span className="font-title text-[28px] leading-[1] text-[#372B34] md:text-[48px]">
+                <span
+                  className={`font-title text-[28px] leading-[1] transition-all duration-300 ${
+                    open
+                      ? 'text-[#C05EC4] md:text-[32px]'
+                      : 'text-[#372B34] md:text-[48px] bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#C05EC4] group-hover:to-[#F0876B] group-hover:text-transparent'
+                  }`}
+                >
                   {item.question}
                 </span>
 
@@ -95,7 +115,11 @@ export default function ContentsBlockFaq({
 
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
                 <div
-                  className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+                  className={`transition-all duration-300 ${
+                    open
+                      ? 'rotate-180 text-[#F0876B]'
+                      : 'text-[#372B34] group-hover:text-[#F0876B]'
+                  }`}
                 >
                   <svg
                     width="24"
@@ -106,7 +130,7 @@ export default function ContentsBlockFaq({
                   >
                     <path
                       d="M6 9L12 15L18 9"
-                      stroke="#372B34"
+                      stroke="currentColor"
                       strokeWidth="1"
                       strokeLinecap="round"
                       strokeLinejoin="round"

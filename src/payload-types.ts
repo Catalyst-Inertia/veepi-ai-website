@@ -210,7 +210,7 @@ export interface Page {
     keywords?: string | null
     og_image?: (string | null) | Media
   }
-  contents?: BlockHeroBlock[] | null
+  contents?: (BlockHeroBlock | BlockFaqBlock)[] | null
   updatedAt: string
   createdAt: string
 }
@@ -336,7 +336,7 @@ export interface Post {
     keywords?: string | null
     og_image?: (string | null) | Media
   }
-  contents?: BlockHeroBlock[] | null
+  contents?: (BlockHeroBlock | BlockFaqBlock)[] | null
   updatedAt: string
   createdAt: string
 }
@@ -584,6 +584,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         'block-hero'?: T | BlockHeroBlockSelect<T>
+        'block-faq'?: T | BlockFaqBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T
@@ -664,6 +665,7 @@ export interface PostsSelect<T extends boolean = true> {
     | T
     | {
         'block-hero'?: T | BlockHeroBlockSelect<T>
+        'block-faq'?: T | BlockFaqBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T

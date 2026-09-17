@@ -29,6 +29,89 @@ const homeHero = (
   },
   blockType: 'block-hero',
 })
+import type { BlockPricingBlock } from '../src/payload-types'
+
+export const buildPricingBlock = (): BlockPricingBlock => ({
+  identifier: 'block-pricing',
+  blockType: 'block-pricing',
+  sectionId: 'pricing',
+  title: 'Create more.\nStay visible.',
+  tagLabel: 'SUBSCRIPTION',
+  tagline: richTextParagraph('Choose the plan that fits your practice.'),
+  description: richTextParagraph(
+    "Whether you're building your personal brand, promoting multiple treatments, or creating content at scale, VeePi gives your team access to an evolving library of creative possibilities.",
+  ),
+  logos: [],
+  plans: [
+    {
+      planName: 'Essential',
+      tagline: richTextParagraph(
+        'For practices getting started with AI-powered content.',
+      ),
+      description: richTextParagraph(
+        'A focused way to turn your existing results into polished social content.',
+      ),
+      includesLabel: 'Includes',
+      includes: [
+        { item: 'Access to VeePi creative concepts' },
+        { item: 'AI-generated social video content' },
+        { item: 'Multiple social formats' },
+        { item: 'Creative direction built for medical content' },
+        { item: 'Content creation workflow' },
+        { item: 'Concept discovery' },
+      ],
+      cta: {
+        label: 'CONTACT VEEPI',
+        type: 'external',
+        externalUrl: '#contact',
+        variant: 'primary',
+      },
+    },
+    {
+      planName: 'Professional',
+      tagline: richTextParagraph('For practices ready to create consistently.'),
+      description: richTextParagraph(
+        'A more flexible content engine for practices with an active social presence.',
+      ),
+      includesLabel: 'Includes',
+      includes: [
+        { item: 'Everything in Essential' },
+        { item: 'Expanded creative possibilities' },
+        { item: 'Multiple content formats' },
+        { item: 'Broader specialty and content categories' },
+        { item: 'Ongoing access to new creative concepts' },
+        { item: 'Built for consistent social content production' },
+      ],
+      cta: {
+        label: 'CONTACT VEEPI',
+        type: 'external',
+        externalUrl: '#contact',
+        variant: 'primary',
+      },
+    },
+    {
+      planName: 'Custom',
+      tagline: richTextParagraph('For practices and teams creating at scale.'),
+      description: richTextParagraph(
+        'A tailored VeePi setup built around your content needs and workflow.',
+      ),
+      includesLabel: 'Includes',
+      includes: [
+        { item: 'Everything in Professional' },
+        { item: 'Custom content requirements' },
+        { item: 'Scalable creative production' },
+        { item: 'Tailored consultation' },
+        { item: 'Practice-specific content strategy' },
+      ],
+      cta: {
+        label: 'CONTACT VEEPI',
+        type: 'external',
+        externalUrl: '#contact',
+        variant: 'primary',
+      },
+    },
+  ],
+})
 
 export async function seedHomepage(): Promise<void> {
   // Upload section media (webm videos where available), then compose the
@@ -44,7 +127,7 @@ export async function seedHomepage(): Promise<void> {
     const bgBuf = await readFile(
       join(process.cwd(), 'public/videos/veepi-bg.webm'),
     )
-    const bgCreated = await payload.create({
+    await payload.create({
       collection: 'media',
       data: { alt: 'Hero BG Video' },
       file: {
@@ -54,7 +137,6 @@ export async function seedHomepage(): Promise<void> {
         size: bgBuf.length,
       },
     })
-    heroBgId = String(bgCreated.id)
 
     const logosBuf = await readFile(
       join(process.cwd(), 'public/partner-logos.svg'),
@@ -116,6 +198,35 @@ export async function seedHomepage(): Promise<void> {
         [partnerLogosId || mastheadId || ''],
       ),
     )
+  }
+  const pricingBlock = buildPricingBlock()
+  if (partnerLogosId) {
+    pricingBlock.logos = [
+      { logo: partnerLogosId },
+      { logo: partnerLogosId },
+      { logo: partnerLogosId },
+    ]
+  } else {
+    pricingBlock.logos = []
+  }
+  contents.push(pricingBlock)
+
+  // Preserve existing blocks after pricing (e.g. FAQ)
+  try {
+    const existingHomepage = await payload.find({
+      collection: 'pages',
+      where: { isHomepage: { equals: true } },
+      limit: 1,
+      depth: 0,
+    })
+    if (existingHomepage.docs.length > 0 && existingHomepage.docs[0].contents) {
+      const existingBlocks = existingHomepage.docs[0].contents.filter(
+        (b) => b.blockType !== 'block-hero' && b.blockType !== 'block-pricing',
+      )
+      contents.push(...existingBlocks)
+    }
+  } catch (e) {
+    console.error('Failed to fetch existing homepage to preserve blocks', e)
   }
 
   const homepage = await upsertPage('homepage', {

@@ -82,11 +82,12 @@ async function main(): Promise<void> {
   // Thumbnail: copy the public logo asset into the block directory.
   await mkdir(join(blockDir, '_components'), { recursive: true })
   await copyFile(
-    join('public', 'assets', 'images', 'logo.webp'),
+    join('public', 'images', 'logo.png'),
     join(blockDir, 'thumbnail.webp'),
   )
   const schemaContent = `import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import type { Block } from 'payload'
 import { identifierField, sectionIdField, textField } from '../../fields'
 
@@ -95,8 +96,11 @@ import { identifierField, sectionIdField, textField } from '../../fields'
 // source of truth for the slug — components never duplicate the literal).
 export const IDENTIFIER = '${slug}' as const
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 const thumbnailUrl = \`data:image/webp;base64,\${readFileSync(
-  join(process.cwd(), 'src/payload/schema/blocks/${slug}/thumbnail.webp'),
+  join(__dirname, 'thumbnail.webp'),
   'base64',
 )}\`
 

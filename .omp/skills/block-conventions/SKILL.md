@@ -28,8 +28,11 @@ description: Rules and conventions for building Payload CMS blocks in this repo 
 - Schema references it via base64 data URI:
 
   ```ts
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = dirname(__filename)
+
   const thumbnailUrl = `data:image/webp;base64,${readFileSync(
-    join(process.cwd(), 'src/payload/schema/blocks/<name>/thumbnail.webp'),
+    join(__dirname, 'thumbnail.webp'),
     'base64',
   )}`
   ```

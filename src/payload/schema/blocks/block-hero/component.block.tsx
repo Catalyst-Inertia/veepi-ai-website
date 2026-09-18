@@ -73,6 +73,7 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
 
   return (
     <section
+      data-is-hero="true"
       id={id}
       ref={sectionRef}
       className="bg-black-color relative w-full h-screen overflow-hidden flex flex-col"

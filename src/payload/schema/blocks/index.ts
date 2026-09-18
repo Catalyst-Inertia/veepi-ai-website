@@ -3,6 +3,11 @@
 // and kept in sync by scripts/rename-block.ts (bun run rename:block).
 import type { Block } from 'payload'
 import { BlockHeroBlock } from './block-hero/schema.block'
+import { BlockPricingBlock } from './block-pricing/schema.block'
 import { BlockFaqBlock } from './block-faq/schema.block'
 
-export const allBlocks: Block[] = [BlockHeroBlock, BlockFaqBlock]
+export const allBlocks: Block[] = [
+  BlockHeroBlock,
+  BlockPricingBlock,
+  BlockFaqBlock,
+]

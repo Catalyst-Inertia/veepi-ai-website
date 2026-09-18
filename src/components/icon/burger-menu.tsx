@@ -14,7 +14,11 @@ const IconSvg = () => (
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M1 1H9M1 5H9M1 9H9" stroke="#FDFDFD" strokeLinecap="round" />
+      <path
+        d="M1 1H9M1 5H9M1 9H9"
+        stroke="currentColor"
+        strokeLinecap="round"
+      />
     </svg>
   </>
 )

@@ -9,14 +9,13 @@ import { useScrollDetection } from '@/hooks/ui/scroll-detection'
 
 export default function ContainerPageHeaderDesktop() {
   const router = useRouter()
-
-  const { withBackground } = useScrollDetection()
+  const { withBackground, isLight } = useScrollDetection()
 
   return (
     <>
       <AnimatePresence key={'header-animation'} mode="sync">
         <motion.header
-          className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? 'bg-black-color drop-shadow-lg' : 'bg-transparent'} min-h-[80px] flex items-center`}
+          className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? (isLight ? 'drop-shadow-lg' : 'bg-black-color drop-shadow-lg') : 'bg-transparent'} min-h-[80px] flex items-center`}
           initial={{ y: 0 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.3 }}
@@ -30,13 +29,15 @@ export default function ContainerPageHeaderDesktop() {
                 }}
               >
                 <Image
-                  src={'/veepi-logo.svg'}
+                  src={isLight ? '/veepi-logo-black.svg' : '/veepi-logo.svg'}
                   fill
                   alt="logo"
                   style={{ objectFit: 'contain' }}
                 />
               </div>
-              <div className="flex flex-wrap gap-[41px] font-text text-[12px] leading-none uppercase text-[#FBF2E9]">
+              <div
+                className={`flex flex-wrap gap-[41px] font-text text-[12px] leading-none uppercase ${isLight ? 'text-black font-bold' : 'text-[#FBF2E9]'}`}
+              >
                 {PageNavigationData.map((item) => (
                   <div
                     key={item.key}

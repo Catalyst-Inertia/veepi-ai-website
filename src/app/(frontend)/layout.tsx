@@ -3,6 +3,7 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import '@/styles/global.scss'
 
 import GlobalProvider from '@/components/container/global-provider'
+import SmoothScroll from '@/components/container/smooth-scroll'
 import MainContainer from '@/components/layout'
 import { LivePreviewRefresh } from '@/components/live-preview/refresh-route'
 import { SITE_NAME } from '@/utils/metadata-page-builder'
@@ -31,9 +32,11 @@ export default async function FrontendLayout({
       <GoogleTagManager gtmId="GTM-WGM9DSKB" />
       <body suppressHydrationWarning>
         <LivePreviewRefresh />
-        <GlobalProvider>
-          <MainContainer>{children}</MainContainer>
-        </GlobalProvider>
+        <SmoothScroll>
+          <GlobalProvider>
+            <MainContainer>{children}</MainContainer>
+          </GlobalProvider>
+        </SmoothScroll>
       </body>
     </html>
   )

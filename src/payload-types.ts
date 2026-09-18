@@ -228,21 +228,34 @@ export interface BlockHeroBlock {
    */
   sectionId?: string | null
   backgroundMedia: string | Media
-  title?: {
-    root: {
-      type: string
-      children: {
-        type: any
-        version: number
-        [k: string]: unknown
+  animatedTexts?:
+    | {
+        textStyle: 'heading' | 'description'
+        text?: {
+          root: {
+            type: string
+            children: {
+              type: any
+              version: number
+              [k: string]: unknown
+            }[]
+            direction: ('ltr' | 'rtl') | null
+            format:
+              | 'left'
+              | 'start'
+              | 'center'
+              | 'right'
+              | 'end'
+              | 'justify'
+              | ''
+            indent: number
+            version: number
+          }
+          [k: string]: unknown
+        } | null
+        id?: string | null
       }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  } | null
+    | null
   description?: {
     root: {
       type: string
@@ -537,7 +550,13 @@ export interface BlockHeroBlockSelect<T extends boolean = true> {
   identifier?: T
   sectionId?: T
   backgroundMedia?: T
-  title?: T
+  animatedTexts?:
+    | T
+    | {
+        textStyle?: T
+        text?: T
+        id?: T
+      }
   description?: T
   logos?:
     | T
@@ -757,7 +776,6 @@ export interface Header {
 export interface Footer {
   id: string
   logo?: (string | null) | Media
-  background?: (string | null) | Media
   /**
    * Footer links: internal Page/Post or external URL.
    */
@@ -865,61 +883,11 @@ export interface Footer {
     }
     [k: string]: unknown
   } | null
-  /**
-   * Uncheck to hide the call-to-action button entirely.
-   */
-  showCta?: boolean | null
-  /**
-   * Footer call-to-action link: internal Page/Post or external URL.
-   */
-  cta?: {
-    label: string
-    /**
-     * Internal links point to Pages or Posts; external links use a full URL or scheme.
-     */
-    type: 'internal' | 'external'
-    /**
-     * Pick a Page or Post. Required when Link Type is "internal".
-     */
-    internalUrl?:
-      | ({
-          relationTo: 'pages'
-          value: string | Page
-        } | null)
-      | ({
-          relationTo: 'posts'
-          value: string | Post
-        } | null)
-    /**
-     * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
-     */
-    sectionId?: string | null
-    /**
-     * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
-     */
-    externalUrl?: string | null
-    target?: ('_self' | '_blank') | null
-    /**
-     * Computed: internal references resolve to their public path.
-     */
-    url?: string | null
-    /**
-     * Computed from "Open Link In".
-     */
-    newTab?: boolean | null
-    id?: string | null
+  subscribe?: {
+    placeholder?: string | null
+    buttonLabel?: string | null
+    note?: string | null
   }
-  sectionLabels?: {
-    links?: string | null
-    contact?: string | null
-  }
-  contact?:
-    | {
-        icon: 'phone' | 'mail' | 'location'
-        label: string
-        id?: string | null
-      }[]
-    | null
   updatedAt?: string | null
   createdAt?: string | null
 }
@@ -978,7 +946,6 @@ export interface HeaderSelect<T extends boolean = true> {
  */
 export interface FooterSelect<T extends boolean = true> {
   logo?: T
-  background?: T
   links?:
     | T
     | {
@@ -1014,32 +981,12 @@ export interface FooterSelect<T extends boolean = true> {
   copyright?: T
   heading?: T
   intro?: T
-  showCta?: T
-  cta?:
+  subscribe?:
     | T
     | {
-        label?: T
-        type?: T
-        internalUrl?: T
-        sectionId?: T
-        externalUrl?: T
-        target?: T
-        url?: T
-        newTab?: T
-        id?: T
-      }
-  sectionLabels?:
-    | T
-    | {
-        links?: T
-        contact?: T
-      }
-  contact?:
-    | T
-    | {
-        icon?: T
-        label?: T
-        id?: T
+        placeholder?: T
+        buttonLabel?: T
+        note?: T
       }
   updatedAt?: T
   createdAt?: T

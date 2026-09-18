@@ -28,7 +28,7 @@ export const paragraphNode = (text: string) => ({
 
 export const richTextParagraph = (
   text: string,
-): NonNullable<BlockHeroBlock['title']> => ({
+): NonNullable<BlockHeroBlock['description']> => ({
   root: {
     type: 'root',
     format: '',
@@ -41,7 +41,7 @@ export const richTextParagraph = (
 
 export const richTextRuns = (
   paragraphs: { text: string; italic?: boolean }[][],
-): NonNullable<BlockHeroBlock['title']> => ({
+): NonNullable<BlockHeroBlock['description']> => ({
   root: {
     type: 'root',
     format: '',
@@ -71,7 +71,7 @@ export const richTextRuns = (
 
 export const richTextParagraphs = (
   texts: string[],
-): NonNullable<BlockHeroBlock['title']> => ({
+): NonNullable<BlockHeroBlock['description']> => ({
   root: {
     type: 'root',
     format: '',

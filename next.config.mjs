@@ -23,6 +23,10 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
+  outputFileTracingIncludes: {
+    '/*': ['./src/payload/schema/blocks/**/thumbnail.webp'],
+    '/api/**/*': ['./src/payload/schema/blocks/**/thumbnail.webp'],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

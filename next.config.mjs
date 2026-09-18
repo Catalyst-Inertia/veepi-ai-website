@@ -8,6 +8,18 @@ const __dirname = dirname(__filename)
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'bucket-catatia.s3.ap-southeast-1.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      },
+    ],
+  },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },

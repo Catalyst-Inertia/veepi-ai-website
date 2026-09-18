@@ -1,0 +1,4 @@
+/* Admin-only Tailwind entry: utilities without the preflight/base reset so
+   Payload's own admin styling stays intact. Classes are JIT-scanned from the
+   tailwind.config content globs (incl. src/payload). */
+@tailwind utilities;

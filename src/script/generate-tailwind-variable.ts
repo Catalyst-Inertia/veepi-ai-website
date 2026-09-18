@@ -17,12 +17,13 @@ if (fs.existsSync(outputPath)) {
 const sassVariables = `
 @import 'tailwindcss';
 @theme {
---color-primary-color: ${process.env.NEXT_PUBLIC_PRIMARY_COLOR || '#F36E69'};
---color-second-color: ${process.env.NEXT_PUBLIC_SECONDARY_COLOR || '#8C2425'};
---color-accent-color-1: ${process.env.NEXT_PUBLIC_ACCENT_COLOR_1 || '#E9262C'};
---color-accent-color-2: ${process.env.NEXT_PUBLIC_ACCENT_COLOR_2 || '#F8AFA8'};
---color-black-color: ${process.env.NEXT_PUBLIC_BLACK_COLOR || '#09080D'};
---color-white-color: ${process.env.NEXT_PUBLIC_WHITE_COLOR || '#FFF'};
+--primary_color: ${process.env.NEXT_PUBLIC_PRIMARY_COLOR || '#E5859E'};
+--second_color: ${process.env.NEXT_PUBLIC_SECONDARY_COLOR || '#A66395'};
+--accent_color_1: ${process.env.NEXT_PUBLIC_ACCENT_COLOR_1 || '#DA8B9D'};
+--accent_color_2: ${process.env.NEXT_PUBLIC_ACCENT_COLOR_2 || '#F6EFE9'};
+--accent_color_3: ${process.env.NEXT_PUBLIC_ACCENT_COLOR_3 || '#FFFFFF'};
+--black_color: ${process.env.NEXT_PUBLIC_BLACK_COLOR || '#171515'};
+--white_color: ${process.env.NEXT_PUBLIC_WHITE_COLOR || '#F6EFE9'};
 
 --font-text: ${'var(--font_text)'};
 --font-title: ${'var(--font_title)'};

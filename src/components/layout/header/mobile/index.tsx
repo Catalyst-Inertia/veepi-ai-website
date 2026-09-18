@@ -15,7 +15,7 @@ export default function ContainerPageHeaderMobile() {
 
   const [openMenu, setOpenMenu] = useState(false)
 
-  const { isVisible, withBackground } = useScrollDetection()
+  const { withBackground } = useScrollDetection()
 
   useEffect(() => {
     if (openMenu) {
@@ -31,20 +31,20 @@ export default function ContainerPageHeaderMobile() {
         <motion.header
           className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? 'bg-black-color drop-shadow-lg' : 'bg-transparent'} min-h-[80px] flex items-center`}
           initial={{ y: 0 }}
-          animate={{ y: isVisible ? 0 : -100 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.3, bounce: false }}
         >
           <BoxContainer sectionClassName="w-full">
             <div className="flex flex-wrap justify-between items-center min-h-[85px]">
               <div
-                className="w-[80px] aspect-video relative cursor-pointer"
+                className="w-[121px] h-[48px] relative cursor-pointer"
                 onClick={() => {
                   router.push('/')
                   setOpenMenu(false)
                 }}
               >
                 <Image
-                  src={'/images/logo.png'}
+                  src={'/veepi-logo.svg'}
                   fill
                   alt="logo"
                   style={{ objectFit: 'contain' }}
@@ -79,14 +79,14 @@ export default function ContainerPageHeaderMobile() {
                 <div className="w-full">
                   <div className="min-h-[80px] flex items-center justify-between mb-8 w-full">
                     <div
-                      className="w-[80px] aspect-video relative cursor-pointer"
+                      className="w-[121px] h-[48px] relative cursor-pointer"
                       onClick={() => {
                         router.push('/')
                         setOpenMenu(false)
                       }}
                     >
                       <Image
-                        src={'/images/logo.png'}
+                        src={'/veepi-logo.svg'}
                         fill
                         alt="logo"
                         style={{ objectFit: 'contain' }}

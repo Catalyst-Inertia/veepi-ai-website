@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import antdTheme from '@/config/antdTheme'
 import GlobalContextProvider from '@/context'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
@@ -9,14 +12,16 @@ export default function GlobalProvider({
 }: {
   children: React.ReactNode
 }) {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5,
-      },
-    },
-  })
-
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 1000 * 60 * 5,
+          },
+        },
+      }),
+  )
   return (
     <AntdRegistry>
       <ConfigProvider theme={antdTheme}>

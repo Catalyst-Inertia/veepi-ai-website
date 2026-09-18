@@ -127,7 +127,7 @@ export async function seedHomepage(): Promise<void> {
     const bgBuf = await readFile(
       join(process.cwd(), 'public/videos/veepi-bg.webm'),
     )
-    await payload.create({
+    const bgCreated = await payload.create({
       collection: 'media',
       data: { alt: 'Hero BG Video' },
       file: {
@@ -137,6 +137,7 @@ export async function seedHomepage(): Promise<void> {
         size: bgBuf.length,
       },
     })
+    heroBgId = String(bgCreated.id)
 
     const logosBuf = await readFile(
       join(process.cwd(), 'public/partner-logos.svg'),
@@ -211,7 +212,70 @@ export async function seedHomepage(): Promise<void> {
   }
   contents.push(pricingBlock)
 
-  // Preserve existing blocks after pricing (e.g. FAQ)
+  contents.push({
+    blockType: 'block-faq',
+    identifier: 'block-faq',
+    sectionId: 'faq',
+    title: 'Questions, answered.',
+    questions: [
+      {
+        question: 'What is VeePi?',
+        answer: richTextParagraph(
+          'VeePi is an AI-powered creative platform built specifically for medical and aesthetic professionals. It transforms existing practice content — including before & after photos, treatment imagery, videos, and results — into premium social media content.',
+        ),
+      },
+      {
+        question: 'What kind of content can I create with VeePi?',
+        answer: richTextParagraph(
+          'VeePi can create a range of social content including transformation videos, treatment and educational content, patient journeys, doctor branding, medical technology content, and more.',
+        ),
+      },
+      {
+        question: 'Do I need to create new content for VeePi?',
+        answer: richTextParagraph(
+          'No. VeePi is designed around the content you already have. You provide your source material, and VeePi turns it into a creative social concept.',
+        ),
+      },
+      {
+        question: 'Which medical specialties is VeePi built for?',
+        answer: richTextParagraph(
+          'VeePi is designed for medical and aesthetic professionals including plastic surgeons, cosmetic surgeons, dentists, cosmetic dentists, dermatologists, med spas, aesthetic clinics, facial rejuvenation specialists, and hair restoration specialists.',
+        ),
+      },
+      {
+        question: 'What formats can VeePi create?',
+        answer: richTextParagraph(
+          'Content can be adapted for multiple social formats, including 9:16, 1:1, and 16:9, for platforms and placements such as Reels, TikTok, Stories, YouTube, and social feeds.',
+        ),
+      },
+      {
+        question: 'Is VeePi just animating my photos?',
+        answer: richTextParagraph(
+          'No. VeePi is designed to provide the creative direction behind the content. Concepts can incorporate storytelling, hooks, camera movement, subject movement, transitions, visual effects, and cinematic direction.',
+        ),
+      },
+      {
+        question: 'Can I choose the type of creative I want?',
+        answer: richTextParagraph(
+          'Yes. VeePi includes a growing library of creative concepts that you can browse and use as a starting point for your own content.',
+        ),
+      },
+      {
+        question: 'How much does VeePi cost?',
+        answer: richTextParagraph(
+          'VeePi offers subscription options based on your content needs. Contact the VeePi team for a consultation and tailored pricing.',
+        ),
+      },
+      {
+        question: 'Can I see examples before getting started?',
+        answer: richTextParagraph(
+          'Yes. Explore the VeePi creative gallery to see examples of concepts, outputs, specialties, and formats.',
+        ),
+      },
+    ],
+  })
+
+  // Preserve existing blocks after pricing/faq
   try {
     const existingHomepage = await payload.find({
       collection: 'pages',
@@ -221,7 +285,10 @@ export async function seedHomepage(): Promise<void> {
     })
     if (existingHomepage.docs.length > 0 && existingHomepage.docs[0].contents) {
       const existingBlocks = existingHomepage.docs[0].contents.filter(
-        (b) => b.blockType !== 'block-hero' && b.blockType !== 'block-pricing',
+        (b) =>
+          b.blockType !== 'block-hero' &&
+          b.blockType !== 'block-pricing' &&
+          b.blockType !== 'block-faq',
       )
       contents.push(...existingBlocks)
     }

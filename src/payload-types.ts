@@ -210,7 +210,7 @@ export interface Page {
     keywords?: string | null
     og_image?: (string | null) | Media
   }
-  contents?: (BlockHeroBlock | BlockPricingBlock)[] | null
+  contents?: (BlockHeroBlock | BlockPricingBlock | BlockFaqBlock)[] | null
   updatedAt: string
   createdAt: string
 }
@@ -336,7 +336,7 @@ export interface Post {
     keywords?: string | null
     og_image?: (string | null) | Media
   }
-  contents?: (BlockHeroBlock | BlockPricingBlock)[] | null
+  contents?: (BlockHeroBlock | BlockPricingBlock | BlockFaqBlock)[] | null
   updatedAt: string
   createdAt: string
 }
@@ -507,6 +507,52 @@ export interface BlockPricingBlock {
   id?: string | null
   blockName?: string | null
   blockType: 'block-pricing'
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockFaqBlock".
+ */
+export interface BlockFaqBlock {
+  /**
+   * Block-type identifier — distinguishes this block from other block types.
+   */
+  identifier?: string | null
+  /**
+   * Unique anchor for this section. Auto-generated, but you can override it.
+   */
+  sectionId?: string | null
+  title: string
+  questions?:
+    | {
+        question: string
+        answer?: {
+          root: {
+            type: string
+            children: {
+              type: any
+              version: number
+              [k: string]: unknown
+            }[]
+            direction: ('ltr' | 'rtl') | null
+            format:
+              | 'left'
+              | 'start'
+              | 'center'
+              | 'right'
+              | 'end'
+              | 'justify'
+              | ''
+            indent: number
+            version: number
+          }
+          [k: string]: unknown
+        } | null
+        id?: string | null
+      }[]
+    | null
+  id?: string | null
+  blockName?: string | null
+  blockType: 'block-faq'
 }
 /**
  * Submissions are created via the public API. Creation is disabled in the admin UI (access control).
@@ -688,6 +734,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         'block-hero'?: T | BlockHeroBlockSelect<T>
         'block-pricing'?: T | BlockPricingBlockSelect<T>
+        'block-faq'?: T | BlockFaqBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T
@@ -780,6 +827,24 @@ export interface BlockPricingBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockFaqBlock_select".
+ */
+export interface BlockFaqBlockSelect<T extends boolean = true> {
+  identifier?: T
+  sectionId?: T
+  title?: T
+  questions?:
+    | T
+    | {
+        question?: T
+        answer?: T
+        id?: T
+      }
+  id?: T
+  blockName?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -799,6 +864,7 @@ export interface PostsSelect<T extends boolean = true> {
     | {
         'block-hero'?: T | BlockHeroBlockSelect<T>
         'block-pricing'?: T | BlockPricingBlockSelect<T>
+        'block-faq'?: T | BlockFaqBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T

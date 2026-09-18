@@ -14,7 +14,7 @@ export default function ContainerPageHeaderMobile() {
 
   const [openMenu, setOpenMenu] = useState(false)
 
-  const { withBackground } = useScrollDetection()
+  const { withBackground, isLight } = useScrollDetection()
 
   useEffect(() => {
     if (openMenu) {
@@ -28,7 +28,7 @@ export default function ContainerPageHeaderMobile() {
     <>
       <AnimatePresence key={'header-animation'} mode="sync">
         <motion.header
-          className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? 'bg-black-color drop-shadow-lg' : 'bg-transparent'} min-h-[80px] flex items-center`}
+          className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? (isLight ? 'drop-shadow-lg' : 'bg-black-color drop-shadow-lg') : 'bg-transparent'} min-h-[80px] flex items-center`}
           initial={{ y: 0 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.3, bounce: false }}
@@ -43,14 +43,14 @@ export default function ContainerPageHeaderMobile() {
                 }}
               >
                 <Image
-                  src={'/veepi-logo.svg'}
+                  src={isLight ? '/veepi-logo-black.svg' : '/veepi-logo.svg'}
                   fill
                   alt="logo"
                   style={{ objectFit: 'contain' }}
                 />
               </div>
               <div
-                className="flex flex-wrap gap-10"
+                className={`flex flex-wrap gap-10 ${isLight ? 'text-black' : 'text-[#FDFDFD]'}`}
                 onClick={() => {
                   setOpenMenu(!openMenu)
                 }}
@@ -89,18 +89,17 @@ export default function ContainerPageHeaderMobile() {
                       }}
                     >
                       <Image
-                        src={'/veepi-logo.svg'}
+                        src={'/veepi-logo-black.svg'}
                         fill
                         alt="logo"
                         style={{ objectFit: 'contain' }}
-                        className="brightness-0"
                       />
                     </div>
                     <div
                       onClick={() => {
                         setOpenMenu(false)
                       }}
-                      className="text-[28px]"
+                      className="text-[28px] text-black"
                     >
                       <CloseCircleOutlined />
                     </div>
@@ -114,7 +113,7 @@ export default function ContainerPageHeaderMobile() {
                             router.push(item.url, { scroll: true })
                             setOpenMenu(false)
                           }}
-                          className={`text-[24px] font-bold mb-6 relative w-fit pb-1`}
+                          className={`text-[24px] font-bold mb-6 relative w-fit pb-1 text-black`}
                         >
                           {item.label}
                         </div>
@@ -125,7 +124,7 @@ export default function ContainerPageHeaderMobile() {
                 <div className="w-full self-end pb-6">
                   <div className="flex flex-wrap justify-between pt-[180px]">
                     <div className="w-full lg:w-fit mb-6 lg:mb-0 ">
-                      <div className="text-[18px]">
+                      <div className="text-[18px] text-black">
                         © Outlet23 All rights reserved.
                       </div>
                     </div>

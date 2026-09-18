@@ -41,8 +41,6 @@ export const buildPricingBlock = (
         ],
         cta: {
           label: 'CONTACT VEEPI',
-          type: 'external',
-          externalUrl: '#contact',
           variant: 'primary',
         },
       },
@@ -65,8 +63,6 @@ export const buildPricingBlock = (
         ],
         cta: {
           label: 'CONTACT VEEPI',
-          type: 'external',
-          externalUrl: '#contact',
           variant: 'primary',
         },
       },
@@ -88,8 +84,6 @@ export const buildPricingBlock = (
         ],
         cta: {
           label: 'CONTACT VEEPI',
-          type: 'external',
-          externalUrl: '#contact',
           variant: 'primary',
         },
       },

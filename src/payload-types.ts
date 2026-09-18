@@ -556,40 +556,7 @@ export interface BlockPricingBlock {
           | null
         cta: {
           label: string
-          /**
-           * Internal links point to Pages or Posts; external links use a full URL or scheme.
-           */
-          type: 'internal' | 'external'
-          /**
-           * Pick a Page or Post. Required when Link Type is "internal".
-           */
-          internalUrl?:
-            | ({
-                relationTo: 'pages'
-                value: string | Page
-              } | null)
-            | ({
-                relationTo: 'posts'
-                value: string | Post
-              } | null)
-          /**
-           * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
-           */
-          sectionId?: string | null
-          /**
-           * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
-           */
-          externalUrl?: string | null
-          target?: ('_self' | '_blank') | null
-          /**
-           * Computed: internal references resolve to their public path.
-           */
-          url?: string | null
-          /**
-           * Computed from "Open Link In".
-           */
-          newTab?: boolean | null
-          variant?: ('primary' | 'secondary' | 'link') | null
+          variant?: ('primary' | 'secondary') | null
         }
         id?: string | null
       }[]
@@ -935,13 +902,6 @@ export interface BlockPricingBlockSelect<T extends boolean = true> {
           | T
           | {
               label?: T
-              type?: T
-              internalUrl?: T
-              sectionId?: T
-              externalUrl?: T
-              target?: T
-              url?: T
-              newTab?: T
               variant?: T
             }
         id?: T

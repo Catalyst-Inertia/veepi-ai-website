@@ -60,6 +60,11 @@ export async function seedHomepage(): Promise<void> {
     contents.push(heroBlock)
   }
 
+  const galleryBlock = buildGalleryBlock(heroBgId || mastheadId)
+  if (galleryBlock) {
+    contents.push(galleryBlock)
+  }
+
   contents.push(buildPricingBlock(partnerLogosId))
   contents.push(buildFaqBlock())
 
@@ -83,11 +88,6 @@ export async function seedHomepage(): Promise<void> {
     }
   } catch (e) {
     console.error('Failed to fetch existing homepage to preserve blocks', e)
-  }
-
-  const galleryBlock = buildGalleryBlock(heroBgId || mastheadId)
-  if (galleryBlock) {
-    contents.push(galleryBlock)
   }
 
   const homepage = await upsertPage('homepage', {

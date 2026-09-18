@@ -3,7 +3,7 @@
 import { IDENTIFIER } from './schema.block'
 import type { Block } from '@/types/blocks'
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import PayloadLink from '@/components/common/payload-link'
+import ContactPopupTrigger from '@/components/common/contact-form-popup/trigger'
 import Media from '@/components/common/media'
 import BoxContainer from '@/components/container/boxed'
 import { useRef } from 'react'
@@ -188,16 +188,10 @@ export default function ContentsBlockPricing(props: BlockPricingProps) {
                             <RichText data={plan.description} />
                           </div>
                         )}
-                        {plan.cta?.url && (
-                          <PayloadLink
-                            link={{
-                              label: plan.cta.label || '',
-                              type: plan.cta.type || 'custom',
-                              url: plan.cta.url,
-                              newTab: plan.cta.newTab ?? false,
-                            }}
-                            className="flex h-12 w-full items-center justify-center rounded-lg bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)] px-6 font-text text-[12px] uppercase leading-none text-[#FBF2E9]"
-                          />
+                        {plan.cta?.label && (
+                          <ContactPopupTrigger className="flex h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)] px-6 font-text text-[12px] uppercase leading-none text-[#FBF2E9]">
+                            {plan.cta.label}
+                          </ContactPopupTrigger>
                         )}
                       </div>
                       {/* Includes */}

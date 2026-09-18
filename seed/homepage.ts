@@ -4,7 +4,7 @@ import payload from 'payload'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { Page } from '../src/payload-types'
-import type { BlockHeroBlock } from '../src/payload-types'
+import type { BlockHeroBlock, BlockGalleryBlock } from '../src/payload-types'
 import { ensureMedia, richTextParagraph, richTextRuns, upsertPage } from './lib'
 
 // Homepage section copy. Deliberately decoupled from src/data/homepage
@@ -116,6 +116,69 @@ export async function seedHomepage(): Promise<void> {
         [partnerLogosId || mastheadId || ''],
       ),
     )
+  }
+
+  const cardsData = [
+    {
+      title: 'Create with VeePi',
+      specialty: 'Technology',
+      category: 'Creative',
+    },
+    { title: 'Inside The Skin', specialty: 'Med Spa', category: 'Educational' },
+    {
+      title: 'Desert to Silk',
+      specialty: 'Med Spa',
+      category: 'Before & After',
+    },
+    {
+      title: 'The Confidence Boost',
+      specialty: 'Dentistry',
+      category: 'Before & After',
+    },
+    { title: 'Sculpted', specialty: 'Rhinoplasty', category: 'Before & After' },
+    {
+      title: 'See Through Your Nose',
+      specialty: 'Rhinoplasty',
+      category: 'Educational',
+    },
+    {
+      title: 'Younger Than Before',
+      specialty: 'Facelift',
+      category: 'Before & After',
+    },
+    {
+      title: 'Smile Architecture',
+      specialty: 'Dentistry',
+      category: 'Educational',
+    },
+    {
+      title: 'Profile Blueprint',
+      specialty: 'Facelift',
+      category: 'Educational',
+    },
+  ] as const
+
+  const galleryMediaId = heroBgId || mastheadId
+  if (galleryMediaId) {
+    const galleryBlock: BlockGalleryBlock & { blockType: 'block-gallery' } = {
+      blockType: 'block-gallery',
+      title: "Don't start with a blank canvas.",
+      description: richTextParagraph(
+        'Explore creative concepts built for medical and aesthetic storytelling.',
+      ),
+      cards: cardsData.map((data) => ({
+        title: data.title,
+        specialty: data.specialty,
+        category: data.category,
+        media: galleryMediaId,
+        link: {
+          type: 'external',
+          externalUrl: 'https://example.com',
+          label: 'Explore Concept',
+        },
+      })),
+    }
+    contents.push(galleryBlock)
   }
 
   const homepage = await upsertPage('homepage', {

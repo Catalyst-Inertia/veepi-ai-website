@@ -7,6 +7,8 @@ import { resolveSectionIds } from './section-ids'
 // Do not edit manually.
 import { BlockHeroBlock } from '@/payload/schema/blocks/block-hero/schema.block'
 import ContentsBlockHero from '@/payload/schema/blocks/block-hero/component.block'
+import { BlockGalleryBlock } from '@/payload/schema/blocks/block-gallery/schema.block'
+import ContentsBlockGallery from '@/payload/schema/blocks/block-gallery/component.block'
 // AUTO-MANAGED SECTION END
 
 type BlockProps<K extends Block['blockType']> = { id?: string } & Extract<
@@ -21,6 +23,7 @@ type BlockProps<K extends Block['blockType']> = { id?: string } & Extract<
 // scripts/rename-block.ts — do not add/remove entries by hand.
 const blockRegistry = {
   [BlockHeroBlock.slug]: ContentsBlockHero,
+  [BlockGalleryBlock.slug]: ContentsBlockGallery,
 } satisfies { [K in Block['blockType']]: ComponentType<BlockProps<K>> }
 
 export default function PageBuilder({ blocks }: { blocks: Block[] }) {

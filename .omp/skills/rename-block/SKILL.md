@@ -18,7 +18,6 @@ Both names MUST match `/^[a-z0-9]+(?:-[a-z0-9]+)*$/`.
   - `IDENTIFIER` constant value (`block-<old>` → `block-<new>`, lowercase `block-<name>` convention)
   - `export const <OldPascal>Block` → `<NewPascal>Block`
   - `interfaceName`
-  - thumbnail path (`blocks/<new>/thumbnail.webp`)
 - `component.block.tsx`:
   - `Contents<OldPascal>` → `Contents<NewPascal>`
   - `<OldPascal>Props` → `<NewPascal>Props`

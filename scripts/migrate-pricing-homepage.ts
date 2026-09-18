@@ -1,7 +1,7 @@
 /* eslint-disable no-console -- migration report script */
 import payload from 'payload'
 import config from '../payload.config'
-import { buildPricingBlock } from '../seed/homepage'
+import { buildPricingBlock } from '../seed/homepage/block-pricing'
 import type { Page } from '../src/payload-types'
 
 async function main(): Promise<void> {
@@ -27,7 +27,7 @@ async function main(): Promise<void> {
     process.exit(0)
   }
 
-  const pricingBlock = buildPricingBlock()
+  const pricingBlock = buildPricingBlock(undefined)
 
   const mediaRes = await payload.find({
     collection: 'media',

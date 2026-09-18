@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import type { Block } from 'payload'
 import {
   identifierField,
@@ -15,8 +16,11 @@ import {
 // source of truth for the slug).
 export const IDENTIFIER = 'block-hero' as const
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 const thumbnailUrl = `data:image/webp;base64,${readFileSync(
-  join(process.cwd(), 'src/payload/schema/blocks/block-hero/thumbnail.webp'),
+  join(__dirname, 'thumbnail.webp'),
   'base64',
 )}`
 

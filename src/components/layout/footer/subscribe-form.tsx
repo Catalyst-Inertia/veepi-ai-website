@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useMainNotification } from '@/hooks/ui/notification'
 
 export default function SubscribeForm({
   placeholder,
@@ -12,6 +13,7 @@ export default function SubscribeForm({
   note: string
 }) {
   const [email, setEmail] = useState('')
+  const showNotification = useMainNotification()
   const [sending, setSending] = useState(false)
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -32,8 +34,18 @@ export default function SubscribeForm({
       }).then((res) => {
         if (!res.ok) throw new Error(String(res.status))
       })
+      showNotification({
+        type: 'success',
+        entity: 'newsletter subscription',
+        action: 'submitted',
+      })
       setEmail('')
     } catch (err) {
+      showNotification({
+        type: 'error',
+        entity: 'newsletter subscription',
+        action: 'submit',
+      })
       // eslint-disable-next-line no-console
       console.error('subscribe failed:', err)
     } finally {

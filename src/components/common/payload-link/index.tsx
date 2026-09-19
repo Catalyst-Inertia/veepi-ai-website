@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import ContactPopupTrigger from '../contact-form-popup/trigger'
 
 /**
  * Reusable navigation primitive for CMS-driven links (spec item 7).
@@ -37,6 +38,17 @@ export default function PayloadLink({
   if (!url) return null
 
   const content = children ?? link.label
+
+  if (url === '#contact') {
+    return (
+      <ContactPopupTrigger
+        className={className}
+        label={link.label || undefined}
+      >
+        {content}
+      </ContactPopupTrigger>
+    )
+  }
 
   if (link.type === 'internal') {
     return (

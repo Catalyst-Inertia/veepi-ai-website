@@ -9,7 +9,7 @@ import {
   richTextField,
   arrayField,
   uploadField,
-  actionButtonField,
+  actionDisplayButtonField,
 } from '../../fields'
 
 // Spec item 3: block slugs use the lowercase block-<name> convention.
@@ -70,7 +70,10 @@ export const BlockPricingBlock = {
           label: 'Includes Items',
           fields: [textField({ name: 'item', label: 'Item', required: true })],
         }),
-        actionButtonField({ name: 'cta', label: 'Call to Action' }),
+        actionDisplayButtonField({
+          name: 'cta',
+          label: 'Call to Action Button',
+        }),
       ],
     }),
   ],

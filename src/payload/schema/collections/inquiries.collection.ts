@@ -3,6 +3,7 @@ import { jsonField, groupField, dateField, textField } from '../fields'
 
 export const Inquiries: CollectionConfig = {
   slug: 'inquiries',
+  defaultSort: 'metadata.formType',
   admin: {
     defaultColumns: [
       'metadata.formType',

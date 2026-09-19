@@ -1,13 +1,12 @@
-import { App } from 'antd'
+import { useFeedbackDialogStore } from './feedback-dialog'
 
 type notificationProps = {
   type: 'success' | 'error'
   entity: string
   action: string
 }
-
 export const useMainNotification = () => {
-  const { notification } = App.useApp()
+  const openDialog = useFeedbackDialogStore((s) => s.open)
 
   const showNotification = ({ type, entity, action }: notificationProps) => {
     const generalNotification = {
@@ -21,10 +20,11 @@ export const useMainNotification = () => {
       },
     }
 
-    return notification[type]({
-      message: generalNotification[type].message,
-      description: generalNotification[type].description,
-    })
+    return openDialog(
+      type,
+      generalNotification[type].message,
+      generalNotification[type].description,
+    )
   }
 
   return showNotification

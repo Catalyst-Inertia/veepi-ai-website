@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import type { Media as MediaDoc } from '@/payload-types'
 
@@ -29,8 +32,31 @@ export default function Media({
   autoPlay = true,
   videoRef,
 }: MediaProps) {
+  const internalRef = useRef<HTMLVideoElement | null>(null)
   const doc = typeof media === 'object' && media !== null ? media : null
   const src = typeof media === 'string' ? media : (doc?.url ?? null)
+
+  useEffect(() => {
+    if (autoPlay && internalRef.current) {
+      const video = internalRef.current
+      video.defaultMuted = true
+      video.muted = true
+      video.play().catch(() => {})
+    }
+  }, [autoPlay, src])
+
+  const handleRef = useCallback(
+    (el: HTMLVideoElement | null) => {
+      internalRef.current = el
+      if (typeof videoRef === 'function') {
+        videoRef(el)
+      } else if (videoRef) {
+        ;(videoRef as React.MutableRefObject<HTMLVideoElement | null>).current =
+          el
+      }
+    },
+    [videoRef],
+  )
   if (!src) return null
 
   const isVideo = doc?.mimeType?.startsWith('video/') ?? false
@@ -38,20 +64,25 @@ export default function Media({
   const altText = alt ?? doc?.alt ?? ''
 
   if (isVideo) {
+    const videoSrc = autoPlay || src.includes('#') ? src : `${src}#t=0.001`
     return (
       <video
-        ref={videoRef}
-        src={src}
+        ref={handleRef}
+        src={videoSrc}
         autoPlay={autoPlay}
         muted
         loop
         playsInline
-        onEnded={(e) => {
-          e.currentTarget.play().catch(() => {})
-        }}
+        preload={autoPlay ? 'auto' : 'metadata'}
         aria-label={altText || undefined}
         className={className}
-        style={{ width: '100%', height: '100%', objectFit: fit }}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: fit,
+          willChange: 'transform',
+          transform: 'translateZ(0)',
+        }}
       />
     )
   }

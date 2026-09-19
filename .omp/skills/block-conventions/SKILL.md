@@ -70,6 +70,7 @@ description: Rules and conventions for building Payload CMS blocks in this repo 
 | link group   | `linkField({ name?, label?, required?, description?, admin? })`                |                                                                   |
 | link array   | `groupLinkField({ name?, label?, required?, description?, admin? })`           |                                                                   |
 | CTA group    | `actionButtonField({ name?, label?, required?, description?, admin? })`        | name defaults `actionButton`, label `Action Button`               |
+| display CTA  | `actionDisplayButtonField({ name?, label?, required?, description?, admin? })` | same defaults; no link/page options, just presentation            |
 
 ### Fixed-name fields
 

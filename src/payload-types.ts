@@ -210,7 +210,9 @@ export interface Page {
     keywords?: string | null
     og_image?: (string | null) | Media
   }
-  contents?: (BlockHeroBlock | BlockPricingBlock | BlockFaqBlock)[] | null
+  contents?:
+    | (BlockHeroBlock | BlockGalleryBlock | BlockPricingBlock | BlockFaqBlock)[]
+    | null
   updatedAt: string
   createdAt: string
 }
@@ -336,7 +338,9 @@ export interface Post {
     keywords?: string | null
     og_image?: (string | null) | Media
   }
-  contents?: (BlockHeroBlock | BlockPricingBlock | BlockFaqBlock)[] | null
+  contents?:
+    | (BlockHeroBlock | BlockGalleryBlock | BlockPricingBlock | BlockFaqBlock)[]
+    | null
   updatedAt: string
   createdAt: string
 }
@@ -358,6 +362,92 @@ export interface Group {
   }
   updatedAt: string
   createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockGalleryBlock".
+ */
+export interface BlockGalleryBlock {
+  /**
+   * Block-type identifier — distinguishes this block from other block types.
+   */
+  identifier?: string | null
+  /**
+   * Unique anchor for this section. Auto-generated, but you can override it.
+   */
+  sectionId?: string | null
+  title: string
+  description?: {
+    root: {
+      type: string
+      children: {
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  } | null
+  cards?:
+    | {
+        media: string | Media
+        title: string
+        specialty?:
+          | (
+              | 'Technology'
+              | 'Med Spa'
+              | 'Dentistry'
+              | 'Rhinoplasty'
+              | 'Facelift'
+            )
+          | null
+        category?: ('Creative' | 'Educational' | 'Before & After') | null
+        link: {
+          label: string
+          /**
+           * Internal links point to Pages or Posts; external links use a full URL or scheme.
+           */
+          type: 'internal' | 'external'
+          /**
+           * Pick a Page or Post. Required when Link Type is "internal".
+           */
+          internalUrl?:
+            | ({
+                relationTo: 'pages'
+                value: string | Page
+              } | null)
+            | ({
+                relationTo: 'posts'
+                value: string | Post
+              } | null)
+          /**
+           * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
+           */
+          sectionId?: string | null
+          /**
+           * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
+           */
+          externalUrl?: string | null
+          target?: ('_self' | '_blank') | null
+          /**
+           * Computed: internal references resolve to their public path.
+           */
+          url?: string | null
+          /**
+           * Computed from "Open Link In".
+           */
+          newTab?: boolean | null
+        }
+        id?: string | null
+      }[]
+    | null
+  id?: string | null
+  blockName?: string | null
+  blockType: 'block-gallery'
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -733,6 +823,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         'block-hero'?: T | BlockHeroBlockSelect<T>
+        'block-gallery'?: T | BlockGalleryBlockSelect<T>
         'block-pricing'?: T | BlockPricingBlockSelect<T>
         'block-faq'?: T | BlockFaqBlockSelect<T>
       }
@@ -773,6 +864,39 @@ export interface BlockHeroBlockSelect<T extends boolean = true> {
         url?: T
         newTab?: T
         variant?: T
+      }
+  id?: T
+  blockName?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockGalleryBlock_select".
+ */
+export interface BlockGalleryBlockSelect<T extends boolean = true> {
+  identifier?: T
+  sectionId?: T
+  title?: T
+  description?: T
+  cards?:
+    | T
+    | {
+        media?: T
+        title?: T
+        specialty?: T
+        category?: T
+        link?:
+          | T
+          | {
+              label?: T
+              type?: T
+              internalUrl?: T
+              sectionId?: T
+              externalUrl?: T
+              target?: T
+              url?: T
+              newTab?: T
+            }
+        id?: T
       }
   id?: T
   blockName?: T
@@ -863,6 +987,7 @@ export interface PostsSelect<T extends boolean = true> {
     | T
     | {
         'block-hero'?: T | BlockHeroBlockSelect<T>
+        'block-gallery'?: T | BlockGalleryBlockSelect<T>
         'block-pricing'?: T | BlockPricingBlockSelect<T>
         'block-faq'?: T | BlockFaqBlockSelect<T>
       }

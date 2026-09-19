@@ -3,11 +3,12 @@
 import payload from 'payload'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import type { Page } from '../src/payload-types'
-import { ensureMedia, upsertPage } from './lib'
-import { buildHeroBlock } from './homepage/block-hero'
-import { buildPricingBlock } from './homepage/block-pricing'
-import { buildFaqBlock } from './homepage/block-faq'
+import type { Page } from '../../src/payload-types'
+import { ensureMedia, upsertPage } from '../lib'
+import { buildHeroBlock } from './block-hero'
+import { buildPricingBlock } from './block-pricing'
+import { buildFaqBlock } from './block-faq'
+import { buildGalleryBlock } from './block-gallery'
 
 export async function seedHomepage(): Promise<void> {
   // Upload section media (webm videos where available), then compose the
@@ -75,12 +76,18 @@ export async function seedHomepage(): Promise<void> {
         (b) =>
           b.blockType !== 'block-hero' &&
           b.blockType !== 'block-pricing' &&
+          b.blockType !== 'block-gallery' &&
           b.blockType !== 'block-faq',
       )
       contents.push(...existingBlocks)
     }
   } catch (e) {
     console.error('Failed to fetch existing homepage to preserve blocks', e)
+  }
+
+  const galleryBlock = buildGalleryBlock(heroBgId || mastheadId)
+  if (galleryBlock) {
+    contents.push(galleryBlock)
   }
 
   const homepage = await upsertPage('homepage', {

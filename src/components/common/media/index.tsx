@@ -15,6 +15,8 @@ type MediaProps = {
   objectFit?: 'cover' | 'contain'
   className?: string
   priority?: boolean
+  autoPlay?: boolean
+  videoRef?: React.Ref<HTMLVideoElement>
 }
 
 export default function Media({
@@ -24,6 +26,8 @@ export default function Media({
   objectFit = 'cover',
   className,
   priority,
+  autoPlay = true,
+  videoRef,
 }: MediaProps) {
   const doc = typeof media === 'object' && media !== null ? media : null
   const src = typeof media === 'string' ? media : (doc?.url ?? null)
@@ -36,11 +40,15 @@ export default function Media({
   if (isVideo) {
     return (
       <video
+        ref={videoRef}
         src={src}
-        autoPlay
+        autoPlay={autoPlay}
         muted
         loop
         playsInline
+        onEnded={(e) => {
+          e.currentTarget.play().catch(() => {})
+        }}
         aria-label={altText || undefined}
         className={className}
         style={{ width: '100%', height: '100%', objectFit: fit }}

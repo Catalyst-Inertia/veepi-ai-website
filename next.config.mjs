@@ -8,6 +8,9 @@ const __dirname = dirname(__filename)
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  outputFileTracingIncludes: {
+    '/*': ['./src/payload/schema/blocks/**/*.{webp,png,jpg,jpeg,gif,svg,avif}'],
+  },
   images: {
     remotePatterns: [
       {

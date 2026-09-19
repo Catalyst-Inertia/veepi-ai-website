@@ -86,8 +86,7 @@ async function main(): Promise<void> {
     join(blockDir, 'thumbnail.webp'),
   )
   const schemaContent = `import { readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import type { Block } from 'payload'
 import { identifierField, sectionIdField, textField } from '../../fields'
 
@@ -96,11 +95,11 @@ import { identifierField, sectionIdField, textField } from '../../fields'
 // source of truth for the slug — components never duplicate the literal).
 export const IDENTIFIER = '${slug}' as const
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
 const thumbnailUrl = \`data:image/webp;base64,\${readFileSync(
-  join(__dirname, 'thumbnail.webp'),
+  join(
+    process.cwd(),
+    'src/payload/schema/blocks/${slug}/thumbnail.webp',
+  ),
   'base64',
 )}\`
 

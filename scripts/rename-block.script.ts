@@ -87,11 +87,15 @@ async function main(): Promise<void> {
   await rename(oldDir, newDir)
   console.log(`Renamed directory: ${oldDir} -> ${newDir}`)
 
-  // 2. schema.block.ts — export name, interfaceName, IDENTIFIER value.
-  // (Thumbnail path is resolved via __dirname, so it doesn't need rewriting).
+  // 2. schema.block.ts — export name, interfaceName, IDENTIFIER value,
+  //    thumbnail path.
   await rewrite(join(newDir, 'schema.block.ts'), [
     [`${oldPascal}Block`, `${newPascal}Block`],
     [`'${oldDirName}'`, `'${newDirName}'`],
+    [
+      `blocks/${oldDirName}/thumbnail.webp`,
+      `blocks/${newDirName}/thumbnail.webp`,
+    ],
   ])
 
   // 3. component.block.tsx — component fn + Props type. blockType is typed

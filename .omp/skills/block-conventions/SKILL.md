@@ -28,16 +28,18 @@ description: Rules and conventions for building Payload CMS blocks in this repo 
 - Schema references it via base64 data URI:
 
   ```ts
-  const __filename = fileURLToPath(import.meta.url)
-  const __dirname = dirname(__filename)
-
   const thumbnailUrl = `data:image/webp;base64,${readFileSync(
-    join(__dirname, 'thumbnail.webp'),
+    join(process.cwd(), 'src/payload/schema/blocks/<name>/thumbnail.webp'),
     'base64',
   )}`
   ```
 
-- NEVER use a static `import thumb from './thumbnail.webp'` — `payload` CLI (generate:types, migrate) runs under node and cannot import `.webp`.
+  `process.cwd()`, NOT `__dirname`/`import.meta.url` — on Vercel, webpack
+  bakes the build machine's absolute path into `__dirname`, so runtime reads
+  fail with ENOENT. `process.cwd()` = `/var/task` in serverless, where
+  `outputFileTracingIncludes` (next.config.mjs) copies the thumbnails. NEVER
+  use a static `import thumb from './thumbnail.webp'` — `payload` CLI
+  (generate:types, migrate) runs under node and cannot import `.webp`.
 
 ## Fields — MUST use field wrappers, no raw fields
 

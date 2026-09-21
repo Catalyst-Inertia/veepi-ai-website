@@ -60,7 +60,25 @@ export async function seedHomepage(): Promise<void> {
     contents.push(heroBlock)
   }
 
-  const galleryBlock = buildGalleryBlock(heroBgId || mastheadId)
+  const pricingPage = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: 'pricing' } },
+    limit: 1,
+    depth: 0,
+  })
+  let pricingPageId = pricingPage.docs[0]?.id
+  if (!pricingPageId) {
+    const p = await payload.create({
+      collection: 'pages',
+      data: { title: 'Pricing', slug: 'pricing' },
+    })
+    pricingPageId = p.id
+  }
+
+  const galleryBlock = await buildGalleryBlock(
+    heroBgId || mastheadId,
+    String(pricingPageId),
+  )
   if (galleryBlock) {
     contents.push(galleryBlock)
   }

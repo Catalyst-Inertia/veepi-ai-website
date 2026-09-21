@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const DIR = 'public/assets/videos'
+const DIR = 'public/videos/gallery'
 
 // Filename (no extension) -> background color to chroma-key out.
 // Keyed videos encode VP9 with alpha (yuva420p) so they composite on any bg.
@@ -43,12 +43,16 @@ function main() {
       const alphaArgs = keyColor
         ? '-pix_fmt yuva420p -auto-alt-ref 0 -lag-in-frames 0'
         : ''
-      execSync(
-        `ffmpeg -i "${filePath}" -loglevel error -hide_banner ` +
-          `-vf "${filter}" ${alphaArgs} ` +
-          `-c:v libvpx-vp9 -crf 40 -b:v 0 -deadline good -cpu-used 3 -row-mt 1 ` +
-          `-c:a libopus -b:a 96k -y "${outPath}"`,
-      )
+      try {
+        execSync(
+          `ffmpeg -i "${filePath}" -loglevel error -hide_banner ` +
+            `-vf "${filter}" ${alphaArgs} ` +
+            `-c:v libvpx-vp9 -crf 40 -b:v 0 -deadline good -cpu-used 3 -row-mt 1 ` +
+            `-c:a libopus -b:a 96k -y "${outPath}"`,
+        )
+      } catch (err) {
+        console.error(`Failed to compress ${file}:`, err)
+      }
     }
   })
 }

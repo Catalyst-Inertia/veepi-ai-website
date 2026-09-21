@@ -19,7 +19,9 @@ type MediaProps = {
   className?: string
   priority?: boolean
   autoPlay?: boolean
+  muted?: boolean
   videoRef?: React.Ref<HTMLVideoElement>
+  controls?: boolean
 }
 
 export default function Media({
@@ -30,6 +32,8 @@ export default function Media({
   className,
   priority,
   autoPlay = true,
+  muted = true,
+  controls = false,
   videoRef,
 }: MediaProps) {
   const internalRef = useRef<HTMLVideoElement | null>(null)
@@ -39,11 +43,11 @@ export default function Media({
   useEffect(() => {
     if (autoPlay && internalRef.current) {
       const video = internalRef.current
-      video.defaultMuted = true
-      video.muted = true
+      video.defaultMuted = muted
+      video.muted = muted
       video.play().catch(() => {})
     }
-  }, [autoPlay, src])
+  }, [autoPlay, src, muted])
 
   const handleRef = useCallback(
     (el: HTMLVideoElement | null) => {
@@ -70,7 +74,8 @@ export default function Media({
         ref={handleRef}
         src={videoSrc}
         autoPlay={autoPlay}
-        muted
+        controls={controls}
+        muted={muted}
         loop
         playsInline
         preload={autoPlay ? 'auto' : 'metadata'}

@@ -396,6 +396,11 @@ export interface BlockGalleryBlock {
     | {
         media: string | Media
         title: string
+        cardDescription?: string | null
+        bestFor?: string | null
+        input?: string | null
+        output?: string | null
+        formats?: string | null
         specialty?:
           | (
               | 'Technology'
@@ -406,7 +411,7 @@ export interface BlockGalleryBlock {
             )
           | null
         category?: ('Creative' | 'Educational' | 'Before & After') | null
-        link: {
+        actionButton: {
           label: string
           /**
            * Internal links point to Pages or Posts; external links use a full URL or scheme.
@@ -441,6 +446,7 @@ export interface BlockGalleryBlock {
            * Computed from "Open Link In".
            */
           newTab?: boolean | null
+          variant?: ('primary' | 'secondary' | 'link') | null
         }
         id?: string | null
       }[]
@@ -849,9 +855,14 @@ export interface BlockGalleryBlockSelect<T extends boolean = true> {
     | {
         media?: T
         title?: T
+        cardDescription?: T
+        bestFor?: T
+        input?: T
+        output?: T
+        formats?: T
         specialty?: T
         category?: T
-        link?:
+        actionButton?:
           | T
           | {
               label?: T
@@ -862,6 +873,7 @@ export interface BlockGalleryBlockSelect<T extends boolean = true> {
               target?: T
               url?: T
               newTab?: T
+              variant?: T
             }
         id?: T
       }

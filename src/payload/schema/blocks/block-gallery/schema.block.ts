@@ -9,7 +9,7 @@ import {
   uploadField,
   arrayField,
   selectField,
-  linkField,
+  actionButtonField,
 } from '../../fields'
 
 export const IDENTIFIER = 'block-gallery' as const
@@ -41,6 +41,11 @@ export const BlockGalleryBlock = {
       fields: [
         uploadField('media', { label: 'Media', required: true }),
         textField({ name: 'title', label: 'Title', required: true }),
+        textField({ name: 'cardDescription', label: 'Description (Modal)' }),
+        textField({ name: 'bestFor', label: 'Best for' }),
+        textField({ name: 'input', label: 'Input' }),
+        textField({ name: 'output', label: 'Output' }),
+        textField({ name: 'formats', label: 'Formats' }),
         selectField({
           name: 'specialty',
           label: 'Specialty',
@@ -61,7 +66,7 @@ export const BlockGalleryBlock = {
             { label: 'Before & After', value: 'Before & After' },
           ],
         }),
-        linkField({ name: 'link', label: 'Link' }),
+        actionButtonField({ name: 'actionButton', label: 'Action Button' }),
       ],
     }),
   ],

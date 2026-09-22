@@ -6,25 +6,8 @@ export const useScrollDetection = () => {
   const { scrollY } = useScroll()
   const pathname = usePathname()
   const [isVisible, setIsVisible] = useState(true)
-  const [lastScrollY, setLastScrollY] = useState(0)
   const [withBackground, setWithBackground] = useState(false)
   const [isLight, setIsLight] = useState(false)
-
-  const checkTheme = () => {
-    // Check if there is a hero block on the page
-    const hero = document.querySelector('[data-is-hero="true"]')
-    if (!hero) {
-      setIsLight(true)
-    } else {
-      const rect = hero.getBoundingClientRect()
-      // If the bottom of the hero block is at or above the header height
-      if (rect.bottom <= 80) {
-        setIsLight(true)
-      } else {
-        setIsLight(false)
-      }
-    }
-  }
 
   // Run on mount and whenever the route changes
   useEffect(() => {
@@ -33,29 +16,36 @@ export const useScrollDetection = () => {
     return () => clearTimeout(timeoutId)
   }, [pathname])
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    setLastScrollY(latest)
+  const checkTheme = (latest?: number) => {
+    const currentScroll = latest ?? scrollY.get()
+    const hero = document.querySelector('[data-is-hero="true"]')
 
-    if (latest > lastScrollY) {
-      setIsVisible(false)
-    }
-
-    if (latest < lastScrollY) {
-      setIsVisible(true)
-    }
-
-    if (latest !== 0 && isVisible) {
-      setWithBackground(true)
+    if (!hero) {
+      setIsLight(true)
+      setWithBackground(currentScroll > 0)
     } else {
-      setWithBackground(false)
+      const rect = hero.getBoundingClientRect()
+      if (rect.bottom <= 80) {
+        setIsLight(true)
+        setWithBackground(true)
+      } else {
+        setIsLight(false)
+        setWithBackground(false)
+      }
     }
+  }
 
-    checkTheme()
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const prev = scrollY.getPrevious() ?? 0
+
+    setIsVisible(latest < prev || latest <= 0)
+
+    checkTheme(latest)
   })
 
   return {
     withBackground,
     isVisible,
-    isLight,
+    isLight: withBackground || isLight,
   }
 }

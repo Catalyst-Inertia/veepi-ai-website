@@ -211,7 +211,13 @@ export interface Page {
     og_image?: (string | null) | Media
   }
   contents?:
-    | (BlockHeroBlock | BlockGalleryBlock | BlockPricingBlock | BlockFaqBlock)[]
+    | (
+        | BlockHeroBlock
+        | BlockGalleryBlock
+        | BlockPricingBlock
+        | BlockFaqBlock
+        | BlockHowItWorksBlock
+      )[]
     | null
   updatedAt: string
   createdAt: string
@@ -339,7 +345,13 @@ export interface Post {
     og_image?: (string | null) | Media
   }
   contents?:
-    | (BlockHeroBlock | BlockGalleryBlock | BlockPricingBlock | BlockFaqBlock)[]
+    | (
+        | BlockHeroBlock
+        | BlockGalleryBlock
+        | BlockPricingBlock
+        | BlockFaqBlock
+        | BlockHowItWorksBlock
+      )[]
     | null
   updatedAt: string
   createdAt: string
@@ -618,6 +630,46 @@ export interface BlockFaqBlock {
   blockType: 'block-faq'
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockHowItWorksBlock".
+ */
+export interface BlockHowItWorksBlock {
+  /**
+   * Block-type identifier — distinguishes this block from other block types.
+   */
+  identifier?: string | null
+  /**
+   * Unique anchor for this section. Auto-generated, but you can override it.
+   */
+  sectionId?: string | null
+  title: string
+  description?: {
+    root: {
+      type: string
+      children: {
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  } | null
+  steps?:
+    | {
+        title: string
+        description?: string | null
+        id?: string | null
+      }[]
+    | null
+  id?: string | null
+  blockName?: string | null
+  blockType: 'block-how-it-works'
+}
+/**
  * Submissions are created via the public API. Creation is disabled in the admin UI (access control).
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -799,6 +851,7 @@ export interface PagesSelect<T extends boolean = true> {
         'block-gallery'?: T | BlockGalleryBlockSelect<T>
         'block-pricing'?: T | BlockPricingBlockSelect<T>
         'block-faq'?: T | BlockFaqBlockSelect<T>
+        'block-how-it-works'?: T | BlockHowItWorksBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T
@@ -941,6 +994,25 @@ export interface BlockFaqBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockHowItWorksBlock_select".
+ */
+export interface BlockHowItWorksBlockSelect<T extends boolean = true> {
+  identifier?: T
+  sectionId?: T
+  title?: T
+  description?: T
+  steps?:
+    | T
+    | {
+        title?: T
+        description?: T
+        id?: T
+      }
+  id?: T
+  blockName?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -962,6 +1034,7 @@ export interface PostsSelect<T extends boolean = true> {
         'block-gallery'?: T | BlockGalleryBlockSelect<T>
         'block-pricing'?: T | BlockPricingBlockSelect<T>
         'block-faq'?: T | BlockFaqBlockSelect<T>
+        'block-how-it-works'?: T | BlockHowItWorksBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T

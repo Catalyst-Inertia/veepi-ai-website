@@ -402,6 +402,7 @@ export default function ContentsBlockGallery({
               {selectedCard.actionButton && (
                 <PayloadLink
                   link={selectedCard.actionButton}
+                  onClick={() => setSelectedCard(null)}
                   className="group relative mt-2 flex w-[265px] h-[48px] items-center justify-between rounded-xl border border-white/20 bg-transparent px-6 py-2 transition-all hover:bg-white/5"
                 >
                   <span className="font-text text-[10px] font-bold leading-none uppercase tracking-[2px] text-[#FBF2E9]">

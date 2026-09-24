@@ -9,15 +9,15 @@ import { useScrollDetection } from '@/hooks/ui/scroll-detection'
 
 export default function ContainerPageHeaderDesktop() {
   const router = useRouter()
-  const { withBackground, isLight } = useScrollDetection()
+  const { withBackground, isLight, isVisible } = useScrollDetection()
 
   return (
     <>
       <AnimatePresence key={'header-animation'} mode="sync">
         <motion.header
-          className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? (isLight ? 'drop-shadow-lg' : 'bg-black-color drop-shadow-lg') : 'bg-transparent'} min-h-[80px] flex items-center`}
+          className={`fixed w-full top-0 z-50 transition-[background] ${withBackground ? 'bg-white drop-shadow-lg' : 'bg-transparent'} min-h-[80px] flex items-center`}
           initial={{ y: 0 }}
-          animate={{ y: 0 }}
+          animate={{ y: isVisible ? 0 : '-110%' }}
           transition={{ duration: 0.3 }}
         >
           <BoxContainer sectionClassName="w-full">

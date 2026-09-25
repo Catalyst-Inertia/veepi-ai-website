@@ -133,46 +133,6 @@ const externalUrlValidate: Validate = (value, { siblingData }) => {
  * 2. Dedupe — repeated links to the same target within one request reuse
  *    the first resolution instead of re-querying.
  */
-type ResolveState = {
-  pending: Set<string>
-  settled: Map<string, string | null>
-}
-
-const resolveStates = new WeakMap<PayloadRequest, ResolveState>()
-
-const getResolveState = (req: PayloadRequest): ResolveState => {
-  let state = resolveStates.get(req)
-  if (!state) {
-    state = { pending: new Set(), settled: new Map() }
-    resolveStates.set(req, state)
-  }
-  return state
-}
-
-const resolvePathFor = async (
-  req: PayloadRequest,
-  key: string,
-  compute: () => Promise<string | null>,
-): Promise<string | null> => {
-  const state = getResolveState(req)
-  if (state.pending.has(key)) return null
-  const cached = state.settled.get(key)
-  if (cached !== undefined) return cached
-  state.pending.add(key)
-  try {
-    const path = await compute()
-    state.settled.set(key, path)
-    return path
-  } catch {
-    // A broken target (deleted doc, foreign/stale id) must not take down
-    // the read of the document containing the link. The renderer contract
-    // treats null url as "no link".
-    state.settled.set(key, null)
-    return null
-  } finally {
-    state.pending.delete(key)
-  }
-}
 
 const resolvePostPath = async (
   slug: string,
@@ -194,17 +154,18 @@ const resolvePostPath = async (
     groupId = typeof id === 'string' ? id : null
   }
   if (!groupId) return null
-  return resolvePathFor(req, `groups:${groupId}`, async () => {
+  return (async () => {
     const groupDoc = await req.payload.findByID({
       collection: 'groups',
       id: groupId,
       depth: 0,
       req,
+      context: { ...req.context, isLinkResolution: true },
     })
     return groupDoc && typeof groupDoc.prefix === 'string'
       ? groupDoc.prefix.replace(/\/+$/, '')
       : null
-  }).then((prefix) => (prefix ? `${prefix}/${slug}` : null))
+  })().then((prefix) => (prefix ? `${prefix}/${slug}` : null))
 }
 
 /** Appends a validated section anchor to a resolved public path. */
@@ -240,8 +201,6 @@ const urlAfterRead: FieldHook = async ({ siblingData, req }) => {
     if (typeof externalUrl !== 'string' || externalUrl.length === 0) {
       return null
     }
-    // Bare `wa.me/<number>` is advertised by the admin UI but resolves as a
-    // relative URL in the browser; normalize it to an absolute WhatsApp link.
     return /^wa\.me\//i.test(externalUrl)
       ? `https://wa.me/${externalUrl.slice(6)}`
       : externalUrl
@@ -287,39 +246,28 @@ const urlAfterRead: FieldHook = async ({ siblingData, req }) => {
   }
 
   if (typeof value !== 'string' || value.length === 0) return null
-  if (relationTo === 'pages') {
-    const path = await resolvePathFor(req, `pages:${value}`, async () => {
-      const page = await req.payload.findByID({
-        collection: 'pages',
-        id: value,
-        depth: 0,
-        // Pass the current req so the per-request cycle guard above is
-        // shared down the read chain and can cut self-referential links.
-        req,
-      })
-      if (!page || typeof page.slug !== 'string') return null
-      return page.isHomepage === true ? '/' : `/${page.slug}`
-    })
-    // Anchor appended outside the memo: two links may share a target page
-    // but use different section ids.
-    return path ? withSectionHash(path, sectionId) : null
-  }
-  const path = await resolvePathFor(req, `posts:${value}`, async () => {
-    const post = await req.payload.findByID({
-      collection: 'posts',
-      id: value,
-      // depth 0: populating the post's group would cascade into the group's
-      // `posts` join field (group -> join posts -> group -> ...) and hang.
-      // resolvePostPath resolves the prefix from the raw group id instead.
-      depth: 0,
-      req,
-    })
-    if (!post || typeof post.slug !== 'string') return null
-    return resolvePostPath(post.slug, post.group, req)
-  })
-  return path ? withSectionHash(path, sectionId) : null
-}
 
+  // Fetch raw doc bypassing hooks to prevent recursive loop / cycle guard deadlocks.
+  // SAFETY: db.findOne returns the raw document, which we manually type-check.
+  const page = (await req.payload.db.findOne({
+    collection: 'pages',
+    where: { id: { equals: value } },
+    req,
+  })) as unknown as Record<string, unknown> | null
+  if (!page || typeof page.slug !== 'string') return null
+  const pagePath = page.isHomepage === true ? '/' : `/${page.slug}`
+  return pagePath ? withSectionHash(pagePath, sectionId) : null
+  // SAFETY: db.findOne returns the raw document, which we manually type-check.
+  const post = (await req.payload.db.findOne({
+    collection: 'posts',
+    where: { id: { equals: value } },
+    req,
+  })) as unknown as Record<string, unknown> | null
+  if (!post || typeof post.slug !== 'string') return null
+  const postPath = await resolvePostPath(post.slug as string, post.group, req)
+  if (!postPath) return null
+  return withSectionHash(postPath as string, sectionId)
+}
 // --- shared inner fields ------------------------------------------------------
 // Used by `linkField` (single link group) and `groupLinkField` (link array).
 

@@ -6,10 +6,12 @@ import { BlockHeroBlock } from './block-hero/schema.block'
 import { BlockGalleryBlock } from './block-gallery/schema.block'
 import { BlockPricingBlock } from './block-pricing/schema.block'
 import { BlockFaqBlock } from './block-faq/schema.block'
+import { BlockHowItWorksBlock } from './block-how-it-works/schema.block'
 
 export const allBlocks: Block[] = [
   BlockHeroBlock,
   BlockGalleryBlock,
   BlockPricingBlock,
   BlockFaqBlock,
+  BlockHowItWorksBlock,
 ]

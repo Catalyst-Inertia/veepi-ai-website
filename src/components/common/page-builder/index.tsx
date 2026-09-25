@@ -13,6 +13,8 @@ import { BlockPricingBlock } from '@/payload/schema/blocks/block-pricing/schema.
 import ContentsBlockPricing from '@/payload/schema/blocks/block-pricing/component.block'
 import { BlockFaqBlock } from '@/payload/schema/blocks/block-faq/schema.block'
 import ContentsBlockFaq from '@/payload/schema/blocks/block-faq/component.block'
+import { BlockHowItWorksBlock } from '@/payload/schema/blocks/block-how-it-works/schema.block'
+import ContentsBlockHowItWorks from '@/payload/schema/blocks/block-how-it-works/component.block'
 // AUTO-MANAGED SECTION END
 
 type BlockProps<K extends Block['blockType']> = { id?: string } & Extract<
@@ -30,6 +32,7 @@ const blockRegistry = {
   [BlockGalleryBlock.slug]: ContentsBlockGallery,
   [BlockPricingBlock.slug]: ContentsBlockPricing,
   [BlockFaqBlock.slug]: ContentsBlockFaq,
+  [BlockHowItWorksBlock.slug]: ContentsBlockHowItWorks,
 } satisfies { [K in Block['blockType']]: ComponentType<BlockProps<K>> }
 
 export default function PageBuilder({ blocks }: { blocks: Block[] }) {

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
-import { jsonField, groupField, dateField, textField } from '../fields'
+import { groupField, dateField, textField, selectField } from '../fields'
+import { CONTACT_CONTENT_TYPE_OPTIONS } from '@/cms/inquiries/options'
 
 export const Inquiries: CollectionConfig = {
   slug: 'inquiries',
@@ -7,11 +8,19 @@ export const Inquiries: CollectionConfig = {
   admin: {
     defaultColumns: [
       'metadata.formType',
+      'submission.fullName',
+      'submission.email',
       'metadata.submittedAt',
       'metadata.originPath',
     ],
+    components: {
+      listMenuItems: [
+        '/src/payload/components/form-type-filter#FormTypeFilter',
+      ],
+    },
     description:
-      'Submissions are created via the public API. Creation is disabled in the admin UI (access control).',
+      'Submissions are created via the public API (contact form popup and footer newsletter form).',
+    listSearchableFields: ['submission.email', 'submission.fullName'],
   },
   access: {
     create: () => true,
@@ -20,16 +29,47 @@ export const Inquiries: CollectionConfig = {
     delete: ({ req }) => req.user != null,
   },
   fields: [
-    jsonField({
+    groupField({
       name: 'submission',
       label: 'Submission',
-      required: true,
-      admin: {
-        readOnly: true,
-        components: {
-          Field: '/src/payload/components/submission-table#SubmissionTable',
-        },
-      },
+      fields: [
+        textField({
+          name: 'fullName',
+          label: 'Full Name',
+          admin: { readOnly: true },
+          required: false,
+        }),
+        textField({
+          name: 'email',
+          label: 'Email',
+          admin: { readOnly: true },
+          required: false,
+        }),
+        textField({
+          name: 'practice',
+          label: 'Practice',
+          admin: { readOnly: true },
+          required: false,
+        }),
+        textField({
+          name: 'role',
+          label: 'Role',
+          admin: { readOnly: true },
+          required: false,
+        }),
+        selectField({
+          name: 'contentTypes',
+          label: 'Content Types',
+          hasMany: true,
+          // SAFETY: Payload options type is mutable, but our options are defined as readonly `as const`
+          options: CONTACT_CONTENT_TYPE_OPTIONS as unknown as {
+            label: string
+            value: string
+          }[],
+          admin: { readOnly: true },
+          required: false,
+        }),
+      ],
     }),
     groupField({
       name: 'metadata',
@@ -44,7 +84,14 @@ export const Inquiries: CollectionConfig = {
         textField({ name: 'ip', label: 'IP Address' }),
         textField({ name: 'userAgent', label: 'User Agent' }),
         textField({ name: 'originPath', label: 'Origin Page Path' }),
-        textField({ name: 'formType', label: 'Form Type' }),
+        selectField({
+          name: 'formType',
+          label: 'Form Type',
+          options: [
+            { label: 'Contact Form', value: 'contact-popup' },
+            { label: 'Newsletter', value: 'newsletter' },
+          ],
+        }),
       ],
     }),
   ],

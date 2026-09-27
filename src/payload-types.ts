@@ -670,28 +670,35 @@ export interface BlockHowItWorksBlock {
   blockType: 'block-how-it-works'
 }
 /**
- * Submissions are created via the public API. Creation is disabled in the admin UI (access control).
+ * Submissions are created via the public API (contact form popup and footer newsletter form).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "inquiries".
  */
 export interface Inquiry {
   id: string
-  submission:
-    | {
-        [k: string]: unknown
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null
+  submission?: {
+    fullName?: string | null
+    email?: string | null
+    practice?: string | null
+    role?: string | null
+    contentTypes?:
+      | (
+          | 'before-and-after'
+          | 'educational'
+          | 'patient-journeys'
+          | 'doctor-branding'
+          | 'social-content'
+          | 'others'
+        )[]
+      | null
+  }
   metadata: {
     submittedAt: string
     ip?: string | null
     userAgent?: string | null
     originPath?: string | null
-    formType?: string | null
+    formType?: ('contact-popup' | 'newsletter') | null
   }
   updatedAt: string
   createdAt: string
@@ -1055,7 +1062,15 @@ export interface GroupsSelect<T extends boolean = true> {
  * via the `definition` "inquiries_select".
  */
 export interface InquiriesSelect<T extends boolean = true> {
-  submission?: T
+  submission?:
+    | T
+    | {
+        fullName?: T
+        email?: T
+        practice?: T
+        role?: T
+        contentTypes?: T
+      }
   metadata?:
     | T
     | {

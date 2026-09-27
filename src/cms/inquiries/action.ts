@@ -7,7 +7,7 @@ import { ALLOWED_CONTENT_TYPES, type ContactContentType } from './options'
 
 export type SubmitContactInquiryInput = {
   fullName: string
-  workEmail: string
+  email: string
   practice: string
   role: string
   contentTypes: string[]
@@ -22,7 +22,7 @@ export async function submitContactInquiry(
   input: SubmitContactInquiryInput,
 ): Promise<SubmitContactInquiryResult> {
   const fullName = input.fullName?.trim() ?? ''
-  const workEmail = input.workEmail?.trim() ?? ''
+  const email = input.email?.trim() ?? ''
   const practice = input.practice?.trim() ?? ''
   const role = input.role?.trim() ?? ''
   const contentTypes = Array.isArray(input.contentTypes)
@@ -39,7 +39,7 @@ export async function submitContactInquiry(
       error: 'Please fill in all fields and choose at least one option.',
     }
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(workEmail)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { ok: false, error: 'Please enter a valid email address.' }
   }
 
@@ -49,7 +49,7 @@ export async function submitContactInquiry(
   await payload.create({
     collection: 'inquiries',
     data: {
-      submission: { fullName, workEmail, practice, role, contentTypes },
+      submission: { fullName, email, practice, role, contentTypes },
       metadata: {
         formType: 'contact-popup',
         originPath: input.originPath,

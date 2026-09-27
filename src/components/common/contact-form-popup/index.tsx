@@ -224,7 +224,7 @@ export function ContactFormPopup() {
     try {
       const result = await submitContactInquiry({
         fullName,
-        workEmail,
+        email: workEmail,
         practice,
         role,
         contentTypes,

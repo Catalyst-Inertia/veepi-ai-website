@@ -7,7 +7,7 @@ import { join } from 'node:path'
 
 export async function buildGalleryBlock(
   placeholderMediaId: string | undefined,
-  pricingPageId: string,
+  homepageId: string,
 ): Promise<(BlockGalleryBlock & { blockType: 'block-gallery' }) | null> {
   if (!placeholderMediaId) return null
 
@@ -107,7 +107,8 @@ export async function buildGalleryBlock(
       media: mediaId,
       actionButton: {
         type: 'internal',
-        internalUrl: { relationTo: 'pages', value: pricingPageId },
+        internalUrl: { relationTo: 'pages', value: homepageId },
+        sectionId: 'pricing',
         label: 'CREATE SOMETHING LIKE THIS',
         variant: 'primary',
       },

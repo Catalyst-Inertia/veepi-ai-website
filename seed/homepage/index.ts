@@ -9,6 +9,7 @@ import { buildHeroBlock } from './block-hero'
 import { buildPricingBlock } from './block-pricing'
 import { buildFaqBlock } from './block-faq'
 import { buildGalleryBlock } from './block-gallery'
+import { buildHowItWorksBlock } from './block-how-it-works'
 
 export async function seedHomepage(): Promise<void> {
   // Upload section media (webm videos where available), then compose the
@@ -60,24 +61,28 @@ export async function seedHomepage(): Promise<void> {
     contents.push(heroBlock)
   }
 
-  const pricingPage = await payload.find({
+  contents.push(buildHowItWorksBlock())
+
+  let homepageId = ''
+  const existingHomepageResult = await payload.find({
     collection: 'pages',
-    where: { slug: { equals: 'pricing' } },
+    where: { isHomepage: { equals: true } },
     limit: 1,
     depth: 0,
   })
-  let pricingPageId = pricingPage.docs[0]?.id
-  if (!pricingPageId) {
+  if (existingHomepageResult.docs.length > 0) {
+    homepageId = String(existingHomepageResult.docs[0].id)
+  } else {
     const p = await payload.create({
       collection: 'pages',
-      data: { title: 'Pricing', slug: 'pricing' },
+      data: { title: 'Homepage', slug: 'homepage', isHomepage: true },
     })
-    pricingPageId = p.id
+    homepageId = String(p.id)
   }
 
   const galleryBlock = await buildGalleryBlock(
     heroBgId || mastheadId,
-    String(pricingPageId),
+    homepageId,
   )
   if (galleryBlock) {
     contents.push(galleryBlock)
@@ -88,16 +93,14 @@ export async function seedHomepage(): Promise<void> {
 
   // Preserve existing blocks after pricing/faq
   try {
-    const existingHomepage = await payload.find({
-      collection: 'pages',
-      where: { isHomepage: { equals: true } },
-      limit: 1,
-      depth: 0,
-    })
-    if (existingHomepage.docs.length > 0 && existingHomepage.docs[0].contents) {
-      const existingBlocks = existingHomepage.docs[0].contents.filter(
+    if (
+      existingHomepageResult.docs.length > 0 &&
+      existingHomepageResult.docs[0].contents
+    ) {
+      const existingBlocks = existingHomepageResult.docs[0].contents.filter(
         (b) =>
           b.blockType !== 'block-hero' &&
+          b.blockType !== 'block-how-it-works' &&
           b.blockType !== 'block-pricing' &&
           b.blockType !== 'block-gallery' &&
           b.blockType !== 'block-faq',

@@ -4,15 +4,15 @@ import type { Block } from 'payload'
 import {
   identifierField,
   sectionIdField,
+  textField,
   richTextField,
-  uploadField,
-  arrayField,
-  selectField,
   actionButtonField,
+  uploadField,
 } from '../../fields'
 
-// Exported so the renderer types blockType via typeof IDENTIFIER (single
-// source of truth for the slug).
+// Spec item 3: block slugs use the lowercase block-<name> convention.
+// Exported so the renderer can type blockType via typeof IDENTIFIER (single
+// source of truth for the slug — components never duplicate the literal).
 export const IDENTIFIER = 'block-hero' as const
 
 const thumbnailUrl = `data:image/webp;base64,${readFileSync(
@@ -26,41 +26,20 @@ export const BlockHeroBlock = {
   admin: {
     images: {
       thumbnail: {
+        // TODO: replace thumbnail.webp with a block-specific image (3:2, e.g. 600x400)
         url: thumbnailUrl,
-        alt: 'Hero block thumbnail',
+        alt: 'BlockHero block thumbnail',
       },
     },
   },
   fields: [
     identifierField({ defaultValue: IDENTIFIER }),
-    sectionIdField('hero'),
-    uploadField('backgroundMedia', {
-      label: 'Background Media',
-      required: true,
-    }),
-    arrayField({
-      name: 'animatedTexts',
-      label: 'Animated Texts',
-      fields: [
-        selectField({
-          name: 'textStyle',
-          label: 'Text Style',
-          options: [
-            { label: 'Heading (Large Serif)', value: 'heading' },
-            { label: 'Description (Small Sans)', value: 'description' },
-          ],
-          defaultValue: 'heading',
-          required: true,
-        }),
-        richTextField({ name: 'text', label: 'Content' }),
-      ],
-    }),
+    sectionIdField('block-hero'),
+    textField({ name: 'title', label: 'Title', required: true }),
+    textField({ name: 'heading', label: 'Heading', required: true }),
+    textField({ name: 'subText', label: 'Sub Text', required: true }),
+    uploadField('logo', { label: 'Logo', required: true }),
     richTextField({ name: 'description', label: 'Description' }),
-    arrayField({
-      name: 'logos',
-      label: 'Logos',
-      fields: [uploadField('logo', { label: 'Logo', required: true })],
-    }),
     actionButtonField({ name: 'cta', label: 'Call to Action' }),
   ],
 } satisfies Block

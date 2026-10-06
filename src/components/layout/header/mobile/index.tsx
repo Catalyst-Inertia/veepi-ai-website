@@ -119,13 +119,37 @@ export default function ContainerPageHeaderMobile() {
                         </div>
                       )
                     })}
+                    <button
+                      type="button"
+                      className="mt-8 flex w-full max-w-[280px] items-center justify-center gap-2 rounded-xl border border-black/20 bg-black px-8 py-4 text-[16px] font-medium text-white transition-all hover:bg-[linear-gradient(to_right,var(--second_color),var(--primary_color))] hover:border-transparent"
+                      onClick={() => {
+                        router.push('/login')
+                        setOpenMenu(false)
+                      }}
+                    >
+                      LOG IN
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16l4-4-4-4" />
+                        <path d="M8 12h8" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
                 <div className="w-full self-end pb-6">
                   <div className="flex flex-wrap justify-between pt-[180px]">
                     <div className="w-full lg:w-fit mb-6 lg:mb-0 ">
                       <div className="text-[18px] text-black">
-                        © Outlet23 All rights reserved.
+                        © 2026 VeePi. All rights reserved.
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-8">

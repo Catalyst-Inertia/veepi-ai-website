@@ -5,16 +5,16 @@ import { resolveSectionIds } from './section-ids'
 // AUTO-MANAGED SECTION — block schema/component imports below are added by
 // scripts/create-block.ts (bun run make:block) and renamed by scripts/rename-block.ts.
 // Do not edit manually.
+import { BlockGalleryBlock } from '@/payload/schema/blocks/block-gallery.DEPRECATED/schema.block'
+import ContentsBlockGallery from '@/payload/schema/blocks/block-gallery.DEPRECATED/component.block'
+import { BlockPricingBlock } from '@/payload/schema/blocks/block-pricing.DEPRECATED/schema.block'
+import ContentsBlockPricing from '@/payload/schema/blocks/block-pricing.DEPRECATED/component.block'
+import { BlockFaqBlock } from '@/payload/schema/blocks/block-faq.DEPRECATED/schema.block'
+import ContentsBlockFaq from '@/payload/schema/blocks/block-faq.DEPRECATED/component.block'
+import { BlockHowItWorksBlock } from '@/payload/schema/blocks/block-how-it-works.DEPRECATED/schema.block'
+import ContentsBlockHowItWorks from '@/payload/schema/blocks/block-how-it-works.DEPRECATED/component.block'
 import { BlockHeroBlock } from '@/payload/schema/blocks/block-hero/schema.block'
 import ContentsBlockHero from '@/payload/schema/blocks/block-hero/component.block'
-import { BlockGalleryBlock } from '@/payload/schema/blocks/block-gallery/schema.block'
-import ContentsBlockGallery from '@/payload/schema/blocks/block-gallery/component.block'
-import { BlockPricingBlock } from '@/payload/schema/blocks/block-pricing/schema.block'
-import ContentsBlockPricing from '@/payload/schema/blocks/block-pricing/component.block'
-import { BlockFaqBlock } from '@/payload/schema/blocks/block-faq/schema.block'
-import ContentsBlockFaq from '@/payload/schema/blocks/block-faq/component.block'
-import { BlockHowItWorksBlock } from '@/payload/schema/blocks/block-how-it-works/schema.block'
-import ContentsBlockHowItWorks from '@/payload/schema/blocks/block-how-it-works/component.block'
 // AUTO-MANAGED SECTION END
 
 type BlockProps<K extends Block['blockType']> = { id?: string } & Extract<
@@ -28,11 +28,11 @@ type BlockProps<K extends Block['blockType']> = { id?: string } & Extract<
 // blockRegistry entries are auto-managed by scripts/create-block.ts and
 // scripts/rename-block.ts — do not add/remove entries by hand.
 const blockRegistry = {
-  [BlockHeroBlock.slug]: ContentsBlockHero,
   [BlockGalleryBlock.slug]: ContentsBlockGallery,
   [BlockPricingBlock.slug]: ContentsBlockPricing,
   [BlockFaqBlock.slug]: ContentsBlockFaq,
   [BlockHowItWorksBlock.slug]: ContentsBlockHowItWorks,
+  [BlockHeroBlock.slug]: ContentsBlockHero,
 } satisfies { [K in Block['blockType']]: ComponentType<BlockProps<K>> }
 
 export default function PageBuilder({ blocks }: { blocks: Block[] }) {

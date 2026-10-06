@@ -1,12 +1,11 @@
 'use client'
 
+import { useRef } from 'react'
 import { IDENTIFIER } from './schema.block'
 import type { Block } from '@/types/blocks'
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import PayloadLink from '@/components/common/payload-link'
 import Media from '@/components/common/media'
-import BoxContainer from '@/components/container/boxed'
-import { useRef } from 'react'
+import PayloadLink from '@/components/common/payload-link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
@@ -19,7 +18,7 @@ export type BlockHeroProps = { id?: string } & Extract<
 >
 
 export default function ContentsBlockHero(props: BlockHeroProps) {
-  const { id, backgroundMedia, animatedTexts, description, logos, cta } = props
+  const { id, title, heading, subText, logo, description, cta } = props
   const sectionRef = useRef<HTMLElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -31,18 +30,17 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
       )
       if (elements.length === 0) return
 
-      // Position all text elements absolutely in the center
-      gsap.set(containerRef.current, { position: 'relative' })
+      // Every panel sits centered in its own viewport-height screen,
+      // matching the Figma positions (50%-centered inside each 810px band).
       gsap.set(elements, {
         position: 'absolute',
-        top: '50%',
         left: '50%',
+        top: '50%',
         xPercent: -50,
         yPercent: -50,
-        width: '100%',
       })
 
-      // Start all elements EXCEPT the first one hidden at bottom of screen
+      // Panels after the first start hidden below the viewport.
       if (elements.length > 1) {
         gsap.set(elements.slice(1), { autoAlpha: 0, y: window.innerHeight })
       }
@@ -53,19 +51,18 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
           start: 'top top',
           end: `+=${elements.length * 100}%`,
           pin: true,
-          scrub: true,
+          scrub: 1,
         },
       })
 
       for (let i = 0; i < elements.length - 1; i++) {
-        const current = elements[i]
-        const next = elements[i + 1]
-
-        tl.to(
-          current,
-          { y: -window.innerHeight, autoAlpha: 0, duration: 1 },
-          i > 0 ? '+=0.5' : undefined,
-        ).to(next, { y: 0, autoAlpha: 1, duration: 1 }, '<0.5')
+        tl.to(elements[i], {
+          autoAlpha: 0,
+          y: -window.innerHeight,
+          duration: 1,
+        })
+        tl.to(elements[i + 1], { autoAlpha: 1, y: 0, duration: 1 }, '<')
+        tl.to({}, { duration: 0.5 })
       }
     },
     { scope: sectionRef },
@@ -73,96 +70,86 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
 
   return (
     <section
-      data-is-hero="true"
       id={id}
       ref={sectionRef}
-      className="bg-black-color relative w-full h-screen overflow-hidden flex flex-col"
+      data-is-hero="true"
+      className="relative w-full h-screen overflow-hidden bg-[#1E1E1E]"
     >
-      {/* Background media + gradient scrim */}
-      <div className="absolute inset-0 z-0">
-        {backgroundMedia && (
-          <Media media={backgroundMedia} objectFit="cover" priority />
-        )}
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(23,21,21,0.55)_0%,rgba(23,21,21,0.15)_25%,rgba(23,21,21,0.10)_55%,rgba(23,21,21,0.80)_100%)]" />
-      </div>
+      <video
+        src="/videos/hero-bg.webm"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      />
 
-      {/* Title — dead center */}
-      <div className="absolute inset-0 z-10 flex items-center justify-center text-center px-4 pointer-events-none">
-        <div ref={containerRef} className="w-full max-w-[1000px] h-[200px]">
-          {animatedTexts?.map((item, index) => {
-            if (item.textStyle === 'heading') {
-              return (
-                <div
-                  key={item.id || index}
-                  className="font-title leading-[1.05] text-[#FBF2E9] w-full mx-auto max-w-[1000px] [&_p]:text-[36px] md:[&_p]:text-[80px] lg:[&_p]:text-[120px] text-center [&_p]:text-center [&_p]:m-0 pointer-events-auto"
-                >
-                  <RichText data={item.text!} />
-                </div>
-              )
-            }
-            return (
-              <div
-                key={item.id || index}
-                className="w-full mx-auto max-w-[800px] text-center font-text text-[16px] md:text-[18px] leading-relaxed text-[#FBF2E9] px-4 flex flex-col gap-6 pointer-events-auto [&_p]:m-0 [&_p]:text-center"
-              >
-                <RichText data={item.text!} />
-              </div>
-            )
-          })}
+      {/* Dark overlay to make text readable */}
+      <div className="absolute inset-0 bg-black/40 z-0" />
+
+      <div
+        ref={containerRef}
+        className="relative z-10 w-full h-full max-w-[1440px] mx-auto pointer-events-none"
+      >
+        {/* Screen 1: Hero Title — FreightDispCmp 120/96, Linen, centered */}
+        <div className="w-full max-w-full text-center pointer-events-auto whitespace-nowrap max-lg:whitespace-normal px-[5%]">
+          <h1 className="font-title font-normal text-[120px] leading-[96px] text-[#FBF2E9] max-md:text-[60px] max-md:leading-tight">
+            {title}
+          </h1>
         </div>
-      </div>
 
-      {/* Bottom bar: tagline + logos left, CTA right */}
-      <div className="relative isolate z-10 pt-32 pb-10 md:pb-12 w-full mt-auto">
-        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent -z-10 pointer-events-none" />
-        <BoxContainer>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="flex flex-col gap-4 text-[#FBF2E9]">
-              {description && (
-                <div className="leading-snug max-w-[600px] [&_p]:text-[13px]">
-                  <RichText data={description} />
-                </div>
-              )}
-              {logos && logos.length > 0 && (
-                <div className="flex items-center gap-6">
-                  {logos.map((item, i) =>
-                    item.logo ? (
-                      <div key={i} className="relative h-[20px] w-[326px]">
-                        <Media media={item.logo} objectFit="contain" />
-                      </div>
-                    ) : null,
-                  )}
-                </div>
-              )}
+        {/* Screen 2: Hero Heading + Sub Text — centered, gap 40 */}
+        <div className="w-full max-w-full text-center flex flex-col items-center gap-[40px] pointer-events-auto px-[5%]">
+          <h2 className="font-title font-normal text-[120px] leading-[96px] text-[#FBF2E9] whitespace-nowrap max-lg:whitespace-normal max-md:text-[60px] max-md:leading-tight">
+            {heading}
+          </h2>
+          <div className="font-title font-normal text-[48px] leading-[48px] text-[#FBF2E9] whitespace-nowrap max-lg:whitespace-normal max-md:text-[24px] max-md:leading-tight">
+            {subText}
+          </div>
+        </div>
+
+        {/* Screen 3: Logo + Description + CTA — 640px column, gap 48 */}
+        <div className="w-full max-w-[640px] flex flex-col items-center gap-[48px] pointer-events-auto max-md:max-w-[90vw]">
+          <div className="flex flex-col items-center gap-[24px]">
+            {/* Logo — 121x48 */}
+            <div className="relative w-[121px] h-[48px]">
+              <Media media={logo} objectFit="contain" />
             </div>
 
-            {cta?.url && (
-              <PayloadLink
-                link={{
-                  label: '',
-                  type: cta.type,
-                  url: cta.url,
-                  newTab: cta.newTab ?? false,
-                }}
-                className="flex items-center gap-2 px-4 py-[10px] rounded-[8px] backdrop-blur-md bg-white/10 border border-white/25 hover:bg-white/20 transition-all duration-300 self-start md:self-auto shrink-0 whitespace-nowrap"
-              >
-                <span className="font-text text-[10px] leading-none uppercase tracking-[0.04em] text-[#FBF2E9]">
-                  {cta.label}
-                </span>
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 20 20"
-                  fill="#FBF2E9"
-                  aria-hidden="true"
-                >
-                  <path d="M10 1 L11.9 8.1 L19 10 L11.9 11.9 L10 19 L8.1 11.9 L1 10 L8.1 8.1 Z" />
-                  <path d="M17 13 l0.8 2.2 2.2 0.8 -2.2 0.8 -0.8 2.2 -0.8 -2.2 -2.2 -0.8 2.2 -0.8 Z" />
-                </svg>
-              </PayloadLink>
-            )}
+            {/* Description — h3: FreightDispCmp 48/48, p: Sofia Pro 16/24, gap 24 */}
+            <div className="text-center text-[#FBF2E9] flex flex-col items-center gap-[24px] max-w-none [&_h3]:font-title [&_h3]:font-normal [&_h3]:text-[48px] [&_h3]:leading-[48px] [&_h3]:m-0 [&_p]:font-text [&_p]:font-normal [&_p]:text-[16px] [&_p]:leading-[24px] [&_p]:m-0">
+              {description && <RichText data={description} />}
+            </div>
           </div>
-        </BoxContainer>
+
+          {/* CTA button — 285x48, gap 16, gradient, radius 8 */}
+          {cta && cta.url && (
+            <PayloadLink
+              link={cta as Parameters<typeof PayloadLink>[0]['link']}
+              className="flex flex-row justify-center items-center px-[24px] py-[12px] gap-[16px] w-[285px] h-[48px] rounded-[8px] transition-opacity hover:opacity-90 bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)]"
+            >
+              <span className="font-text font-normal text-[12px] leading-[12px] uppercase text-[#FBF2E9] flex items-center text-center">
+                {cta.label}
+              </span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.75 2.5L12 6.5L16 7.75L12 9L10.75 13L9.5 9L5.5 7.75L9.5 6.5L10.75 2.5Z"
+                  fill="#FBF2E9"
+                />
+                <path
+                  d="M18.5 13L19.25 15.25L21.5 16L19.25 16.75L18.5 19L17.75 16.75L15.5 16L17.75 15.25L18.5 13Z"
+                  fill="#FBF2E9"
+                />
+              </svg>
+            </PayloadLink>
+          )}
+        </div>
       </div>
     </section>
   )

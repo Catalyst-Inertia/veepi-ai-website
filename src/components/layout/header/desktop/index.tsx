@@ -21,34 +21,61 @@ export default function ContainerPageHeaderDesktop() {
           transition={{ duration: 0.3 }}
         >
           <BoxContainer sectionClassName="w-full">
-            <div className="flex flex-wrap justify-between items-center min-h-[113px]">
+            <div className="relative flex w-full items-center justify-between min-h-[96px]">
               <div
-                className="w-[121px] h-[48px] relative cursor-pointer"
+                className="flex items-center gap-2 cursor-pointer"
                 onClick={() => {
                   router.push('/')
                 }}
               >
-                <Image
-                  src={isLight ? '/veepi-logo-black.svg' : '/veepi-logo.svg'}
-                  fill
-                  alt="logo"
-                  style={{ objectFit: 'contain' }}
-                />
+                <div className="w-[121px] h-[48px] relative">
+                  <Image
+                    src={isLight ? '/veepi-logo-black.svg' : '/veepi-logo.svg'}
+                    fill
+                    alt="logo"
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
               </div>
-              <div
-                className={`flex flex-wrap gap-[41px] font-text text-[12px] leading-none uppercase ${isLight ? 'text-black font-bold' : 'text-[#FBF2E9]'}`}
-              >
-                {PageNavigationData.map((item) => (
-                  <div
-                    key={item.key}
-                    onClick={() => {
-                      router.push(`${item.url}`)
-                    }}
-                    className="cursor-pointer"
+
+              <div className="flex items-center gap-[41px]">
+                <div
+                  className={`hidden lg:flex items-center gap-[41px] font-text text-[12px] leading-none uppercase ${isLight ? 'text-black font-bold' : 'text-[#FBF2E9]'}`}
+                >
+                  {PageNavigationData.map((item) => (
+                    <div
+                      key={item.key}
+                      onClick={() => {
+                        router.push(`${item.url}`)
+                      }}
+                      className={`cursor-pointer transition-colors ${isLight ? 'hover:text-black/70' : 'hover:text-white/80'}`}
+                    >
+                      {item.label}
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  className={`flex items-center gap-[6px] rounded-[10px] border px-[24px] py-[12px] text-[12px] font-text leading-[12px] uppercase transition-all hover:bg-[linear-gradient(to_right,var(--second_color),var(--primary_color))] hover:text-white hover:border-transparent ${isLight ? 'border-black text-black' : 'border-[#FBF2E9] text-[#FBF2E9]'}`}
+                  onClick={() => router.push('/login')}
+                >
+                  LOG IN
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
-                    {item.label}
-                  </div>
-                ))}
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16l4-4-4-4" />
+                    <path d="M8 12h8" />
+                  </svg>
+                </button>
               </div>
             </div>
           </BoxContainer>

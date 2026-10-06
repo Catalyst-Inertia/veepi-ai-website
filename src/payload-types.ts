@@ -212,166 +212,13 @@ export interface Page {
   }
   contents?:
     | (
-        | BlockHeroBlock
         | BlockGalleryBlock
         | BlockPricingBlock
         | BlockFaqBlock
         | BlockHowItWorksBlock
-      )[]
-    | null
-  updatedAt: string
-  createdAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BlockHeroBlock".
- */
-export interface BlockHeroBlock {
-  /**
-   * Block-type identifier — distinguishes this block from other block types.
-   */
-  identifier?: string | null
-  /**
-   * Unique anchor for this section. Auto-generated, but you can override it.
-   */
-  sectionId?: string | null
-  backgroundMedia: string | Media
-  animatedTexts?:
-    | {
-        textStyle: 'heading' | 'description'
-        text?: {
-          root: {
-            type: string
-            children: {
-              type: any
-              version: number
-              [k: string]: unknown
-            }[]
-            direction: ('ltr' | 'rtl') | null
-            format:
-              | 'left'
-              | 'start'
-              | 'center'
-              | 'right'
-              | 'end'
-              | 'justify'
-              | ''
-            indent: number
-            version: number
-          }
-          [k: string]: unknown
-        } | null
-        id?: string | null
-      }[]
-    | null
-  description?: {
-    root: {
-      type: string
-      children: {
-        type: any
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  } | null
-  logos?:
-    | {
-        logo: string | Media
-        id?: string | null
-      }[]
-    | null
-  cta: {
-    label: string
-    /**
-     * Internal links point to Pages or Posts; external links use a full URL or scheme.
-     */
-    type: 'internal' | 'external'
-    /**
-     * Pick a Page or Post. Required when Link Type is "internal".
-     */
-    internalUrl?:
-      | ({
-          relationTo: 'pages'
-          value: string | Page
-        } | null)
-      | ({
-          relationTo: 'posts'
-          value: string | Post
-        } | null)
-    /**
-     * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
-     */
-    sectionId?: string | null
-    /**
-     * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
-     */
-    externalUrl?: string | null
-    target?: ('_self' | '_blank') | null
-    /**
-     * Computed: internal references resolve to their public path.
-     */
-    url?: string | null
-    /**
-     * Computed from "Open Link In".
-     */
-    newTab?: boolean | null
-    variant?: ('primary' | 'secondary' | 'link') | null
-  }
-  id?: string | null
-  blockName?: string | null
-  blockType: 'block-hero'
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: string
-  title: string
-  slug: string
-  group: string | Group
-  seo?: {
-    title?: string | null
-    description?: string | null
-    /**
-     * Comma-separated
-     */
-    keywords?: string | null
-    og_image?: (string | null) | Media
-  }
-  contents?:
-    | (
         | BlockHeroBlock
-        | BlockGalleryBlock
-        | BlockPricingBlock
-        | BlockFaqBlock
-        | BlockHowItWorksBlock
       )[]
     | null
-  updatedAt: string
-  createdAt: string
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "groups".
- */
-export interface Group {
-  id: string
-  name: string
-  /**
-   * Single path segment only (e.g. /projects). Multi-segment prefixes make posts unreachable.
-   */
-  prefix: string
-  posts?: {
-    docs?: (string | Post)[]
-    hasNextPage?: boolean
-    totalDocs?: number
-  }
   updatedAt: string
   createdAt: string
 }
@@ -466,6 +313,55 @@ export interface BlockGalleryBlock {
   id?: string | null
   blockName?: string | null
   blockType: 'block-gallery'
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string
+  title: string
+  slug: string
+  group: string | Group
+  seo?: {
+    title?: string | null
+    description?: string | null
+    /**
+     * Comma-separated
+     */
+    keywords?: string | null
+    og_image?: (string | null) | Media
+  }
+  contents?:
+    | (
+        | BlockGalleryBlock
+        | BlockPricingBlock
+        | BlockFaqBlock
+        | BlockHowItWorksBlock
+        | BlockHeroBlock
+      )[]
+    | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "groups".
+ */
+export interface Group {
+  id: string
+  name: string
+  /**
+   * Single path segment only (e.g. /projects). Multi-segment prefixes make posts unreachable.
+   */
+  prefix: string
+  posts?: {
+    docs?: (string | Post)[]
+    hasNextPage?: boolean
+    totalDocs?: number
+  }
+  updatedAt: string
+  createdAt: string
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -670,6 +566,79 @@ export interface BlockHowItWorksBlock {
   blockType: 'block-how-it-works'
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockHeroBlock".
+ */
+export interface BlockHeroBlock {
+  /**
+   * Block-type identifier — distinguishes this block from other block types.
+   */
+  identifier?: string | null
+  /**
+   * Unique anchor for this section. Auto-generated, but you can override it.
+   */
+  sectionId?: string | null
+  title: string
+  heading: string
+  subText: string
+  logo: string | Media
+  description?: {
+    root: {
+      type: string
+      children: {
+        type: any
+        version: number
+        [k: string]: unknown
+      }[]
+      direction: ('ltr' | 'rtl') | null
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
+      indent: number
+      version: number
+    }
+    [k: string]: unknown
+  } | null
+  cta: {
+    label: string
+    /**
+     * Internal links point to Pages or Posts; external links use a full URL or scheme.
+     */
+    type: 'internal' | 'external'
+    /**
+     * Pick a Page or Post. Required when Link Type is "internal".
+     */
+    internalUrl?:
+      | ({
+          relationTo: 'pages'
+          value: string | Page
+        } | null)
+      | ({
+          relationTo: 'posts'
+          value: string | Post
+        } | null)
+    /**
+     * Anchor on the target page/post. Pick the section to deep-link to; the resolved URL gets #section-id appended.
+     */
+    sectionId?: string | null
+    /**
+     * Starts with #, /, http(s)://, tel:, mailto:, or wa.me/ — e.g. /#contact, https://example.com, tel:+123, wa.me/123
+     */
+    externalUrl?: string | null
+    target?: ('_self' | '_blank') | null
+    /**
+     * Computed: internal references resolve to their public path.
+     */
+    url?: string | null
+    /**
+     * Computed from "Open Link In".
+     */
+    newTab?: boolean | null
+    variant?: ('primary' | 'secondary' | 'link') | null
+  }
+  id?: string | null
+  blockName?: string | null
+  blockType: 'block-hero'
+}
+/**
  * Submissions are created via the public API. Creation is disabled in the admin UI (access control).
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -847,52 +816,14 @@ export interface PagesSelect<T extends boolean = true> {
   contents?:
     | T
     | {
-        'block-hero'?: T | BlockHeroBlockSelect<T>
         'block-gallery'?: T | BlockGalleryBlockSelect<T>
         'block-pricing'?: T | BlockPricingBlockSelect<T>
         'block-faq'?: T | BlockFaqBlockSelect<T>
         'block-how-it-works'?: T | BlockHowItWorksBlockSelect<T>
+        'block-hero'?: T | BlockHeroBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BlockHeroBlock_select".
- */
-export interface BlockHeroBlockSelect<T extends boolean = true> {
-  identifier?: T
-  sectionId?: T
-  backgroundMedia?: T
-  animatedTexts?:
-    | T
-    | {
-        textStyle?: T
-        text?: T
-        id?: T
-      }
-  description?: T
-  logos?:
-    | T
-    | {
-        logo?: T
-        id?: T
-      }
-  cta?:
-    | T
-    | {
-        label?: T
-        type?: T
-        internalUrl?: T
-        sectionId?: T
-        externalUrl?: T
-        target?: T
-        url?: T
-        newTab?: T
-        variant?: T
-      }
-  id?: T
-  blockName?: T
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1013,6 +944,34 @@ export interface BlockHowItWorksBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockHeroBlock_select".
+ */
+export interface BlockHeroBlockSelect<T extends boolean = true> {
+  identifier?: T
+  sectionId?: T
+  title?: T
+  heading?: T
+  subText?: T
+  logo?: T
+  description?: T
+  cta?:
+    | T
+    | {
+        label?: T
+        type?: T
+        internalUrl?: T
+        sectionId?: T
+        externalUrl?: T
+        target?: T
+        url?: T
+        newTab?: T
+        variant?: T
+      }
+  id?: T
+  blockName?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1030,11 +989,11 @@ export interface PostsSelect<T extends boolean = true> {
   contents?:
     | T
     | {
-        'block-hero'?: T | BlockHeroBlockSelect<T>
         'block-gallery'?: T | BlockGalleryBlockSelect<T>
         'block-pricing'?: T | BlockPricingBlockSelect<T>
         'block-faq'?: T | BlockFaqBlockSelect<T>
         'block-how-it-works'?: T | BlockHowItWorksBlockSelect<T>
+        'block-hero'?: T | BlockHeroBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T

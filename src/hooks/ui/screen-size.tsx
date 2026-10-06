@@ -27,7 +27,7 @@ export default function useScreenSize() {
   return {
     width: windowSize.width,
     height: windowSize.height,
-    isMobile: windowSize.width <= 768,
-    isTablet: windowSize.width <= 1024,
+    isMobile: false,
+    isTablet: false,
   }
 }

@@ -7,6 +7,7 @@ import { BlockPricingBlock } from './block-pricing.DEPRECATED/schema.block'
 import { BlockFaqBlock } from './block-faq.DEPRECATED/schema.block'
 import { BlockHowItWorksBlock } from './block-how-it-works.DEPRECATED/schema.block'
 import { BlockHeroBlock } from './block-hero/schema.block'
+import { BlockShowcaseBlock } from './block-showcase/schema.block'
 
 export const allBlocks: Block[] = [
   BlockGalleryBlock,
@@ -14,4 +15,5 @@ export const allBlocks: Block[] = [
   BlockFaqBlock,
   BlockHowItWorksBlock,
   BlockHeroBlock,
+  BlockShowcaseBlock,
 ]

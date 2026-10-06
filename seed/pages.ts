@@ -3,6 +3,7 @@ import { upsertPage, ensureMedia } from './lib'
 
 export async function seedPages(): Promise<void> {
   const logoId = await ensureMedia('veepi-logo.svg', 'VeePi logo')
+  const videoId = await ensureMedia('hero-bg.webm', 'Hero video')
 
   await upsertPage('home', {
     isHomepage: true,
@@ -68,6 +69,18 @@ export async function seedPages(): Promise<void> {
           type: 'external',
           externalUrl: '/get-started',
         },
+      },
+      {
+        blockType: 'block-showcase',
+        identifier: 'block-showcase',
+        heading: 'All from one software.',
+        rating: '4.9/5.0',
+        ratingSubtitle: 'rated by 3000+ practices in 14 countries',
+        video1: videoId,
+        video2: videoId,
+        video3: videoId,
+        video4: videoId,
+        video5: videoId,
       },
     ],
   } as Parameters<typeof upsertPage>[1])

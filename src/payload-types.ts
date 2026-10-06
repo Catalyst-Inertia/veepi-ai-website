@@ -217,6 +217,7 @@ export interface Page {
         | BlockFaqBlock
         | BlockHowItWorksBlock
         | BlockHeroBlock
+        | BlockShowcaseBlock
       )[]
     | null
   updatedAt: string
@@ -339,6 +340,7 @@ export interface Post {
         | BlockFaqBlock
         | BlockHowItWorksBlock
         | BlockHeroBlock
+        | BlockShowcaseBlock
       )[]
     | null
   updatedAt: string
@@ -639,6 +641,28 @@ export interface BlockHeroBlock {
   blockType: 'block-hero'
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockShowcaseBlock".
+ */
+export interface BlockShowcaseBlock {
+  /**
+   * Block-type identifier — distinguishes this block from other block types.
+   */
+  identifier?: string | null
+  heading: string
+  rating: string
+  ratingSubtitle: string
+  video1: string | Media
+  video2: string | Media
+  video3: string | Media
+  video4: string | Media
+  video5: string | Media
+  video6?: (string | null) | Media
+  id?: string | null
+  blockName?: string | null
+  blockType: 'block-showcase'
+}
+/**
  * Submissions are created via the public API. Creation is disabled in the admin UI (access control).
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -821,6 +845,7 @@ export interface PagesSelect<T extends boolean = true> {
         'block-faq'?: T | BlockFaqBlockSelect<T>
         'block-how-it-works'?: T | BlockHowItWorksBlockSelect<T>
         'block-hero'?: T | BlockHeroBlockSelect<T>
+        'block-showcase'?: T | BlockShowcaseBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T
@@ -972,6 +997,24 @@ export interface BlockHeroBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockShowcaseBlock_select".
+ */
+export interface BlockShowcaseBlockSelect<T extends boolean = true> {
+  identifier?: T
+  heading?: T
+  rating?: T
+  ratingSubtitle?: T
+  video1?: T
+  video2?: T
+  video3?: T
+  video4?: T
+  video5?: T
+  video6?: T
+  id?: T
+  blockName?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -994,6 +1037,7 @@ export interface PostsSelect<T extends boolean = true> {
         'block-faq'?: T | BlockFaqBlockSelect<T>
         'block-how-it-works'?: T | BlockHowItWorksBlockSelect<T>
         'block-hero'?: T | BlockHeroBlockSelect<T>
+        'block-showcase'?: T | BlockShowcaseBlockSelect<T>
       }
   updatedAt?: T
   createdAt?: T

@@ -1,17 +1,13 @@
 /* eslint-disable no-console -- seed entry */
 import payload from 'payload'
 import config from '../payload.config'
-import { seedHomepage } from './homepage'
-import { seedProjects } from './projects'
 import { seedGlobals } from './globals'
+import { seedPages } from './pages'
 
 async function main(): Promise<void> {
   await payload.init({ config })
-  // Projects group first: the homepage's case-studies block pins its feed to
-  // the projects group, so the group must exist before the homepage seeds.
-  await seedProjects()
-  await seedHomepage()
   await seedGlobals()
+  await seedPages()
   console.log('Seed complete.')
 }
 

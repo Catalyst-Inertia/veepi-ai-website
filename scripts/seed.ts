@@ -1,13 +1,13 @@
 /* eslint-disable no-console -- seed script */
 import payload from 'payload'
 import config from '../payload.config'
-import { seedHomepage } from '../seed/homepage'
 import { seedGlobals } from '../seed/globals'
+import { seedPages } from '../seed/pages'
 
 async function main(): Promise<void> {
   await payload.init({ config })
-  await seedHomepage()
   await seedGlobals()
+  await seedPages()
   console.log('Seed complete.')
 }
 

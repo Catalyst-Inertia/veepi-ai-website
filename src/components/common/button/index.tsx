@@ -30,22 +30,25 @@ export default function MainButton({
   const router = useRouter()
   const { isMobile } = useScreenSize()
 
+  const baseClasses =
+    'w-fit flex justify-center items-center uppercase cursor-pointer font-text font-bold tracking-[0.025em] transition-all duration-200'
+
   const sizeClass = size
     ? size === 'small'
-      ? s.small
-      : s.default
+      ? 'min-h-[40px] px-4 py-2 rounded-md'
+      : 'min-h-[56px] px-6 py-4 rounded-lg'
     : isMobile
-      ? s.small
-      : s.default
+      ? 'min-h-[40px] px-4 py-2 rounded-md'
+      : 'min-h-[56px] px-6 py-4 rounded-lg'
 
   const typeClass =
     type === 'primary'
-      ? s.primary
+      ? 'bg-primary text-white border-2 border-primary hover:bg-[linear-gradient(to_right,var(--second_color),var(--primary_color))] hover:border-transparent hover:shadow-none'
       : type === 'secondary'
-        ? s.secondary
-        : s.outlined
+        ? 'bg-white text-primary hover:bg-primary hover:text-white'
+        : 'bg-transparent text-primary border border-primary'
 
-  const buttonClassName = `${s.button} ${sizeClass} ${typeClass} ${className}`
+  const buttonClassName = `${baseClasses} ${sizeClass} ${typeClass} ${s.button} ${className ?? ''}`
 
   if (href) {
     return (

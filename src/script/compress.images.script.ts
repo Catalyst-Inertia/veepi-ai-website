@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const DIR = [
   'public/images',
+  'public/assets/images',
   'public/images/template',
   'public/images/product',
   'public/images/testimony',

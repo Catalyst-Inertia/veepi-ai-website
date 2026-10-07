@@ -25,14 +25,8 @@ export default function ContentsBlockGallery({
   return (
     <section
       id={id}
-      className="relative w-full min-h-[810px] overflow-hidden bg-[#372B34]"
+      className="relative w-full min-h-[810px] overflow-hidden bg-[#101010]"
     >
-      {/* Blob */}
-      <div
-        aria-hidden
-        className="absolute pointer-events-none left-[195px] top-[230px] h-[1049px] w-[1049px] rounded-full bg-[linear-gradient(180deg,#F0876B_0%,#C05EC4_100%)] blur-[200px] mix-blend-overlay rotate-[0.68deg] z-0"
-      />
-
       {/* Header Row */}
       <GalleryHeader title={title} description={description} />
 

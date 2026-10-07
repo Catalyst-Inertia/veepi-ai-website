@@ -54,8 +54,11 @@ export default function SubscribeForm({
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <form onSubmit={onSubmit} className="flex gap-2 items-center">
+    <div className="flex flex-col gap-4 w-full">
+      <form
+        onSubmit={onSubmit}
+        className="flex flex-col sm:flex-row gap-2 sm:items-center w-full"
+      >
         <input
           type="email"
           required
@@ -63,12 +66,12 @@ export default function SubscribeForm({
           onChange={(e) => setEmail(e.target.value)}
           aria-label={placeholder}
           placeholder={placeholder}
-          className="w-[298px] h-12 grow bg-[#F5F5F5] border border-[#787878] rounded-lg px-4 text-[16px] text-[#372B34] placeholder:text-[#787878]/50 outline-none"
+          className="w-full sm:w-[298px] h-12 grow bg-[#F5F5F5] border border-[#787878] rounded-lg px-4 text-[16px] text-[#372B34] placeholder:text-[#787878]/50 outline-none"
         />
         <button
           type="submit"
           disabled={sending}
-          className="h-12 px-6 rounded-lg bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)] text-[12px] leading-none uppercase text-[#FBF2E9] disabled:opacity-50"
+          className="h-12 px-6 w-full sm:w-auto rounded-lg bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)] text-[12px] leading-none uppercase text-[#FBF2E9] disabled:opacity-50"
         >
           {buttonLabel}
         </button>

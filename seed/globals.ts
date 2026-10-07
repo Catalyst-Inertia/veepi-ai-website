@@ -2,9 +2,6 @@
 import payload from 'payload'
 import { ensureMedia, richTextParagraph } from './lib'
 
-const WHATSAPP_URL =
-  'https://api.whatsapp.com/send?phone=6282340931249&text=Hi%20There%2C%0A%0AIf%20you%20want%20to%20create%20great%20sites%2C%20follow%20us%20%F0%9F%92%8E'
-
 // Header/footer link fields store (label, type, externalUrl) — `url` is a
 // virtual resolved field, so seeds write the stored shape.
 const extLink = (label: string, externalUrl: string) => ({
@@ -15,10 +12,10 @@ const extLink = (label: string, externalUrl: string) => ({
 
 export async function seedGlobals(): Promise<void> {
   const navItems = [
-    extLink('Projects', '/#projects'),
-    extLink('About', '/#about'),
-    extLink('Services', '/#services'),
-    extLink('Blogs', '/#blogs'),
+    extLink('Home', '/'),
+    extLink('Video Gallery', '/video-gallery'),
+    extLink('Distribution', '/distribution'),
+    extLink('Get Started', '/get-started'),
   ]
   const logoId = await ensureMedia('logo-white.webp', 'Catatia logo')
   const footerLogoId = await ensureMedia('veepi-logo.svg', 'VeePi logo')
@@ -28,7 +25,7 @@ export async function seedGlobals(): Promise<void> {
     data: {
       ...(logoId ? { logo: logoId } : {}),
       nav: navItems,
-      cta: extLink('Ring The Bell', WHATSAPP_URL),
+      cta: extLink('Log In', '/login'),
     },
   })
   console.log('Global header updated')

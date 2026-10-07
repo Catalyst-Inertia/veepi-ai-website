@@ -56,7 +56,8 @@ const EXTERNAL_URL_ERROR =
  */
 const isValidExternalUrl = (v: string): boolean => {
   const lower = v.toLowerCase()
-  if (lower.startsWith('#') || lower.startsWith('/')) return v.length > 1
+  if (lower.startsWith('#')) return v.length > 1
+  if (lower.startsWith('/')) return v.length >= 1
   if (lower.startsWith('http://') || lower.startsWith('https://')) {
     try {
       const url = new URL(v)
@@ -247,26 +248,33 @@ const urlAfterRead: FieldHook = async ({ siblingData, req }) => {
 
   if (typeof value !== 'string' || value.length === 0) return null
 
-  // Fetch raw doc bypassing hooks to prevent recursive loop / cycle guard deadlocks.
-  // SAFETY: db.findOne returns the raw document, which we manually type-check.
-  const page = (await req.payload.db.findOne({
-    collection: 'pages',
-    where: { id: { equals: value } },
-    req,
-  })) as unknown as Record<string, unknown> | null
-  if (!page || typeof page.slug !== 'string') return null
-  const pagePath = page.isHomepage === true ? '/' : `/${page.slug}`
-  return pagePath ? withSectionHash(pagePath, sectionId) : null
-  // SAFETY: db.findOne returns the raw document, which we manually type-check.
-  const post = (await req.payload.db.findOne({
-    collection: 'posts',
-    where: { id: { equals: value } },
-    req,
-  })) as unknown as Record<string, unknown> | null
-  if (!post || typeof post.slug !== 'string') return null
-  const postPath = await resolvePostPath(post.slug as string, post.group, req)
-  if (!postPath) return null
-  return withSectionHash(postPath as string, sectionId)
+  if (relationTo === 'pages') {
+    // Fetch raw doc bypassing hooks to prevent recursive loop / cycle guard deadlocks.
+    // SAFETY: db.findOne returns the raw document, which we manually type-check.
+    const page = (await req.payload.db.findOne({
+      collection: 'pages',
+      where: { id: { equals: value } },
+      req,
+    })) as unknown as Record<string, unknown> | null
+    if (!page || typeof page.slug !== 'string') return null
+    const pagePath = page.isHomepage === true ? '/' : `/${page.slug}`
+    return pagePath ? withSectionHash(pagePath, sectionId) : null
+  }
+
+  if (relationTo === 'posts') {
+    // SAFETY: db.findOne returns the raw document, which we manually type-check.
+    const post = (await req.payload.db.findOne({
+      collection: 'posts',
+      where: { id: { equals: value } },
+      req,
+    })) as unknown as Record<string, unknown> | null
+    if (!post || typeof post.slug !== 'string') return null
+    const postPath = await resolvePostPath(post.slug as string, post.group, req)
+    if (!postPath) return null
+    return withSectionHash(postPath as string, sectionId)
+  }
+
+  return null
 }
 // --- shared inner fields ------------------------------------------------------
 // Used by `linkField` (single link group) and `groupLinkField` (link array).

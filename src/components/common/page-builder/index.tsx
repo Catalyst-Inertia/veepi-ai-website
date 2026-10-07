@@ -5,8 +5,8 @@ import { resolveSectionIds } from './section-ids'
 // AUTO-MANAGED SECTION — block schema/component imports below are added by
 // scripts/create-block.ts (bun run make:block) and renamed by scripts/rename-block.ts.
 // Do not edit manually.
-import { BlockGalleryBlock } from '@/payload/schema/blocks/block-gallery.DEPRECATED/schema.block'
-import ContentsBlockGallery from '@/payload/schema/blocks/block-gallery.DEPRECATED/component.block'
+import { BlockGalleryBlock } from '@/payload/schema/blocks/block-gallery/schema.block'
+import ContentsBlockGallery from '@/payload/schema/blocks/block-gallery/component.block'
 import { BlockPricingBlock } from '@/payload/schema/blocks/block-pricing.DEPRECATED/schema.block'
 import ContentsBlockPricing from '@/payload/schema/blocks/block-pricing.DEPRECATED/component.block'
 import { BlockFaqBlock } from '@/payload/schema/blocks/block-faq.DEPRECATED/schema.block'

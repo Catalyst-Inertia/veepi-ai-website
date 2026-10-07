@@ -18,16 +18,16 @@ function main() {
 
     files.forEach((file) => {
       // Skip temporary files
-      if (file.endsWith('.opt.webm')) return
+      if (file.endsWith('.webm')) return
       // Process mp4, ogg, or existing webm
-      if (!['.mp4', '.ogg', '.webm'].some((f) => file.endsWith(f))) return
+      if (!['.mp4', '.ogg'].some((f) => file.endsWith(f))) return
 
       const filePath = join(dir, file)
       const fileStat = statSync(filePath)
       const fileName = file.slice(0, file.lastIndexOf('.'))
 
       if (fileStat.isFile()) {
-        const outPath = join(dir, `${fileName}.opt.webm`)
+        const outPath = join(dir, `${fileName}.webm`)
         console.log(`Compressing: ${filePath} -> ${outPath}`)
 
         // Optimized VP9 encoding for web backgrounds

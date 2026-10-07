@@ -109,7 +109,10 @@ export default function ContentsBlockShowcase({
   const v5 = getVideoUrl(video5)
 
   return (
-    <div id={id} className="relative w-full bg-[#101010]">
+    <div
+      id={id}
+      className="relative w-full bg-[#101010] isolate overflow-hidden"
+    >
       <div className="w-full h-[12rem] absolute bottom-0 left-0 right-0 z-10 bg-linear-to-b to-[#101010] from-transparant"></div>
       {/* Unpinned Brand runner at the top */}
       <div className="w-full pt-16 relative z-30">

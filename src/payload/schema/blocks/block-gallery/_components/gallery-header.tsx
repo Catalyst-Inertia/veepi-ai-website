@@ -9,12 +9,12 @@ export type GalleryHeaderProps = {
 
 export function GalleryHeader({ title, description }: GalleryHeaderProps) {
   return (
-    <div className="relative z-10 mx-auto mt-[120px] flex max-w-[1312px] items-start gap-6 px-6 min-[1440px]:px-0">
-      <h2 className="font-title text-[40px] md:text-[64px] min-[1440px]:text-[72px] leading-none text-[#FBF2E9] flex-1">
+    <div className="relative z-10 mx-auto mt-[120px] flex flex-col lg:flex-row max-w-[1312px] lg:items-end gap-6 lg:gap-6 px-6 min-[1440px]:px-0">
+      <h2 className="font-title text-[40px] md:text-[64px] min-[1440px]:text-[72px] leading-none text-[#FBF2E9] lg:flex-1">
         {title}
       </h2>
 
-      <div className="flex w-full shrink-0 flex-col items-end gap-4 min-[1440px]:w-[527px]">
+      <div className="flex w-full shrink-0 flex-col items-start lg:items-end gap-4 min-[1440px]:w-[527px]">
         {/* Dotted tag */}
         <div className="relative flex items-center gap-6 rounded-[40px] border border-white/5 py-2 pl-2 pr-8 bg-[linear-gradient(0.56deg,rgba(192,94,196,0.1)_0%,rgba(240,135,107,0.1)_100%)]">
           {/* Icon */}
@@ -55,7 +55,7 @@ export function GalleryHeader({ title, description }: GalleryHeaderProps) {
 
         {/* Description */}
         {description && (
-          <div className="w-full text-right font-text text-[16px] leading-6 text-[#FBF2E9] [&_p]:m-0">
+          <div className="w-full text-left lg:text-right font-text text-[16px] leading-6 text-[#FBF2E9] [&_p]:m-0">
             <RichText data={description} />
           </div>
         )}

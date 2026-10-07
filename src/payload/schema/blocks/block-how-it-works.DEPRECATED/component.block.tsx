@@ -141,7 +141,7 @@ export default function ContentsBlockHowItWorks({
           </div>
           <div className="w-full shrink-0 overflow-hidden rounded-[16px] h-[240px] md:h-[334px] lg:h-[334px] lg:w-[644px] [filter:drop-shadow(0_0_40px_rgba(240,135,107,0.3))] relative">
             <video
-              src="/videos/howitwork.webm"
+              src="/assets/videos/howitwork.webm"
               autoPlay
               muted
               loop

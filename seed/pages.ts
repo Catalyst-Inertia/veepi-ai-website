@@ -1,5 +1,5 @@
 /* eslint-disable no-console -- pages seed */
-import { upsertPage, ensureMedia } from './lib'
+import { upsertPage, ensureMedia, richTextParagraph } from './lib'
 
 export async function seedPages(): Promise<void> {
   const logoId = await ensureMedia('veepi-logo.svg', 'VeePi logo')
@@ -13,6 +13,10 @@ export async function seedPages(): Promise<void> {
   const hf2Id = await ensureMedia('hf2.webm', 'HF 2')
   const hf3Id = await ensureMedia('hf3.webm', 'HF 3')
   const silliconId = await ensureMedia('sillicon.webm', 'Sillicon')
+  const distributionId = await ensureMedia(
+    'distribution.webm',
+    'Distribution video',
+  )
 
   await upsertPage('home', {
     isHomepage: true,
@@ -95,6 +99,9 @@ export async function seedPages(): Promise<void> {
         blockType: 'block-gallery',
         identifier: 'block-gallery',
         title: "Discover what's possible",
+        description: richTextParagraph(
+          'Explore creative concepts built for medical and aesthetic storytelling.',
+        ),
         cards: [
           {
             media: doctorId,
@@ -214,6 +221,36 @@ export async function seedPages(): Promise<void> {
             },
           },
         ],
+      },
+      {
+        blockType: 'block-distribution',
+        identifier: 'block-distribution',
+        heading: 'One story. Every format.',
+        tagLabel: 'DISTRIBUTION',
+        description:
+          'VeePi adapts your creative for every platform without losing the story.',
+        backgroundMedia: distributionId,
+      },
+      {
+        blockType: 'block-cta',
+        identifier: 'block-cta',
+        title: 'Your results are already worth sharing.',
+        tagline: 'VeePi turns them into content.',
+        description: richTextParagraph(
+          "Bring your existing medical and aesthetic content to life with creative concepts built to stop the scroll, tell the story, and showcase the work you're already doing.",
+        ),
+        cta: {
+          type: 'external',
+          externalUrl: '/get-started',
+          label: 'GET STARTED & SEE HOW IT WORKS',
+        },
+        stat1Value: '3,000+',
+        stat1Label: 'Medical Practices Worldwide Since 2017',
+        stat2Value: '2.4M+',
+        stat2Label: 'Social Media Posts',
+        stat3Value: '15B+',
+        stat3Label: 'Total Views Reached',
+        phoneMedia: videoId,
       },
     ],
   } as Parameters<typeof upsertPage>[1])

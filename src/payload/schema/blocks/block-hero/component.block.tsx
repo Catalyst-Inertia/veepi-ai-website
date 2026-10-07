@@ -76,7 +76,7 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
       className="relative w-full h-screen overflow-hidden bg-[#1E1E1E]"
     >
       <video
-        src="/videos/hero-bg.webm"
+        src="/assets/videos/hero-bg.webm"
         autoPlay
         muted
         loop

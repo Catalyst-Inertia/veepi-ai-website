@@ -5,6 +5,8 @@ import { resolveSectionIds } from './section-ids'
 // AUTO-MANAGED SECTION — block schema/component imports below are added by
 // scripts/create-block.ts (bun run make:block) and renamed by scripts/rename-block.ts.
 // Do not edit manually.
+import { BlockCtaBlock } from '@/payload/schema/blocks/block-cta/schema.block'
+import ContentsBlockCta from '@/payload/schema/blocks/block-cta/component.block'
 import { BlockGalleryBlock } from '@/payload/schema/blocks/block-gallery/schema.block'
 import ContentsBlockGallery from '@/payload/schema/blocks/block-gallery/component.block'
 import { BlockPricingBlock } from '@/payload/schema/blocks/block-pricing.DEPRECATED/schema.block'
@@ -17,6 +19,8 @@ import { BlockHeroBlock } from '@/payload/schema/blocks/block-hero/schema.block'
 import ContentsBlockHero from '@/payload/schema/blocks/block-hero/component.block'
 import { BlockShowcaseBlock } from '@/payload/schema/blocks/block-showcase/schema.block'
 import ContentsBlockShowcase from '@/payload/schema/blocks/block-showcase/component.block'
+import { BlockDistributionBlock } from '@/payload/schema/blocks/block-distribution/schema.block'
+import ContentsBlockDistribution from '@/payload/schema/blocks/block-distribution/component.block'
 // AUTO-MANAGED SECTION END
 
 type BlockProps<K extends Block['blockType']> = { id?: string } & Extract<
@@ -30,12 +34,14 @@ type BlockProps<K extends Block['blockType']> = { id?: string } & Extract<
 // blockRegistry entries are auto-managed by scripts/create-block.ts and
 // scripts/rename-block.ts — do not add/remove entries by hand.
 const blockRegistry = {
+  [BlockCtaBlock.slug]: ContentsBlockCta,
   [BlockGalleryBlock.slug]: ContentsBlockGallery,
   [BlockPricingBlock.slug]: ContentsBlockPricing,
   [BlockFaqBlock.slug]: ContentsBlockFaq,
   [BlockHowItWorksBlock.slug]: ContentsBlockHowItWorks,
   [BlockHeroBlock.slug]: ContentsBlockHero,
   [BlockShowcaseBlock.slug]: ContentsBlockShowcase,
+  [BlockDistributionBlock.slug]: ContentsBlockDistribution,
 } satisfies { [K in Block['blockType']]: ComponentType<BlockProps<K>> }
 
 export default function PageBuilder({ blocks }: { blocks: Block[] }) {

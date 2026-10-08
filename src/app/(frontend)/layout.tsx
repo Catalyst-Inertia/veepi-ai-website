@@ -6,11 +6,18 @@ import GlobalProvider from '@/components/container/global-provider'
 import SmoothScroll from '@/components/container/smooth-scroll'
 import MainContainer from '@/components/layout'
 import { LivePreviewRefresh } from '@/components/live-preview/refresh-route'
-import { SITE_NAME } from '@/utils/metadata-page-builder'
 
 export const metadata: Metadata = {
-  title: SITE_NAME,
-  description: 'Catatia official website',
+  title: 'VeePi - AI Video Platform for Medical & Aesthetic Practices',
+  description:
+    'Transform your patient results and treatment imagery into high-performing video content for Reels, TikTok, YouTube, and Stories. Built for aesthetic & medical professionals.',
+  icons: {
+    icon: [{ url: '/favicon.ico' }, { url: '/icon.png', type: 'image/png' }],
+    apple: [{ url: '/icon.png' }],
+  },
+  openGraph: {
+    images: [{ url: '/og-image.png' }],
+  },
 }
 
 // Without device-width, phones render the ~980px layout viewport scaled down:
@@ -27,6 +34,7 @@ export default async function FrontendLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/icon.png" type="image/png" />
         <link rel="stylesheet" href="https://use.typekit.net/yfe3bem.css" />
       </head>
       <GoogleTagManager gtmId="GTM-WGM9DSKB" />

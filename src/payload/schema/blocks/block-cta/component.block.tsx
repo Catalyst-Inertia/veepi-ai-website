@@ -2,7 +2,6 @@ import { IDENTIFIER } from './schema.block'
 import type { Block } from '@/types/blocks'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Media from '@/components/common/media'
-import PayloadLink from '@/components/common/payload-link'
 
 export type BlockCtaProps = { id?: string } & Extract<
   Block,
@@ -24,6 +23,15 @@ export default function ContentsBlockCta(props: BlockCtaProps) {
     stat3Label,
     phoneMedia,
   } = props
+
+  const ctaLabel =
+    cta?.label && cta.label !== 'GET STARTED & SEE HOW IT WORKS'
+      ? cta.label
+      : 'Schedule a Call'
+  const ctaUrl =
+    cta?.url && cta.url !== '/get-started'
+      ? cta.url
+      : 'https://calendly.com/chris-tixta/website'
 
   return (
     <section
@@ -96,26 +104,26 @@ export default function ContentsBlockCta(props: BlockCtaProps) {
             </div>
 
             {/* CTA button — gradient, 278×48, radius 8 */}
-            {cta?.url && (
-              <PayloadLink
-                link={cta as Parameters<typeof PayloadLink>[0]['link']}
-                className="flex flex-row justify-center items-center px-[24px] py-[12px] gap-[16px] w-full lg:w-[278px] h-[48px] rounded-[8px] bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)] transition-opacity hover:opacity-90"
-              >
-                <span className="font-text font-normal text-[12px] leading-[12px] uppercase text-[#FBF2E9] text-center">
-                  {cta.label}
-                </span>
-              </PayloadLink>
-            )}
+            <a
+              href={ctaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-row justify-center items-center px-[24px] py-[12px] gap-[16px] w-full lg:w-[278px] h-[48px] rounded-[8px] bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)] transition-opacity hover:opacity-90"
+            >
+              <span className="font-text font-normal text-[12px] leading-[12px] uppercase text-[#FBF2E9] text-center">
+                {ctaLabel}
+              </span>
+            </a>
           </div>
 
           {/* Stats row — flex row, gap 24, items-center */}
           <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-[24px]">
             {/* Stat 1 */}
-            <div className="flex flex-row items-center gap-[16px] lg:py-[16px]">
-              <span className="font-title font-normal text-[32px] leading-[32px] text-[#FBF2E9]">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 lg:gap-[16px] lg:py-[16px]">
+              <span className="font-title font-normal text-[48px] lg:text-[32px] leading-[48px] lg:leading-[32px] text-[#FBF2E9]">
                 {stat1Value}
               </span>
-              <p className="font-text font-normal text-[12px] leading-[18px] text-[#FBF2E9] m-0 max-w-[118px]">
+              <p className="font-text font-normal text-[16px] lg:text-[12px] leading-[24px] lg:leading-[18px] text-[#FBF2E9] m-0 w-full max-w-full lg:max-w-[118px]">
                 {stat1Label}
               </p>
             </div>
@@ -124,11 +132,11 @@ export default function ContentsBlockCta(props: BlockCtaProps) {
             <div className="hidden lg:block w-px h-[56px] bg-[#FBF2E9]" />
 
             {/* Stat 2 */}
-            <div className="flex flex-row items-center gap-[16px] lg:py-[16px]">
-              <span className="font-title font-normal text-[32px] leading-[32px] text-[#FBF2E9]">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 lg:gap-[16px] lg:py-[16px]">
+              <span className="font-title font-normal text-[48px] lg:text-[32px] leading-[48px] lg:leading-[32px] text-[#FBF2E9]">
                 {stat2Value}
               </span>
-              <p className="font-text font-normal text-[12px] leading-[18px] text-[#FBF2E9] m-0 max-w-[103px]">
+              <p className="font-text font-normal text-[16px] lg:text-[12px] leading-[24px] lg:leading-[18px] text-[#FBF2E9] m-0 w-full max-w-full lg:max-w-[103px]">
                 {stat2Label}
               </p>
             </div>
@@ -137,11 +145,11 @@ export default function ContentsBlockCta(props: BlockCtaProps) {
             <div className="hidden lg:block w-px h-[56px] bg-[#FBF2E9]" />
 
             {/* Stat 3 */}
-            <div className="flex flex-row items-center gap-[16px] lg:py-[16px]">
-              <span className="font-title font-normal text-[32px] leading-[32px] text-[#FBF2E9]">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 lg:gap-[16px] lg:py-[16px]">
+              <span className="font-title font-normal text-[48px] lg:text-[32px] leading-[48px] lg:leading-[32px] text-[#FBF2E9]">
                 {stat3Value}
               </span>
-              <p className="font-text font-normal text-[12px] leading-[18px] text-[#FBF2E9] m-0 max-w-[111px]">
+              <p className="font-text font-normal text-[16px] lg:text-[12px] leading-[24px] lg:leading-[18px] text-[#FBF2E9] m-0 w-full max-w-full lg:max-w-[111px]">
                 {stat3Label}
               </p>
             </div>

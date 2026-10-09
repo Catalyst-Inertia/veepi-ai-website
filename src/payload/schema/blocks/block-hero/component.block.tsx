@@ -5,7 +5,6 @@ import { IDENTIFIER } from './schema.block'
 import type { Block } from '@/types/blocks'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Media from '@/components/common/media'
-import PayloadLink from '@/components/common/payload-link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
@@ -21,6 +20,16 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
   const { id, title, heading, subText, logo, description, cta } = props
   const sectionRef = useRef<HTMLElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const ctaLabel =
+    cta?.label && cta.label !== 'GET STARTED & SEE HOW IT WORKS'
+      ? cta.label
+      : 'Schedule a Call'
+  const ctaUrl =
+    cta?.url && cta.url !== '/get-started'
+      ? cta.url
+      : 'https://calendly.com/chris-tixta/website'
 
   useGSAP(
     () => {
@@ -45,6 +54,26 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
         gsap.set(elements.slice(1), { autoAlpha: 0, y: window.innerHeight })
       }
 
+      const video = videoRef.current
+      let videoDuration = 20
+      if (video) {
+        video.pause()
+        video.currentTime = 0
+        if (video.duration && !isNaN(video.duration)) {
+          videoDuration = video.duration
+        } else {
+          video.addEventListener(
+            'loadedmetadata',
+            () => {
+              if (video.duration && !isNaN(video.duration)) {
+                videoDuration = video.duration
+              }
+            },
+            { once: true },
+          )
+        }
+      }
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -52,6 +81,14 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
           end: `+=${elements.length * 100}%`,
           pin: true,
           scrub: 1,
+          onUpdate: (self) => {
+            if (video && videoDuration > 0) {
+              const targetTime = self.progress * videoDuration
+              if (Math.abs(video.currentTime - targetTime) > 0.03) {
+                video.currentTime = targetTime
+              }
+            }
+          },
         },
       })
 
@@ -76,12 +113,12 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
       className="relative w-full h-screen overflow-hidden bg-[#1E1E1E]"
     >
       <video
+        ref={videoRef}
         src="/assets/videos/hero-bg.webm"
-        autoPlay
         muted
-        loop
         playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
       />
 
       {/* Dark overlay to make text readable */}
@@ -123,32 +160,32 @@ export default function ContentsBlockHero(props: BlockHeroProps) {
           </div>
 
           {/* CTA button — 285x48, gap 16, gradient, radius 8 */}
-          {cta && cta.url && (
-            <PayloadLink
-              link={cta as Parameters<typeof PayloadLink>[0]['link']}
-              className="flex flex-row justify-center items-center px-[24px] py-[12px] gap-[16px] w-[285px] h-[48px] rounded-[8px] transition-opacity hover:opacity-90 bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)]"
+          <a
+            href={ctaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-row justify-center items-center px-[24px] py-[12px] gap-[16px] w-[285px] h-[48px] rounded-[8px] transition-opacity hover:opacity-90 bg-[linear-gradient(90deg,#C05EC4_0%,#F0876B_100%)]"
+          >
+            <span className="font-text font-normal text-[12px] leading-[12px] uppercase text-[#FBF2E9] flex items-center text-center">
+              {ctaLabel}
+            </span>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <span className="font-text font-normal text-[12px] leading-[12px] uppercase text-[#FBF2E9] flex items-center text-center">
-                {cta.label}
-              </span>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.75 2.5L12 6.5L16 7.75L12 9L10.75 13L9.5 9L5.5 7.75L9.5 6.5L10.75 2.5Z"
-                  fill="#FBF2E9"
-                />
-                <path
-                  d="M18.5 13L19.25 15.25L21.5 16L19.25 16.75L18.5 19L17.75 16.75L15.5 16L17.75 15.25L18.5 13Z"
-                  fill="#FBF2E9"
-                />
-              </svg>
-            </PayloadLink>
-          )}
+              <path
+                d="M10.75 2.5L12 6.5L16 7.75L12 9L10.75 13L9.5 9L5.5 7.75L9.5 6.5L10.75 2.5Z"
+                fill="#FBF2E9"
+              />
+              <path
+                d="M18.5 13L19.25 15.25L21.5 16L19.25 16.75L18.5 19L17.75 16.75L15.5 16L17.75 15.25L18.5 13Z"
+                fill="#FBF2E9"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </section>

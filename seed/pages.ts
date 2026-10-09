@@ -17,10 +17,19 @@ export async function seedPages(): Promise<void> {
     'distribution.webm',
     'Distribution video',
   )
+  const ogImageMediaId = await ensureMedia('veepi-og.png', 'VeePi OG Image')
 
   await upsertPage('home', {
     isHomepage: true,
     title: 'VeePi - Home',
+    seo: {
+      title: 'VeePi - AI Video Platform for Medical & Aesthetic Practices',
+      description:
+        'Transform your patient results and treatment imagery into high-performing video content for Reels, TikTok, YouTube, and Stories. Built for aesthetic & medical professionals.',
+      keywords:
+        'VeePi, medical aesthetics, AI video, aesthetic practice marketing, med spa video, patient storytelling, medical marketing',
+      og_image: ogImageMediaId,
+    },
     contents: [
       {
         blockType: 'block-hero',
@@ -78,9 +87,9 @@ export async function seedPages(): Promise<void> {
           },
         },
         cta: {
-          label: 'GET STARTED & SEE HOW IT WORKS',
+          label: 'Schedule a Call',
           type: 'external',
-          externalUrl: '/get-started',
+          externalUrl: 'https://calendly.com/chris-tixta/website',
         },
       },
       {
@@ -241,8 +250,8 @@ export async function seedPages(): Promise<void> {
         ),
         cta: {
           type: 'external',
-          externalUrl: '/get-started',
-          label: 'GET STARTED & SEE HOW IT WORKS',
+          externalUrl: 'https://calendly.com/chris-tixta/website',
+          label: 'Schedule a Call',
         },
         stat1Value: '3,000+',
         stat1Label: 'Medical Practices Worldwide Since 2017',

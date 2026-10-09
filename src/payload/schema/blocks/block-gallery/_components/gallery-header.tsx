@@ -10,7 +10,7 @@ export type GalleryHeaderProps = {
 export function GalleryHeader({ title, description }: GalleryHeaderProps) {
   return (
     <div className="relative z-10 mx-auto mt-[120px] flex flex-col lg:flex-row max-w-[1312px] lg:items-end gap-6 lg:gap-6 px-6 min-[1440px]:px-0">
-      <h2 className="font-title text-[40px] md:text-[64px] min-[1440px]:text-[72px] leading-none text-[#FBF2E9] lg:flex-1">
+      <h2 className="font-title text-[56px] md:text-[72px] lg:text-[64px] min-[1440px]:text-[72px] leading-[1.05] lg:leading-none text-[#FBF2E9] lg:flex-1">
         {title}
       </h2>
 

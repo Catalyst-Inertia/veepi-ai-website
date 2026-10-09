@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { groupField, dateField, uiField } from '../fields'
+import { groupField, dateField, uiField, seoField } from '../fields'
 
 export const config: GlobalConfig = {
   slug: 'config',
@@ -29,5 +29,6 @@ export const config: GlobalConfig = {
         }),
       ],
     }),
+    seoField,
   ],
 }

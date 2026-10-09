@@ -1490,6 +1490,15 @@ export interface Config1 {
   cache?: {
     lastRevalidatedAt?: string | null
   }
+  seo?: {
+    title?: string | null
+    description?: string | null
+    /**
+     * Comma-separated
+     */
+    keywords?: string | null
+    og_image?: (string | null) | Media
+  }
   updatedAt?: string | null
   createdAt?: string | null
 }
@@ -1591,6 +1600,14 @@ export interface ConfigSelect<T extends boolean = true> {
     | T
     | {
         lastRevalidatedAt?: T
+      }
+  seo?:
+    | T
+    | {
+        title?: T
+        description?: T
+        keywords?: T
+        og_image?: T
       }
   updatedAt?: T
   createdAt?: T

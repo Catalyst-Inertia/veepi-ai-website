@@ -50,10 +50,11 @@ export default function ContainerPageHeaderMobile() {
                 />
               </div>
               <div className="flex items-center gap-4">
-                <button
-                  type="button"
+                <a
+                  href="https://veepi.ai/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`flex items-center gap-[6px] rounded-[10px] border px-[16px] py-[8px] text-[12px] font-text leading-[12px] uppercase transition-all hover:bg-[linear-gradient(to_right,var(--second_color),var(--primary_color))] hover:text-white hover:border-transparent ${isLight ? 'border-black text-black' : 'border-[#FBF2E9] text-[#FBF2E9]'}`}
-                  onClick={() => router.push('/login')}
                 >
                   LOG IN
                   <svg
@@ -70,7 +71,7 @@ export default function ContainerPageHeaderMobile() {
                     <path d="M12 16l4-4-4-4" />
                     <path d="M8 12h8" />
                   </svg>
-                </button>
+                </a>
                 <div
                   className={`flex flex-wrap cursor-pointer ${isLight ? 'text-black' : 'text-[#FDFDFD]'}`}
                   onClick={() => setOpenMenu(!openMenu)}
@@ -119,13 +120,12 @@ export default function ContainerPageHeaderMobile() {
                       />
                     </div>
                     <div className="flex items-center gap-4">
-                      <button
-                        type="button"
+                      <a
+                        href="https://veepi.ai/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-[6px] rounded-[10px] border px-[16px] py-[8px] text-[12px] font-text leading-[12px] uppercase transition-all hover:bg-[linear-gradient(to_right,var(--second_color),var(--primary_color))] hover:text-white hover:border-transparent border-black text-black"
-                        onClick={() => {
-                          router.push('/login')
-                          setOpenMenu(false)
-                        }}
+                        onClick={() => setOpenMenu(false)}
                       >
                         LOG IN
                         <svg
@@ -142,7 +142,7 @@ export default function ContainerPageHeaderMobile() {
                           <path d="M12 16l4-4-4-4" />
                           <path d="M8 12h8" />
                         </svg>
-                      </button>
+                      </a>
                       <div
                         onClick={() => setOpenMenu(false)}
                         className="text-[28px] text-black cursor-pointer"
@@ -154,16 +154,28 @@ export default function ContainerPageHeaderMobile() {
                   <div className="w-full">
                     {PageNavigationData.map((item) => {
                       return (
-                        <div
+                        <a
                           key={item.key}
-                          onClick={() => {
-                            router.push(item.url, { scroll: true })
+                          href={item.url}
+                          target={
+                            item.url.startsWith('http') ? '_blank' : undefined
+                          }
+                          rel={
+                            item.url.startsWith('http')
+                              ? 'noopener noreferrer'
+                              : undefined
+                          }
+                          onClick={(e) => {
+                            if (!item.url.startsWith('http')) {
+                              e.preventDefault()
+                              router.push(item.url, { scroll: true })
+                            }
                             setOpenMenu(false)
                           }}
-                          className={`text-[24px] font-bold mb-6 relative w-fit pb-1 text-black`}
+                          className={`text-[24px] font-bold mb-6 relative w-fit pb-1 text-black block`}
                         >
                           {item.label}
-                        </div>
+                        </a>
                       )
                     })}
                   </div>

@@ -43,22 +43,29 @@ export default function ContainerPageHeaderDesktop() {
                   className={`hidden lg:flex items-center gap-[41px] font-text text-[12px] leading-none uppercase ${isLight ? 'text-black font-bold' : 'text-[#FBF2E9]'}`}
                 >
                   {PageNavigationData.map((item) => (
-                    <div
+                    <a
                       key={item.key}
-                      onClick={() => {
-                        router.push(`${item.url}`)
-                      }}
+                      href={item.url}
+                      target={
+                        item.url.startsWith('http') ? '_blank' : undefined
+                      }
+                      rel={
+                        item.url.startsWith('http')
+                          ? 'noopener noreferrer'
+                          : undefined
+                      }
                       className={`cursor-pointer transition-colors ${isLight ? 'hover:text-black/70' : 'hover:text-white/80'}`}
                     >
                       {item.label}
-                    </div>
+                    </a>
                   ))}
                 </div>
 
-                <button
-                  type="button"
+                <a
+                  href="https://veepi.ai/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`flex items-center gap-[6px] rounded-[10px] border px-[24px] py-[12px] text-[12px] font-text leading-[12px] uppercase transition-all hover:bg-[linear-gradient(to_right,var(--second_color),var(--primary_color))] hover:text-white hover:border-transparent ${isLight ? 'border-black text-black' : 'border-[#FBF2E9] text-[#FBF2E9]'}`}
-                  onClick={() => router.push('/login')}
                 >
                   LOG IN
                   <svg
@@ -75,7 +82,7 @@ export default function ContainerPageHeaderDesktop() {
                     <path d="M12 16l4-4-4-4" />
                     <path d="M8 12h8" />
                   </svg>
-                </button>
+                </a>
               </div>
             </div>
           </BoxContainer>

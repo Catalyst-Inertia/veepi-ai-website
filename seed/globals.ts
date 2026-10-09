@@ -15,7 +15,7 @@ export async function seedGlobals(): Promise<void> {
     extLink('Home', '/'),
     extLink('Video Gallery', '/video-gallery'),
     extLink('Distribution', '/distribution'),
-    extLink('Get Started', '/get-started'),
+    extLink('Schedule a Call', 'https://calendly.com/chris-tixta/website'),
   ]
   const logoId = await ensureMedia('logo-white.webp', 'Catatia logo')
   const footerLogoId = await ensureMedia('veepi-logo.svg', 'VeePi logo')
@@ -25,7 +25,7 @@ export async function seedGlobals(): Promise<void> {
     data: {
       ...(logoId ? { logo: logoId } : {}),
       nav: navItems,
-      cta: extLink('Log In', '/login'),
+      cta: extLink('Log In', 'https://veepi.ai/'),
     },
   })
   console.log('Global header updated')

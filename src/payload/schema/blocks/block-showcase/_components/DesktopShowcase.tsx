@@ -56,7 +56,7 @@ export default function DesktopShowcase({
           card4Ref.current,
           card5Ref.current,
         ],
-        { xPercent: -50, yPercent: -50, y: '120vh' },
+        { y: '120vh' },
       )
 
       // Staggered speeds: widened gaps to pull cards further apart
@@ -161,23 +161,39 @@ export default function DesktopShowcase({
               muted
               loop
               playsInline
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-x-0 top-[26%] h-[46.65%] w-full object-cover"
               src={v1}
+            />
+            <img
+              src="/assets/images/frames/linkedin.svg"
+              alt=""
+              aria-hidden
+              width={310}
+              height={665}
+              className="pointer-events-none absolute inset-0 z-10 h-full w-full"
             />
           </div>
 
           {/* Card 2: YouTube 16:9 */}
           <div
             ref={card2Ref}
-            className="absolute left-[calc(50%-211px)] top-[139px] h-[303px] w-[422px] overflow-hidden rounded-[16px] bg-black shadow-[0px_0px_40px_rgba(0,0,0,0.6)] pointer-events-auto"
+            className="absolute left-[calc(50%-211px)] top-[139px] h-[303px] w-[422px] overflow-hidden rounded-[16px] bg-[#111111] shadow-[0px_0px_40px_rgba(0,0,0,0.6)] pointer-events-auto"
           >
             <video
               autoPlay
               muted
               loop
               playsInline
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute left-[1.33%] top-[2.07%] h-[74.54%] w-[97.33%] rounded-[6.5px] object-cover"
               src={v2}
+            />
+            <img
+              src="/assets/images/frames/youtube.svg"
+              alt=""
+              aria-hidden
+              width={422}
+              height={303}
+              className="pointer-events-none absolute inset-0 z-10 h-full w-full"
             />
           </div>
 
@@ -191,8 +207,16 @@ export default function DesktopShowcase({
               muted
               loop
               playsInline
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-x-0 top-0 h-[87.08%] w-full object-cover"
               src={v3}
+            />
+            <img
+              src="/assets/images/frames/igs.svg"
+              alt=""
+              aria-hidden
+              width={310}
+              height={632}
+              className="pointer-events-none absolute inset-0 z-10 h-full w-full"
             />
           </div>
 
@@ -206,23 +230,39 @@ export default function DesktopShowcase({
               muted
               loop
               playsInline
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-x-0 top-0 h-[94.41%] w-full object-cover"
               src={v4}
+            />
+            <img
+              src="/assets/images/frames/tiktok.svg"
+              alt=""
+              aria-hidden
+              width={308}
+              height={580}
+              className="pointer-events-none absolute inset-0 z-10 h-full w-full"
             />
           </div>
 
           {/* Card 5: Instagram 4:5 */}
           <div
             ref={card5Ref}
-            className="absolute left-[calc(50%+209px)] top-[750px] h-[579px] w-[310px] overflow-hidden rounded-[16px] bg-black shadow-[0px_0px_40px_rgba(0,0,0,0.6)] pointer-events-auto"
+            className="absolute left-[calc(50%+209px)] top-[750px] h-[579px] w-[310px] overflow-hidden rounded-[16px] bg-white shadow-[0px_0px_40px_rgba(0,0,0,0.6)] pointer-events-auto"
           >
             <video
               autoPlay
               muted
               loop
               playsInline
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-x-0 top-[9.33%] h-[66.76%] w-full object-cover"
               src={v5}
+            />
+            <img
+              src="/assets/images/frames/instagram.svg"
+              alt=""
+              aria-hidden
+              width={310}
+              height={579}
+              className="pointer-events-none absolute inset-0 z-10 h-full w-full"
             />
           </div>
         </div>

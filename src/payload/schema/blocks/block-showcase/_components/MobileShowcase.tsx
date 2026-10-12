@@ -122,21 +122,71 @@ export default function MobileShowcase({
           ref={wrapperRef}
           className="absolute left-1/2 top-[100vh] z-20 flex w-full -translate-x-1/2 flex-col items-center gap-6 pointer-events-none"
         >
-          {[v1, v2, v3, v4, v5].map((src, index) => (
+          {[
+            {
+              src: v1,
+              frame: '/assets/images/frames/linkedin.svg',
+              width: 310,
+              height: 665,
+              cardClass: 'aspect-[310/665] max-w-[310px] bg-black',
+              videoClass: 'inset-x-0 top-[26%] h-[46.65%] w-full',
+            },
+            {
+              src: v2,
+              frame: '/assets/images/frames/youtube.svg',
+              width: 422,
+              height: 303,
+              cardClass: 'aspect-[422/303] max-w-[360px] bg-[#111111]',
+              videoClass:
+                'left-[1.33%] top-[2.07%] h-[74.54%] w-[97.33%] rounded-[6.5px]',
+            },
+            {
+              src: v3,
+              frame: '/assets/images/frames/igs.svg',
+              width: 310,
+              height: 632,
+              cardClass: 'aspect-[310/632] max-w-[310px] bg-black',
+              videoClass: 'inset-x-0 top-0 h-[87.08%] w-full',
+            },
+            {
+              src: v4,
+              frame: '/assets/images/frames/tiktok.svg',
+              width: 308,
+              height: 580,
+              cardClass: 'aspect-[308/580] max-w-[308px] bg-black',
+              videoClass: 'inset-x-0 top-0 h-[94.41%] w-full',
+            },
+            {
+              src: v5,
+              frame: '/assets/images/frames/instagram.svg',
+              width: 310,
+              height: 579,
+              cardClass: 'aspect-[310/579] max-w-[310px] bg-white',
+              videoClass: 'inset-x-0 top-[9.33%] h-[66.76%] w-full',
+            },
+          ].map((card, index) => (
             <div
               key={index}
-              className="relative h-[350px] w-[90%] max-w-[310px] overflow-hidden rounded-[16px] bg-black shadow-[0px_0px_40px_rgba(0,0,0,0.6)] pointer-events-auto flex-shrink-0"
+              className={`relative w-[90%] overflow-hidden rounded-[16px] shadow-[0px_0px_40px_rgba(0,0,0,0.6)] pointer-events-auto flex-shrink-0 ${card.cardClass}`}
             >
-              {src && (
+              {card.src && (
                 <video
                   autoPlay
                   muted
                   loop
                   playsInline
-                  className="absolute inset-0 h-full w-full object-cover"
-                  src={src}
+                  className={`absolute object-cover ${card.videoClass}`}
+                  src={card.src}
                 />
               )}
+              <img
+                src={card.frame}
+                alt=""
+                aria-hidden
+                width={card.width}
+                height={card.height}
+                className="pointer-events-none absolute inset-0 z-10 h-full w-full"
+              />
             </div>
           ))}
         </div>

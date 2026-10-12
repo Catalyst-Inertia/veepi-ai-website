@@ -117,9 +117,9 @@ export default function ContentsBlockCta(props: BlockCtaProps) {
           </div>
 
           {/* Stats row — flex row, gap 24, items-center */}
-          <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-[24px]">
+          <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-[24px]">
             {/* Stat 1 */}
-            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 lg:gap-[16px] lg:py-[16px]">
+            <div className="flex flex-col lg:flex-row items-center text-center lg:text-left gap-2 lg:gap-[16px] lg:py-[16px]">
               <span className="font-title font-normal text-[48px] lg:text-[32px] leading-[48px] lg:leading-[32px] text-[#FBF2E9]">
                 {stat1Value}
               </span>
@@ -132,7 +132,7 @@ export default function ContentsBlockCta(props: BlockCtaProps) {
             <div className="hidden lg:block w-px h-[56px] bg-[#FBF2E9]" />
 
             {/* Stat 2 */}
-            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 lg:gap-[16px] lg:py-[16px]">
+            <div className="flex flex-col lg:flex-row items-center text-center lg:text-left gap-2 lg:gap-[16px] lg:py-[16px]">
               <span className="font-title font-normal text-[48px] lg:text-[32px] leading-[48px] lg:leading-[32px] text-[#FBF2E9]">
                 {stat2Value}
               </span>
@@ -145,7 +145,7 @@ export default function ContentsBlockCta(props: BlockCtaProps) {
             <div className="hidden lg:block w-px h-[56px] bg-[#FBF2E9]" />
 
             {/* Stat 3 */}
-            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 lg:gap-[16px] lg:py-[16px]">
+            <div className="flex flex-col lg:flex-row items-center text-center lg:text-left gap-2 lg:gap-[16px] lg:py-[16px]">
               <span className="font-title font-normal text-[48px] lg:text-[32px] leading-[48px] lg:leading-[32px] text-[#FBF2E9]">
                 {stat3Value}
               </span>

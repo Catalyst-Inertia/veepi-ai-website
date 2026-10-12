@@ -13,6 +13,9 @@ export async function seedPages(): Promise<void> {
   const hf2Id = await ensureMedia('hf2.webm', 'HF 2')
   const hf3Id = await ensureMedia('hf3.webm', 'HF 3')
   const silliconId = await ensureMedia('sillicon.webm', 'Sillicon')
+  const linkedinId = await ensureMedia('linkedin.webm', 'LinkedIn')
+  const igsId = await ensureMedia('igs.webm', 'IGS')
+  const tiktokId = await ensureMedia('tiktok.webm', 'TikTok')
   const distributionId = await ensureMedia(
     'distribution.webm',
     'Distribution video',
@@ -98,11 +101,11 @@ export async function seedPages(): Promise<void> {
         heading: 'All from one software.',
         rating: '4.9/5.0',
         ratingSubtitle: 'rated by 3000+ practices in 14 countries',
-        video1: videoId,
-        video2: videoId,
-        video3: videoId,
-        video4: videoId,
-        video5: videoId,
+        video1: linkedinId,
+        video2: doctorId,
+        video3: igsId,
+        video4: tiktokId,
+        video5: hf1Id,
       },
       {
         blockType: 'block-gallery',
